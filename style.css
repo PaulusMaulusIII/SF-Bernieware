@@ -27,6 +27,11 @@ body {
     border: solid black 1px;
 }
 
+#Auswahl {
+    min-width: 90%;
+    min-heigth: 66%;
+}
+
 .container {
     display: flex;
     flex-direction: row;
