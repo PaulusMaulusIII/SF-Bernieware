@@ -37,3 +37,8 @@ body {
 #menu {
     width: 66%;
 }
+
+.selection {
+    min-width: 33%;
+    min-height: 33%;
+}
