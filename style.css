@@ -1,0 +1,39 @@
+body {
+    background-color: lightgray;
+}
+
+#reiter {
+    background-color: white;
+    height: 100px
+}
+
+#korb {
+    height: 20px;
+    width: 20px;
+}
+
+#impressum {
+    background-color: rgb(165, 165, 165);
+
+}
+
+.impressum {
+    width: 33%;
+    border: solid black 1px;
+}
+
+.item {
+    flex-grow: inherit;
+    border: solid black 1px;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    border: solid red 3px;
+}
+
+#menu {
+    width: 66%;
+}
