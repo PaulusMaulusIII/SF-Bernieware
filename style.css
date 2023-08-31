@@ -28,8 +28,8 @@ body {
 }
 
 #Auswahl {
-    min-width: 90%;
-    min-heigth: 66%;
+    display: flex;
+    min-height: 75%;
 }
 
 .container {
@@ -44,6 +44,5 @@ body {
 }
 
 .selection {
-    min-width: 33%;
-    min-height: 33%;
+    flex-basis: 33% 66%;
 }
