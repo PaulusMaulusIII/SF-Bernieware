@@ -1,9 +1,11 @@
 body {
-    background-color: lightgray;
+    background-color: beige;
 }
 
 #reiter {
-    background-color: white;
+    background-color: burlywood;
+    border: solid burlywood 5px;
+    border-radius: 5px;
 }
 
 #korb {
@@ -12,18 +14,23 @@ body {
 }
 
 #impressum {
-    background-color: rgb(165, 165, 165);
+    background-color: burlywood;
 
 }
 
 .impressum {
+    margin: 5px;
+    border: solid beige 5px;
+    border-radius: 5px;
+    padding: 5px;
+    align-content: center;
     width: 33%;
-    border: solid black 1px;
+    /*border: solid black 1px;*/
 }
 
 .item {
     flex-grow: 1;
-    border: solid black 1px;
+    /*border: solid black 1px;*/
 }
 
 #Auswahl {
@@ -38,7 +45,7 @@ body {
     flex-direction: row;
     flex-wrap: wrap;
     flex-grow: 1;
-    border: solid red 3px;
+    /*border: solid red 3px;*/
     align-content: center;
 }
 
@@ -47,10 +54,14 @@ body {
 }
 
 .selection {
-    flex-grow: 0;
+    flex-grow: 1;
     height: 100%;
     align-items: center;
-    width: 25%
+    max-width: 25%;
+    margin: 5px;
+    padding: 5px;
+    border: solid burlywood 5px;
+    border-radius: 5px;
 }
 
 .product {
