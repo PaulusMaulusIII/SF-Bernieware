@@ -54,3 +54,8 @@ body {
     height: 250px;
     max-width: 33%
 }
+
+.product {
+    max-width: 100%;
+    max-height: 100%;
+}
