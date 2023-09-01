@@ -25,6 +25,7 @@ body {
     padding: 5px;
     align-content: center;
     width: 33%;
+    background-color: beige;
     /*border: solid black 1px;*/
 }
 
@@ -57,11 +58,12 @@ body {
     flex-grow: 1;
     height: 100%;
     align-items: center;
-    max-width: 25%;
+    max-width: 33%;
     margin: 5px;
     padding: 5px;
     border: solid burlywood 5px;
     border-radius: 5px;
+    background-color: burlywood;
 }
 
 .product {
