@@ -4,12 +4,11 @@ body {
 
 #reiter {
     background-color: white;
-    height: 100px
 }
 
 #korb {
-    height: 20px;
-    width: 20px;
+    max-width: 20px;
+    max-height: 20px;
 }
 
 #impressum {
@@ -23,20 +22,24 @@ body {
 }
 
 .item {
-    flex-grow: inherit;
+    flex-grow: 1;
     border: solid black 1px;
 }
 
 #Auswahl {
     display: flex;
     min-height: 75%;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .container {
     display: flex;
     flex-direction: row;
+    flex-wrap: nowrap;
     flex-grow: 1;
     border: solid red 3px;
+    align-content: center;
 }
 
 #menu {
@@ -44,5 +47,10 @@ body {
 }
 
 .selection {
-    flex-basis: 33% 66%;
+    flex-grow: 0;
+    height: 100%;
+    width: 653px;
+    align-items: center;
+    height: 250px;
+    max-width: 33%
 }
