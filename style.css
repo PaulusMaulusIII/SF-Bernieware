@@ -36,7 +36,7 @@ body {
 .container {
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     flex-grow: 1;
     border: solid red 3px;
     align-content: center;
@@ -49,10 +49,8 @@ body {
 .selection {
     flex-grow: 0;
     height: 100%;
-    width: 653px;
     align-items: center;
-    height: 250px;
-    max-width: 33%
+    width: 25%
 }
 
 .product {
