@@ -1,0 +1,27 @@
+.grid-container {
+    display: grid;
+    grid-template-areas: 
+    'header header header header'
+    'sidebar content content content'
+    'sidebar content content content'
+    'sidebar content content content'
+    'sidebar content content content'
+    'sidebar content content content'
+    'footer footer footer footer';
+}
+
+#header {
+    grid-area: header;
+}
+
+#sidebar {
+    grid-area: sidebar;
+}
+
+#content {
+    grid-area: content;
+}
+
+#footer {
+    grid-area: footer;
+}
