@@ -1,27 +1,109 @@
-.grid-container {
+@media screen and (orientation:landscape) {}
+
+@media screen and (orientation:portrait) {}
+
+body {
     display: grid;
-    grid-template-areas: 
-    'header header header header'
-    'sidebar content content content'
-    'sidebar content content content'
-    'sidebar content content content'
-    'sidebar content content content'
-    'sidebar content content content'
-    'footer footer footer footer';
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 5fr 45fr 5fr;
+    margin: 0px;
 }
 
 #header {
-    grid-area: header;
+    grid-column: 1 / 4;
+    grid-row: 1 / 2;
+    background-image: none;
+    background-color: #555;
+    display: grid;
+    grid-template: max-content max-content 6fr 2fr;
+    grid-gap: 1%;
+}
+
+#button {
+    grid-column: 1 / 2;
+    background-color: lightgreen;
+    border: green dashed 1px;
+}
+
+#logo {
+    grid-column: 2 / 3;
+    background-color: lightgreen;
+    border: green dashed 1px;
+}
+
+#title {
+    grid-column: 3 / 4;
+    background-color: lightgreen;
+    border: green dashed 1px;
+}
+
+#buttons {
+    grid-column: 4 / 5;
+    background-color: lightgreen;
+    border: green dashed 1px;
 }
 
 #sidebar {
-    grid-area: sidebar;
+    grid-row: 2 / 3;
+    grid-column: 1 / 2;
+    padding: 2.5%;
+    background-color: #AAA;
 }
 
 #content {
-    grid-area: content;
+    margin: 5%;
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: 1fr 48fr 1fr;
+    grid-gap: 5px;
+    background-color: lightcoral;
+    border: coral dashed 1px;
+}
+
+#previous {
+    grid-area: 2 / 1 / 3 / 2;
+}
+
+#next {
+    grid-area: 2 / 3 / 3 / 4;
+}
+
+#content-item {
+    grid-area: 1 / 2 / 4 / 3;
+    display: grid;
+    grid-template: 9fr 1fr / 1fr 1fr 1fr 1fr;
+    background-color: lightpink;
+    border: pink dashed 1px;
+    grid-gap: 1%;
+}
+
+#product-image {
+    grid-area: 1 / 1 / 3 / 3;
+    background-color: none;
+    background-color: lightgreen;
+    border: green dashed 1px;
+    width: 100%;
+    height: 100%;
+}
+
+#product-info {
+    grid-area: 1 / 3 / 2 / 5;
+    background-color: lightgreen;
+    border: green dashed 1px;
+    margin: 0px;
+}
+
+#to-cart {
+    grid-area: 2 / 4 / 4 / 5;
+    background-color: yellow;
+    color: white;
 }
 
 #footer {
-    grid-area: footer;
+    grid-row: 3 / 4;
+    grid-column: 1 / 4;
+    background-color: #555;
+    align-items: center;
 }

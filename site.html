@@ -1,25 +1,79 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">  
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hauptseite</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="grid-container">
-    <div id="header" class="grid-item">
+<body>
+    <div id="header">
+        <div id="button">
+
+        </div>
+        <div id="logo">
+
+        </div>
+        <h1 id="title">
+            Bernhards Warenhandel
+        </h1>
+        <div id="buttons">
+
+        </div>
+    </div>
+    
+    <div id="sidebar">
 
     </div>
-    <div id="sidebar" class="grid-item">
+    
+    <div id="content">
+        <button id="previous" onclick="next(-1);">
 
-    </div>
-    <div id="content" class="grid-item grid-container">
+        </button>
 
-    </div>
-    <div id="footer" class="grid-item>
+        <div id="content-item" class="slide">
+            <img src="https://www.brgs.de/files/medien/Fotos/AGs/Bernie%20Ware/Schulkleidung/mit%20Nummern/hoodies/unisex/%2301_h.JPG" alt="" srcset="" id="product-image">
+            <p id="product-info">
+                AAAAAAAAAAAAAAAAAAAAA
+            </p>
+            <button id="to-cart">
+                Add to cart
+            </button>
+        </div>
 
+        <div id="content-item" class="slide">
+            <img src="https://www.brgs.de/files/medien/Fotos/AGs/Bernie%20Ware/Schulkleidung/mit%20Nummern/hoodies/unisex/%2310_h.JPG" alt="" srcset="" id="product-image">
+            <p id="product-info">
+                BBBBBBBBBBBBBBBBBBBBBBBB
+            </p>
+            <button id="to-cart">
+                Add to cart
+            </button>
+        </div>
+
+        <div id="content-item" class="slide">
+            <img src="https://www.brgs.de/files/medien/Fotos/AGs/Bernie%20Ware/Schulkleidung/mit%20Nummern/hoodies/unisex/%2318_h.JPG" alt="" srcset="" id="product-image">
+            <p id="product-info">
+                CCCCCCCCCCCCCCCCCCCCCCCCCC
+            </p>
+            <button id="to-cart">
+                Add to cart
+            </button>
+        </div>
+
+        <button id="next" onclick="next(1);">
+
+        </button>
     </div>
+
+    <div id="footer">
+        «Irgendwas»
+    </div>
+
+    <script src="script.js">
+
+    </script>
 </body>
 
 </html>
