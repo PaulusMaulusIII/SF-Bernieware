@@ -42,30 +42,24 @@ body {
     background-image: none;
     background-color: #555;
     display: grid;
-    grid-template: max-content max-content 6fr 2fr;
+    grid-template: max-content 6fr 2fr;
     grid-gap: 1%;
 }
 
-#button {
+#logo {
     grid-column: 1 / 2;
     background-color: lightgreen;
     border: green dashed 1px;
 }
 
-#logo {
+#title {
     grid-column: 2 / 3;
     background-color: lightgreen;
     border: green dashed 1px;
 }
 
-#title {
-    grid-column: 3 / 4;
-    background-color: lightgreen;
-    border: green dashed 1px;
-}
-
 #buttons {
-    grid-column: 4 / 5;
+    grid-column: 3 / 4;
     background-color: lightgreen;
     border: green dashed 1px;
 }
@@ -73,7 +67,7 @@ body {
 #banner {
     grid-column: 1 / 4;
     grid-row: 2 / 3;
-    background-image: url('H:\\Downloads\\SF-Bernieware-main\\SF-Bernieware-main\\bannerbsp.png');
+    background-image: url('bannerbsp.png');
     background-size: cover;
     background-position: center;
     width: 100%;
