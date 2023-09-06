@@ -70,6 +70,11 @@ body {
     grid-template: 'button1 button2 button3';
 }
 
+.icon {
+    aspect-ratio: 1;
+    height: 5vh;
+}
+
 #button1 {
     grid-area: button1;
 }
