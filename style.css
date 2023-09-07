@@ -121,6 +121,14 @@ body {
     width: 100%;
 }
 
+.product-info {
+    margin: 0;
+    font-size: medium;
+    color: white;
+    border: black 0.1em solid;
+    border-radius: 0.1em;
+}
+
 #footer {
     grid-row: 4 / 5;
     grid-column: 1 / 4;
