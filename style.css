@@ -40,7 +40,7 @@ body {
     background-image: none;
     background-color: #555;
     display: grid;
-    grid-template: max-content 6fr 2fr;
+    grid-template: 2fr 6fr 2fr;
     grid-gap: 1%;
 }
 
@@ -50,8 +50,12 @@ body {
 
 #title {
     grid-column: 2 / 3;
+    text-align: center;
     font-size: xx-large;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font: 900;
+    text-transform: uppercase;
+    color: white;
 }
 
 #buttons {
