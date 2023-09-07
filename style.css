@@ -6,8 +6,6 @@
         display: grid;
         grid-template: 'item1 item2 item3';
         grid-gap: 10%;
-        background-color: lightcoral;
-        border: coral dashed 1px;
     }
 }
 
@@ -23,8 +21,6 @@
             'item3'
         ;
         grid-gap: 1%;
-        background-color: lightcoral;
-        border: coral dashed 1px;
     }
 
 }
@@ -50,22 +46,16 @@ body {
 
 #logo {
     grid-column: 1 / 2;
-    background-color: lightgreen;
-    border: green dashed 1px;
 }
 
 #title {
     grid-column: 2 / 3;
-    background-color: lightgreen;
-    border: green dashed 1px;
     font-size: xx-large;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 #buttons {
     grid-column: 3 / 4;
-    background-color: lightgreen;
-    border: green dashed 1px;
     display: grid;
     grid-template: 'button1 button2 button3';
 }
