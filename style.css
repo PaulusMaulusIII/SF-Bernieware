@@ -4,8 +4,9 @@
         grid-row: 3 / 4;
         grid-column: 2 / 3;
         display: grid;
-        grid-template: 'item1 item2 item3';
-        grid-gap: 10%;
+        grid-template: 
+        'item1 item2 item3';
+        grid-gap: 0% 10%;
     }
 }
 
@@ -19,10 +20,12 @@
             'item1'
             'item2'
             'item3'
-        ;
-        grid-gap: 1%;
     }
 
+}
+
+*{
+    max-width: calc(100vw - (100vw - 100%));;
 }
 
 body {
@@ -94,39 +97,78 @@ body {
     max-height: calc(200vh - (100vh - 100%));
 }
 
-#content-item1 {
+.item {
+    display: grid;
+    aspect-ratio: 1;
+    size: 100%;
+    justify-content: center;
+}
+
+#item1 {
     grid-area: item1;
+    grid-template: 
+    'content-item1'
+    'product-info1';
+}
+
+#item2 {
+    grid-area: item2;
+    grid-template: 
+    'content-item2'
+    'product-info2';
+}
+
+#item3 {
+    grid-area: item3;
+    grid-template: 
+    'content-item3'
+    'product-info3';
+}
+
+#content-item1 {
+    grid-area: content-item1;
     background-image: url('01_h.JPG');
 }
 
 #content-item2 {
-    grid-area: item2;
+    grid-area: content-item2;
     background-image: url('10_h.JPG');
 }
 
 #content-item3 {
-    grid-area: item3;
+    grid-area: content-item3;
     background-image: url('18_h.JPG');
-    
 }
 
 .slide {
-    display: grid;
-    grid-template: 9fr 1fr / 1fr 1fr 1fr 1fr;
-    grid-gap: 1%;
     aspect-ratio: 1;
     background-size: cover;
     background-position: center;
-    height: 100%;
-    width: 100%;
+    height: 45vh;
 }
 
 .product-info {
     margin: 0;
-    font-size: medium;
-    color: white;
-    border: black 0.1em solid;
-    border-radius: 0.1em;
+    background-color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: #555;
+    max-height: min-content;
+    padding-bottom: 2.5%;
+    font-size: xx-large;
+    text-align: center;
+}
+
+#product-info1 {
+    grid-area: product-info1;
+}
+
+#product-info2 {
+    grid-area: product-info2;
+}
+
+#product-info3 {
+    grid-area: product-info3;
 }
 
 #footer {
