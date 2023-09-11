@@ -1,9 +1,7 @@
 @media screen and (orientation:landscape) {
-    #content {
-        margin: 5%;
+    main {
         grid-row: 3 / 4;
         grid-column: 2 / 3;
-        display: grid;
         grid-template: 
         'item1 item2 item3';
         grid-gap: 0% 10%;
@@ -11,11 +9,9 @@
 }
 
 @media screen and (orientation:portrait) {
-    #content {
-        margin: 5%;
+    main {
         grid-row: 3 / 4;
         grid-column: 2 / 3;
-        display: grid;
         grid-template:
             'item1'
             'item2'
@@ -25,7 +21,7 @@
 }
 
 *{
-    max-width: calc(100vw - (100vw - 100%));;
+    max-width: calc(100vw - (100vw - 100%));
 }
 
 body {
@@ -37,7 +33,7 @@ body {
     margin: 0px;
 }
 
-#header {
+header {
     grid-column: 1 / 4;
     grid-row: 1 / 2;
     background-image: none;
@@ -93,8 +89,10 @@ body {
     height: 170px;
 }
 
-#content {
+main {
     max-height: calc(200vh - (100vh - 100%));
+    display: grid;
+    margin: 5%;
 }
 
 .item {
@@ -181,7 +179,7 @@ a:hover {
     cursor:pointer;  
 }
 
-#footer {
+footer {
     grid-row: 4 / 5;
     grid-column: 1 / 4;
     background-color: #555;
