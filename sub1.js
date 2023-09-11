@@ -7,11 +7,7 @@ function useTemplate() {
 
 var counter = 0;
 
-while (counter < 100) {
+while (counter < 1000) {
     useTemplate();
     counter++;
-}
-
-if (document.getElementById("size").value === "S") {
-    document.body.style.backgroundColor = red;
 }
