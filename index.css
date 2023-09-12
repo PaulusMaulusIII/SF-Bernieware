@@ -129,17 +129,17 @@ main {
 
 #content-item1 {
     grid-area: content-item1;
-    background-image: url('01_h.JPG');
+    background-image: url('Medien\\Kleidung\\13_h.jpg');
 }
 
 #content-item2 {
     grid-area: content-item2;
-    background-image: url('10_h.JPG');
+    background-image: url('Medien\\Kleidung\\12_h.jpg');
 }
 
 #content-item3 {
     grid-area: content-item3;
-    background-image: url('18_h.JPG');
+    background-image: url('Medien\\Kleidung\\138_h.jpg');
 }
 
 .slide {
