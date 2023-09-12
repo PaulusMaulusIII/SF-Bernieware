@@ -146,7 +146,8 @@ main {
     aspect-ratio: 1;
     background-size: cover;
     background-position: center;
-    height: 45vh;
+    height: calc((100vh / 3));
+    min-height: 25vh;
 }
 
 .product-info {
