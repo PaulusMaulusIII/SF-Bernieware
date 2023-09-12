@@ -54,12 +54,17 @@ header {
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font: 900;
     text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
 }
 
 #buttons {
     grid-column: 3 / 4;
     display: grid;
     grid-template: 'button1 button2 button3';
+    margin: 0;
+    padding: 0;
 }
 
 .icon {
