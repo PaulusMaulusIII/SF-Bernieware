@@ -149,8 +149,8 @@ main {
 }
 
 .item picture img {
-		 width: 100%;
-		 heigth: 100%;
+	width: 100%;
+	heigth: 100%;
     object-fit: contain;
 }
 
