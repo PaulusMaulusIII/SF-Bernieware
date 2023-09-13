@@ -129,28 +129,30 @@ main {
 
 #content-item1 {
     grid-area: content-item1;
-    background-image: url('Medien\\Kleidung\\13_h.jpg');
 }
 
 #content-item2 {
     grid-area: content-item2;
-    background-image: url('Medien\\Kleidung\\12_h.jpg');
 }
 
 #content-item3 {
     grid-area: content-item3;
-    background-image: url('Medien\\Kleidung\\138_h.jpg');
 }
 
-.slide {
+.item picture {
     aspect-ratio: 1;
     background-size: cover;
     background-position: center;
     height: calc((100vh / 3));
     min-height: 25vh;
+    justify-content: center;
 }
 
-.product-info {
+.item picture img {
+    object-fit: scale-down;
+}
+
+.item p {
     margin: 0;
     background-color: transparent;
     background-clip: text;
