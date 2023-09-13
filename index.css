@@ -149,7 +149,9 @@ main {
 }
 
 .item picture img {
-    object-fit: scale-down;
+		 width: 100%;
+		 heigth: 100%;
+    object-fit: contain;
 }
 
 .item p {
