@@ -119,7 +119,9 @@ main {
 
 .image {
     grid-area: 1 / 1 / 2 / 4;
-    aspect-ratio: 1;
+    width: 100%;
+heigth: 100%;
+object-fit: contain;
 }
 
 .product-info {
