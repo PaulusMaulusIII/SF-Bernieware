@@ -111,17 +111,23 @@ main {
     background-color: #555;
     border: darkslategray dashed 3px;
     margin: 1%;
+    justify-content: center;
 }
 
 .info {
     max-height: 7vh;
 }
 
-.image {
+.product picture {
     grid-area: 1 / 1 / 2 / 4;
+    height: calc((100vh / 3));
+    min-height: 25vh;
+}
+
+.image {
     width: 100%;
-heigth: 100%;
-object-fit: contain;
+    height: 100%;
+    object-fit: contain;
 }
 
 .product-info {

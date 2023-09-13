@@ -9,6 +9,7 @@ while (i < 140) {
     else {
         var content = document.getElementById("content"),
             section = document.createElement("section"),
+            picture = document.createElement("picture"),
             img = document.createElement("img"),
             p = document.createElement("p"),
             select = document.createElement("select"),
@@ -40,7 +41,8 @@ while (i < 140) {
         optionXXL.textContent = "XXL";
 
         select.append(optionXS, optionS, optionM, optionL, optionXL, optionXXL);
-        section.append(img, p, select, button);
+        picture.append(img);
+        section.append(picture, p, select, button);
         content.append(section);
 
         i++;
