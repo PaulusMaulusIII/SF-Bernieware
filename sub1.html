@@ -42,68 +42,45 @@
 
         <fieldset id="gender" class="filter">
             <input type="checkbox" name="" id="">
-            <select name="" id="">
+            <select name="" id="genderSelect">
+                <option value="Herren">Herren</option>
+                <option value="Damen">Damen</option>
+                <option value="Kinder">Kinder</option>
+            </select>
+            <button onclick="apply('gender');">
+
+            </button>
+        </fieldset>
+
+        <fieldset id="color" class="filter">
+            <input type="checkbox" name="" id="">
+            <select name="" id="colorSelect">
                 <option value=""></option>
                 <option value=""></option>
                 <option value=""></option>
             </select>
+            <button onclick="apply('color');">
+
+            </button>
         </fieldset>
-
-        <fieldset id="size" class="filter">
-            <input type="checkbox" name="" id="">
-            <select name="" id="">
-                <option value=""></option>
-                <option value=""></option>
-                <option value=""></option>
-            </select>        </fieldset>
-
-        <fieldset id="color" class="filter">
-            <input type="checkbox" name="" id="">
-            <select name="" id="">
-                <option value=""></option>
-                <option value=""></option>
-                <option value=""></option>
-            </select>        </fieldset>
 
         <fieldset id="type" class="filter">
             <input type="checkbox" name="" id="">
-            <select name="" id="">
+            <select name="" id="typeSelect">
                 <option value=""></option>
                 <option value=""></option>
                 <option value=""></option>
-            </select>        </fieldset>
+            </select>
+            <button onclick="apply('type');">
+
+            </button>
+        </fieldset>
 
     </section>
 
     <main id="content">
         
     </main>
-
-    <template id="template">
-
-        <section class="product">
-
-            <img src= "" alt="" class="image">
-
-            <p class="product-info info">
-                <slot name = desc></slot>
-            </p>
-
-            <select name="" class="size info">
-                <option value="XS"> XS </option>
-                <option value="S"> S </option>
-                <option value="M"> M </option>
-                <option value="L"> L </option>
-                <option value="XL"> XL </option>
-            </select>
-
-            <button class="to-cart info">
-                Add to Cart
-            </button>
-
-        </section>
-
-    </template>
 
     <script src="sub1.js">
 

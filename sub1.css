@@ -71,7 +71,7 @@ header {
 
 #filters {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 4fr;
+    grid-template-columns: 1fr 1fr 1fr 3fr;
 }
 
 .filter {
@@ -84,20 +84,16 @@ header {
     grid-column: 1 / 2;
 }
 
-#size {
+#color {
     grid-column: 2 / 3;
 }
 
-#color {
+#type {
     grid-column: 3 / 4;
 }
 
-#type {
-    grid-column: 4 / 5;
-}
-
 main {
-    aspect-ratio: 1.33;
+    aspect-ratio: 0.563;
     align-items: center;
     display: flex;
     flex-direction: row;
