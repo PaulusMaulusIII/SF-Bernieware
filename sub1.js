@@ -1,4 +1,13 @@
-var i = 1;
+var i = 1,
+
+    genderCheck = document.getElementById("genderCheck"),
+    genderSelect = document.getElementById("genderSelect"),
+    /*
+    */
+    typeCheck = document.getElementById("typeCheck"),
+    typeSelect = document.getElementById("typeSelect"),
+    filterList = [false, false, false];
+
 const
     hoodies = [],
     tShirts = [],
@@ -25,11 +34,20 @@ while (i < 139) {
     i++;
 }
 
-i = 1;
+var del = () => {
 
+    var content = document.getElementById("content");
 
+    for (let el of document.querySelectorAll('.product')) {
+        content.removeChild(el);
+    }
 
-gen = () => {
+}
+
+var gen = () => {
+
+    i = 1;
+
     while (i < 139) {
 
         if (ban.includes(i)) {
@@ -42,6 +60,7 @@ gen = () => {
                 img = document.createElement("img"),
                 p = document.createElement("p"),
                 select = document.createElement("select"),
+                optionSelect = document.createElement("option"),
                 optionXS = document.createElement("option"),
                 optionS = document.createElement("option"),
                 optionM = document.createElement("option"),
@@ -53,10 +72,12 @@ gen = () => {
             img.className = "image";
             p.className = "product-info info";
             select.className = "size info";
+            select.name = "size-selection";
             button.className = "to-cart info";
+            button.textContent = "Warenkorb"
 
             try {
-                img.src = "Medien/Kleidung/" + i + "_h.jpg";
+                img.src = "Medien/Kleidung/" + i + "_v.jpg";
             } catch (error) {
 
             }
@@ -65,6 +86,7 @@ gen = () => {
             if (hoodies.includes(i)) {
                 if (i < 28) {
                     section.className = "product Hoodie Unisex 35€";
+                    optionSelect.textContent = "Größe auswählen";
                     optionXS.textContent = "XS";
                     optionS.textContent = "S";
                     optionM.textContent = "M";
@@ -73,6 +95,7 @@ gen = () => {
                     optionXXL.textContent = "XXL";
                 } else {
                     section.className = "product Hoodie Kinder 35€";
+                    optionSelect.textContent = "Größe auswählen";
                     optionXS.textContent = "134";
                     optionS.textContent = "146";
                     optionM.textContent = "152";
@@ -83,6 +106,7 @@ gen = () => {
             } else if (tShirts.includes(i)) {
                 if (i < 65) {
                     section.className = "product T-Shirt Herren 26€";
+                    optionSelect.textContent = "Größe auswählen";
                     optionXS.textContent = "XS";
                     optionS.textContent = "S";
                     optionM.textContent = "M";
@@ -91,6 +115,7 @@ gen = () => {
                     optionXXL.textContent = "XXL";
                 } else if ((69 < i) && (i < 81)) {
                     section.className = "product T-Shirt Kinder 23€";
+                    optionSelect.textContent = "Größe auswählen";
                     optionXS.textContent = "146";
                     optionS.textContent = "152";
                     optionM.textContent = "158";
@@ -99,6 +124,7 @@ gen = () => {
                     optionXXL.hidden = true;
                 } else if (99 < i && i < 115) {
                     section.className = "product T-Shirt Damen 25€";
+                    optionSelect.textContent = "Größe auswählen";
                     optionXS.textContent = "XS";
                     optionS.textContent = "S";
                     optionM.textContent = "M";
@@ -108,6 +134,7 @@ gen = () => {
                 }
             } else if (jacken.includes(i)) {
                 section.className = "product Jacke Unisex 35€";
+                optionSelect.textContent = "Größe auswählen";
                 optionXS.textContent = "XS";
                 optionS.textContent = "S";
                 optionM.textContent = "M";
@@ -122,7 +149,7 @@ gen = () => {
                 section.className = "product Turnbeutel 14€";
             }
 
-            select.append(optionXS, optionS, optionM, optionL, optionXL, optionXXL);
+            select.append(optionSelect, optionXS, optionS, optionM, optionL, optionXL, optionXXL);
             picture.append(img);
             section.append(picture, p, select, button);
             content.append(section);
@@ -130,48 +157,98 @@ gen = () => {
             i++;
         }
     }
-
 }
 
-gen();
+var apply = (filterBy = []) => {
 
-apply = (String) => {
+    del();
 
     gen();
 
     var content = document.getElementById("content");
 
-    if (String === 'gender') {
-        if (document.getElementById("genderSelect").value === "Herren") {
-            for (let el of document.querySelectorAll('.Damen')) {
-                content.removeChild(el);
+    for (let i = 0; i < filterBy.length; i++) {
+        var filter = "";
+
+        if (i === 0 && filterBy[i] === true) {
+            filter = "gender";
+        } else if (i === 1 && filterBy[i] === true) {
+            //TODO
+        } else if (i === 2 && filterBy[i] === true) {
+            filter = "type";
+        }
+
+        let filterSelect = document.getElementById((filter + "Select"));
+
+        if (filter === "gender") {
+            if (filterSelect.value === "Alle") {
+
+            } else if (filterSelect.value === "Herren") {
+                for (const el of document.querySelectorAll(".Damen")) {
+                    content.removeChild(el);
+                }
+                for (const el of document.querySelectorAll(".Kinder")) {
+                    content.removeChild(el);
+                }
+            } else if (filterSelect.value === "Damen") {
+                for (const el of document.querySelectorAll(".Herren")) {
+                    content.removeChild(el);
+                }
+                for (const el of document.querySelectorAll(".Kinder")) {
+                    content.removeChild(el);
+                }
+            } else if (filterSelect.value === "Kinder") {
+                for (const el of document.querySelectorAll(".Herren")) {
+                    content.removeChild(el);
+                }
+                for (const el of document.querySelectorAll(".Damen")) {
+                    content.removeChild(el);
+                }
+                for (const el of document.querySelectorAll(".Unisex")) {
+                    content.removeChild(el);
+                }
             }
-            for (let el of document.querySelectorAll('.Kinder')) {
-                content.removeChild(el);
+        } else if (false) {
+            //TODO
+        } else if (filter === "type") {
+            if (filterSelect.value === "Alle") {
+                
+            } else if (filterSelect.value === "Hoodies") {
+                for (const el of document.querySelectorAll(".Jacke")) {
+                    content.removeChild(el);
+                }
+                for (const el of document.querySelectorAll(".T-Shirt")) {
+                    content.removeChild(el);
+                }
+            } else if (filterSelect.value === "Jacken") {
+                for (const el of document.querySelectorAll(".Hoodie")) {
+                    content.removeChild(el);
+                }
+                for (const el of document.querySelectorAll(".T-Shirt")) {
+                    content.removeChild(el);
+                }
+            } else if (filterSelect.value === "T-Shirts") {
+                for (const el of document.querySelectorAll(".Hoodie")) {
+                    content.removeChild(el);
+                }
+                for (const el of document.querySelectorAll(".Jacke")) {
+                    content.removeChild(el);
+                }
             }
         }
-        else if (document.getElementById("genderSelect").value === "Damen") {
-            for (let el of document.querySelectorAll('.Herren')) {
-                content.removeChild(el);
-            }
-            for (let el of document.querySelectorAll('.Kinder')) {
-                content.removeChild(el);
-            }
-        }
-        else if (document.getElementById("genderSelect").value === "Kinder") {
-            for (let el of document.querySelectorAll('.Unisex')) {
-                content.removeChild(el);
-            }
-            for (let el of document.querySelectorAll('.Herren')) {
-                content.removeChild(el);
-            }
-            for (let el of document.querySelectorAll('.Damen')) {
-                content.removeChild(el);
-            }
-        }
-    } else if (String === 'color') {
-        //TODO
-    } else if (String === 'type') {
-        //TODO
     }
 }
+
+gen();
+
+genderSelect.addEventListener("change", () => {
+        filterList[0] = true;
+        apply(filterList);
+});
+
+//TODO
+
+typeSelect.addEventListener("change", () => {
+        filterList[2] = true;
+        apply(filterList);
+});

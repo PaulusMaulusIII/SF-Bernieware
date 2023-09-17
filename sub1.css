@@ -32,6 +32,10 @@ header {
     grid-column: 1 / 2;
 }
 
+#logo picture img {
+    max-height: 50px;
+}
+
 #title {
     grid-column: 2 / 3;
     text-align: center;
@@ -42,6 +46,7 @@ header {
     margin: 0;
     padding: 0;
     font-weight: normal;
+    justify-content: center;
 }
 
 #buttons {
@@ -78,6 +83,15 @@ header {
     margin: 1%;
     background-color: #555;
     border: dashed 1px black;
+    display: flex;
+}
+
+.filter input {
+    flex-grow: 1;
+}
+
+.filter select {
+    flex-grow: 2;
 }
 
 #gender {
@@ -93,7 +107,6 @@ header {
 }
 
 main {
-    aspect-ratio: 0.563;
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -104,10 +117,9 @@ main {
 .product {
     display: grid;
     grid-template: 3fr 1fr / 2fr 1fr 1fr;
-    background-color: #555;
-    border: darkslategray dashed 3px;
     margin: 1%;
     justify-content: center;
+    height: min-content;
 }
 
 .info {
@@ -132,12 +144,16 @@ main {
 
 .size {
     grid-area: 2 / 2 / 3 / 3;
-    aspect-ratio: 1;
+    aspect-ratio: 1.7;
+    margin: 3px;
 }
 
 .to-cart {
     grid-area: 2 / 3 / 3 / 4;
-    aspect-ratio: 1;
+    aspect-ratio: 1.7;
+    margin: 3px;
+    background-color: green;
+    border-radius: 3px;
 }
 
 a {

@@ -2,8 +2,8 @@
     main {
         grid-row: 3 / 4;
         grid-column: 2 / 3;
-        grid-template: 
-        'item1 item2 item3';
+        grid-template:
+            'item1 item2 item3';
         grid-gap: 0% 10%;
     }
 }
@@ -20,7 +20,7 @@
 
 }
 
-*{
+* {
     max-width: calc(100vw - (100vw - 100%));
 }
 
@@ -47,6 +47,10 @@ header {
     grid-column: 1 / 2;
 }
 
+#logo picture img {
+    max-height: 50px;
+}
+
 #title {
     grid-column: 2 / 3;
     text-align: center;
@@ -57,6 +61,7 @@ header {
     margin: 0;
     padding: 0;
     font-weight: normal;
+    justify-content: center;
 }
 
 #buttons {
@@ -108,23 +113,23 @@ main {
 
 #item1 {
     grid-area: item1;
-    grid-template: 
-    'content-item1'
-    'product-info1';
+    grid-template:
+        'content-item1'
+        'product-info1';
 }
 
 #item2 {
     grid-area: item2;
-    grid-template: 
-    'content-item2'
-    'product-info2';
+    grid-template:
+        'content-item2'
+        'product-info2';
 }
 
 #item3 {
     grid-area: item3;
-    grid-template: 
-    'content-item3'
-    'product-info3';
+    grid-template:
+        'content-item3'
+        'product-info3';
 }
 
 #content-item1 {
@@ -184,9 +189,9 @@ a {
 }
 
 a:hover {
-    color: black; 
-    text-decoration:none; 
-    cursor:pointer;  
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 footer {
