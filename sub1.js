@@ -251,15 +251,13 @@ var apply = (filterBy = []) => {
 
             } else {
                 for (let e = 0; e < colors.length; e++) {
-                    if (filter === colors[e]) {
-                        for (let j = 0; j < 6; j++) {
-                            for (const el of document.querySelectorAll(colors[j])) {
-                                if (j !== e) {
-                                    for (const el of document.querySelectorAll(Colors[e])) {
-                                        content.removeChild(el);
-                                    }
-                                }
+                    if (filterSelect.value === colors[e]) {
+                        j = 0;
+                        for (const el of Colors) {
+                            if (j !== e) {
+                                content.removeChild(el);
                             }
+                            j++;
                         }
                     }
                 }
