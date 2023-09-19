@@ -1,4 +1,4 @@
-var i = 1,
+let i = 1,
     genderSelect = document.getElementById("genderSelect"),
     colorSelect = document.getElementById("colorSelect"),
     typeSelect = document.getElementById("typeSelect"),
@@ -13,9 +13,9 @@ const
     turnbeutel = [],
     braun = [1, 9, 17],
     hellbraun = [5, 8],
-    schwarz = [3, 6, 11, 14, 18, 30, 35, 40, 44, 48, 53, 54, 58, 59, 62, 63, 72, 73, 75, 76, 80, 103, 104, 108, 110, 121, 127, 128, 134, 135],
+    schwarz = [3, 6, 11, 14, 18, 30, 35, 40, 44, 48, 53, 54, 58, 59, 63, 72, 73, 75, 76, 80, 103, 104, 108, 110, 121, 127, 128, 134, 135],
     dunkelblau = [2, 4, 10, 13, 16, 31, 34, 38, 43, 47, 52, 61, 71, 78, 102, 105, 106, 111, 122, 125, 131, 132, 138],
-    weiß = [7, 12, 15, 19, 22, 24, 25, 50, 56, 60, 70, 74, 77, 79, 100, 107, 114, 123, 124, 130, 133, 137],
+    weiß = [7, 12, 15, 19, 22, 24, 25, 50, 56, 60, 62, 70, 74, 77, 79, 100, 107, 114, 123, 124, 130, 133, 137],
     rot = [20, 21, 23, 27, 51, 55, 57, 64, 101, 120, 126, 129, 136],
     rosa = [32, 36, 41, 49, 109, 112],
     ban = [26, 28, 29, 33, 37, 39, 42, 45, 46, 65, 66, 67, 68, 69, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 113, 115, 116, 117, 118, 119];
@@ -37,9 +37,9 @@ while (i < 139) {
     i++;
 }
 
-var del = () => {
+let del = () => {
 
-    var content = document.getElementById("content");
+    let content = document.getElementById("content");
 
     for (let el of document.querySelectorAll('.product')) {
         content.removeChild(el);
@@ -47,7 +47,7 @@ var del = () => {
 
 }
 
-var gen = () => {
+let gen = () => {
 
     i = 1;
 
@@ -56,7 +56,7 @@ var gen = () => {
         if (ban.includes(i)) {
             i++;
         } else {
-            var content = document.getElementById("content"),
+            let content = document.getElementById("content"),
                 section = document.createElement("section"),
                 picture = document.createElement("picture"),
                 img = document.createElement("img"),
@@ -73,6 +73,7 @@ var gen = () => {
 
             section.className = "product";
             img.className = "image";
+            img.addEventListener("mouseover", hover());
             p.className = "product-info info";
             select.className = "size info";
             select.name = "size-selection";
@@ -190,16 +191,16 @@ var gen = () => {
     }
 }
 
-var apply = (filterBy = []) => {
+let apply = (filterBy = []) => {
 
     del();
 
     gen();
 
-    var content = document.getElementById("content");
+    let content = document.getElementById("content");
 
     for (let i = 0; i < filterBy.length; i++) {
-        var filter = "";
+        let filter = "";
 
         if (i === 0) {
             filter = "gender";
@@ -244,20 +245,20 @@ var apply = (filterBy = []) => {
                 }
             }
         } else if (filter === "color") {
-            var colors = ["weiß", "hBraun", "braun", "rosa", "rot", "dunkelBlau", "schwarz"],
-                Colors = [""]
+            let colors = ["weiß", "hBraun", "braun", "rosa", "rot", "dunkelBlau", "schwarz"],
+                Colors = ["Weiß", "Hellbraun", "Braun", "Rosa", "Rot", "Dunkelblau", "Schwarz"];
 
             if (filterSelect.value === "Alle") {
 
             } else {
                 for (let e = 0; e < colors.length; e++) {
                     if (filterSelect.value === colors[e]) {
-                        j = 0;
-                        for (const el of Colors) {
-                            if (j !== e) {
-                                content.removeChild(el);
+                        for (let j = 0; j < Colors.length; j++) {
+                            for (const el of document.querySelectorAll("." + Colors[j])) {
+                                if (j !== e) {
+                                    content.removeChild(el);
+                                }
                             }
-                            j++;
                         }
                     }
                 }
@@ -291,6 +292,9 @@ var apply = (filterBy = []) => {
     }
 }
 
+hover = () => {
+
+}
 
 gen();
 
