@@ -3,10 +3,10 @@ let xhr = new XMLHttpRequest();
 xhr.open ("GET", "Menü.png");
 
 xhr.onreadystatechange =  () => {
-	console.log (this.readyState);
+	if (xhr.readyState === 4) {
+        xhr.responseText();
+    }
 };
-
-xhr.send ();
 
 let i = 1,
     genderSelect = document.getElementById("genderSelect"),
