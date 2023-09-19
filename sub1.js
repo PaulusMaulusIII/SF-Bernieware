@@ -1,3 +1,13 @@
+let xhr = new XMLHttpRequest();
+
+xhr.open ("GET", "Menü.png");
+
+xhr.onreadystatechange =  () => {
+	console.log (this.readyState);
+};
+
+xhr.send ();
+
 let i = 1,
     genderSelect = document.getElementById("genderSelect"),
     colorSelect = document.getElementById("colorSelect"),
