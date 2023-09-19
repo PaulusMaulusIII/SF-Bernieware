@@ -1,13 +1,5 @@
 let xhr = new XMLHttpRequest();
 
-xhr.open ("GET", "Menü.png");
-
-xhr.onreadystatechange =  () => {
-	if (xhr.readyState === 4) {
-        xhr.responseText();
-    }
-};
-
 let i = 1,
     genderSelect = document.getElementById("genderSelect"),
     colorSelect = document.getElementById("colorSelect"),
@@ -47,7 +39,7 @@ while (i < 139) {
     i++;
 }
 
-let del = () => {
+const del = () => {
 
     let content = document.getElementById("content");
 
@@ -57,7 +49,44 @@ let del = () => {
 
 }
 
-let gen = () => {
+const getFilesInDirectory = async (directoryPath) => {
+    try {
+        const response = await fetch(directoryPath);
+
+        if (response.ok) {
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+
+            const files = Array.from(doc.querySelectorAll('a')).map((a) =>
+                a.textContent.trim()
+            );
+
+            const filteredFiles = files.filter(
+                (entry) => entry !== '../' && entry !== './' && !entry.endsWith('/') && (entry.endsWith('.svg') || entry.endsWith('.jpg') || entry.endsWith('.png'))
+            );
+
+            return filteredFiles;
+        } else {
+            console.error(
+                'Error fetching directory:',
+                response.status,
+                response.statusText
+            );
+            return [];
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        return [];
+    }
+};
+
+const gen = () => {
+
+    let
+        filesKleidung = getFilesInDirectory("http://localhost/Medien/Kleidung"),
+        filesPraktisches = getFilesInDirectory("http://localhost/Medien/Praktisches"),
+        filesSüßes = getFilesInDirectory("http://localhost/Medien/Süßes");
 
     i = 1;
 
