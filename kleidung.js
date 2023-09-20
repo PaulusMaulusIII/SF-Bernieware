@@ -1,5 +1,3 @@
-let xhr = new XMLHttpRequest();
-
 let i = 1,
     genderSelect = document.getElementById("genderSelect"),
     colorSelect = document.getElementById("colorSelect"),
