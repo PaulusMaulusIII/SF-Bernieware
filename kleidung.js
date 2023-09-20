@@ -81,22 +81,45 @@ const getFilesInDirectory = async (directoryPath) => {
     }
 };
 
-const gen = () => {
+const gen = async () => {
 
     let kategorie = "Kleidung",
         kleidung = ["Hoodie", "Jacke", "T-Shirt"],
         passform = ["Damen", "Herren", "Kinder", "Unisex"],
         farbe = ["Weiß", "Hellbraun", "Braun", "Rosa", "Rot", "Dunkelblau", "Schwarz"];
 
-    console.log(getFilesInDirectory("http://localhost/Medien/"+kategorie+"/"+kleidung[0]+"/"+passform[3]+"/"+farbe[0]));
+    let fileList = [];
 
-    i = 1;
+    for (let j = 0; j < farbe.length; j++) {
+        for (let e = 0; e < passform.length; e++) {
+            for (let i = 0; i < kleidung.length; i++) {
 
-    while (i < 139) {
+                let files = await getFilesInDirectory("http://localhost/Medien/" + kategorie + "/" + kleidung[i] + "/" + passform[e] + "/" + farbe[j]);
 
-        if (ban.includes(i)) {
-            i++;
-        } else {
+                for (let k = 0; k < files.length; k++) {
+                    fileList.push(files[k] + ":" + kleidung[i] + ":" + passform[e] + ":" + farbe[j] + "$$" + "http://localhost/Medien/" + kategorie + "/" + kleidung[i] + "/" + passform[e] + "/" + farbe[j] + "/" + files[k]);
+                }
+            }
+        }
+    }
+
+    fileList.sort();
+
+    for (let i = 0; i < fileList.length; i++) {
+
+        let file = fileList[i].split("$$"),
+            fileFile = file[0],
+            filePath = file[1],
+            fileListSplit = fileFile.split(":"),
+            fileName = fileListSplit[0],
+            fileAttr = [];
+
+        for (let e = 1; e < fileListSplit.length; e++) {
+            fileAttr.push(fileListSplit[e]);
+        }
+
+        if (!fileName.endsWith("_h.jpg")) {
+
             let content = document.getElementById("content"),
                 section = document.createElement("section"),
                 picture = document.createElement("picture"),
@@ -122,112 +145,20 @@ const gen = () => {
             button.textContent = "Warenkorb";
 
             try {
-                img.src = "Medien/Kleidung/" + i + "_v.jpg";
+                img.src = filePath;
             } catch (error) {
 
             }
-            p.textContent = i;
+            p.textContent = fileName;
 
-            if (weiß.includes(i)) {
-                section.classList.add("Weiß");
-            } else if (rosa.includes(i)) {
-                section.classList.add("Rosa");
-            } else if (rot.includes(i)) {
-                section.classList.add("Rot");
-            } else if (hellbraun.includes(i)) {
-                section.classList.add("Hellbraun");
-            } else if (braun.includes(i)) {
-                section.classList.add("Braun");
-            } else if (dunkelblau.includes(i)) {
-                section.classList.add("Dunkelblau");
-            } else if (schwarz.includes(i)) {
-                section.classList.add("Schwarz");
-            }
-
-            if (hoodies.includes(i)) {
-                if (i < 28) {
-                    section.classList.add("Hoodie");
-                    section.classList.add("Unisex");
-                    section.classList.add("35€");
-                    optionSelect.textContent = "Größe auswählen";
-                    optionXS.textContent = "XS";
-                    optionS.textContent = "S";
-                    optionM.textContent = "M";
-                    optionL.textContent = "L";
-                    optionXL.textContent = "XL";
-                    optionXXL.textContent = "XXL";
-                } else {
-                    section.classList.add("Hoodie");
-                    section.classList.add("Kinder");
-                    section.classList.add("35€");
-                    optionSelect.textContent = "Größe auswählen";
-                    optionXS.textContent = "134";
-                    optionS.textContent = "146";
-                    optionM.textContent = "152";
-                    optionL.textContent = "164";
-                    optionXL.hidden = true;
-                    optionXXL.hidden = true;
-                }
-            } else if (tShirts.includes(i)) {
-                if (i < 65) {
-                    section.classList.add("T-Shirt");
-                    section.classList.add("Herren");
-                    section.classList.add("26€");
-                    optionSelect.textContent = "Größe auswählen";
-                    optionXS.textContent = "XS";
-                    optionS.textContent = "S";
-                    optionM.textContent = "M";
-                    optionL.textContent = "L";
-                    optionXL.textContent = "XL";
-                    optionXXL.textContent = "XXL";
-                } else if ((69 < i) && (i < 81)) {
-                    section.classList.add("T-Shirt");
-                    section.classList.add("Kinder");
-                    section.classList.add("23€");
-                    optionSelect.textContent = "Größe auswählen";
-                    optionXS.textContent = "146";
-                    optionS.textContent = "152";
-                    optionM.textContent = "158";
-                    optionL.textContent = "164";
-                    optionXL.hidden = true;
-                    optionXXL.hidden = true;
-                } else if (99 < i && i < 115) {
-                    section.classList.add("T-Shirt");
-                    section.classList.add("Damen");
-                    section.classList.add("25€");
-                    optionSelect.textContent = "Größe auswählen";
-                    optionXS.textContent = "XS";
-                    optionS.textContent = "S";
-                    optionM.textContent = "M";
-                    optionL.textContent = "L";
-                    optionXL.textContent = "XL";
-                    optionXXL.textContent = "XXL";
-                }
-            } else if (jacken.includes(i)) {
-                section.classList.add("Jacke");
-                section.classList.add("Unisex");
-                section.classList.add("35€");
-                optionSelect.textContent = "Größe auswählen";
-                optionXS.textContent = "XS";
-                optionS.textContent = "S";
-                optionM.textContent = "M";
-                optionL.textContent = "L";
-                optionXL.textContent = "XL";
-                optionXXL.textContent = "XXL";
-            } else if (teddys.includes(i)) {
-                section.classList.add(["Teddy", "26€"]);
-            } else if (trinkFlaschen.includes(i)) {
-                section.classList.add(["Flasche", "18€"]);
-            } else if (turnbeutel.includes(i)) {
-                section.classList.add(["Turnbeutel", "14€"]);
+            for (let g = 0; g < fileAttr.length; g++) {
+                section.classList.add(fileAttr[g]);
             }
 
             select.append(optionSelect, optionXS, optionS, optionM, optionL, optionXL, optionXXL);
             picture.append(img);
             section.append(picture, p, select, button);
             content.append(section);
-
-            i++;
         }
     }
 }
