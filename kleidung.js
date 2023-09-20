@@ -88,7 +88,7 @@ const gen = () => {
         passform = ["Damen", "Herren", "Kinder", "Unisex"],
         farbe = ["Weiß", "Hellbraun", "Braun", "Rosa", "Rot", "Dunkelblau", "Schwarz"];
 
-    console.log(getFilesInDirectory("http://localhost/"+kategorie+kleidung[0]+passform[3]+farbe[0]));
+    console.log(getFilesInDirectory("http://localhost/"+kategorie+"/"+kleidung[0]+"/"+passform[3]+"/"+farbe[0]));
 
     i = 1;
 
