@@ -6,39 +6,6 @@ let i = 1,
     typeSelect = document.getElementById("typeSelect"),
     filterList = [false, false, false];
 
-const
-    hoodies = [],
-    tShirts = [],
-    jacken = [],
-    teddys = [],
-    trinkFlaschen = [],
-    turnbeutel = [],
-    braun = [1, 9, 17],
-    hellbraun = [5, 8],
-    schwarz = [3, 6, 11, 14, 18, 30, 35, 40, 44, 48, 53, 54, 58, 59, 63, 72, 73, 75, 76, 80, 103, 104, 108, 110, 121, 127, 128, 134, 135],
-    dunkelblau = [2, 4, 10, 13, 16, 31, 34, 38, 43, 47, 52, 61, 71, 78, 102, 105, 106, 111, 122, 125, 131, 132, 138],
-    weiß = [7, 12, 15, 19, 22, 24, 25, 50, 56, 60, 62, 70, 74, 77, 79, 100, 107, 114, 123, 124, 130, 133, 137],
-    rot = [20, 21, 23, 27, 51, 55, 57, 64, 101, 120, 126, 129, 136],
-    rosa = [32, 36, 41, 49, 109, 112],
-    ban = [26, 28, 29, 33, 37, 39, 42, 45, 46, 65, 66, 67, 68, 69, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 113, 115, 116, 117, 118, 119];
-
-while (i < 139) {
-    if (i < 28 || (29 < i && i < 50)) {
-        hoodies.push(i);
-    } else if ((49 < i && i < 65) || (69 < i && i < 81) || (99 < i && i < 115)) {
-        tShirts.push(i);
-    } else if (119 < i && i < 139) {
-        jacken.push(i);
-    } else if (89 < i && i < 94) {
-        teddys.push(i);
-    } else if (64 < i && i < 69) {
-        trinkFlaschen.push(i);
-    } else if (80 < i && i < 87) {
-        turnbeutel.push(i);
-    }
-    i++;
-}
-
 const del = () => {
 
     let content = document.getElementById("content");
@@ -163,11 +130,11 @@ const gen = async () => {
     }
 }
 
-let apply = (filterBy = []) => {
+let apply = async (filterBy = []) => {
 
     del();
 
-    gen();
+    await gen();
 
     let content = document.getElementById("content");
 
@@ -182,12 +149,10 @@ let apply = (filterBy = []) => {
             filter = "type";
         }
 
-        console.log(filter);
-
         let filterSelect = document.getElementById((filter + "Select"));
 
         if (filter === "gender") {
-            console.log(filterSelect.value);
+        
             if (filterSelect.value === "Alle") {
 
             } else if (filterSelect.value === "Herren") {
