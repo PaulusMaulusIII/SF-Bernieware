@@ -48,22 +48,20 @@ const getFilesInDirectory = async (directoryPath) => {
 
 const gen = async () => {
 
-    let kategorie = "Kleidung",
-        kleidung = ["Hoodie", "Jacke", "T-Shirt"],
-        passform = ["Damen", "Herren", "Kinder", "Unisex"],
+    let kategorie = "Praktisches",
+        praktisches = ["Flasche", "Turnbeutel"],
         farbe = ["Weiß", "Hellbraun", "Braun", "Rosa", "Rot", "Dunkelblau", "Schwarz"];
 
     let fileList = [];
 
     for (let j = 0; j < farbe.length; j++) {
-        for (let e = 0; e < passform.length; e++) {
-            for (let i = 0; i < kleidung.length; i++) {
 
-                let files = await getFilesInDirectory("http://localhost/Medien/" + kategorie + "/" + kleidung[i] + "/" + passform[e] + "/" + farbe[j]);
+        for (let i = 0; i < praktisches.length; i++) {
 
-                for (let k = 0; k < files.length; k++) {
-                    fileList.push(files[k] + ":" + kleidung[i] + ":" + passform[e] + ":" + farbe[j] + "$$" + "http://localhost/Medien/" + kategorie + "/" + kleidung[i] + "/" + passform[e] + "/" + farbe[j] + "/" + files[k]);
-                }
+            let files = await getFilesInDirectory("http://localhost/Medien/" + kategorie + "/" + praktisches[i] + "/" + farbe[j]);
+
+            for (let k = 0; k < files.length; k++) {
+                fileList.push(files[k] + ":" + praktisches[i] + ":" + dingens[e] + ":" + farbe[j] + "$$" + "http://localhost/Medien/" + kategorie + "/" + praktisches[i] + "/" + farbe[j] + "/" + files[k]);
             }
         }
     }
@@ -150,7 +148,7 @@ let apply = async (filterBy = []) => {
         let filterSelect = document.getElementById((filter + "Select"));
 
         if (filter === "gender") {
-        
+
             if (filterSelect.value === "Alle") {
 
             } else if (filterSelect.value === "Herren") {
