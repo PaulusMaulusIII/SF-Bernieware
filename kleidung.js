@@ -16,7 +16,7 @@ const del = () => {
 
 const getFilesInDirectory = async (directoryPath) => {
     try {
-        const response = await fetch(directoryPath);
+        const response = await fetch(directoryPath, { mode: "same-origin" });
 
         if (response.ok) {
             const html = await response.text();
@@ -59,10 +59,10 @@ const gen = async () => {
         for (let e = 0; e < passform.length; e++) {
             for (let i = 0; i < kleidung.length; i++) {
 
-                let files = await getFilesInDirectory("http://localhost/Medien/" + kategorie + "/" + kleidung[i] + "/" + passform[e] + "/" + farbe[j]);
+                let files = await getFilesInDirectory("http://10\.204\.227\.38/Medien/" + kategorie + "/" + kleidung[i] + "/" + passform[e] + "/" + farbe[j]);
 
                 for (let k = 0; k < files.length; k++) {
-                    fileList.push(files[k] + ":" + kleidung[i] + ":" + passform[e] + ":" + farbe[j] + "$$" + "http://localhost/Medien/" + kategorie + "/" + kleidung[i] + "/" + passform[e] + "/" + farbe[j] + "/" + files[k]);
+                    fileList.push(files[k] + ":" + kleidung[i] + ":" + passform[e] + ":" + farbe[j] + "$$" + "http://10\.204\.227\.38/Medien/" + kategorie + "/" + kleidung[i] + "/" + passform[e] + "/" + farbe[j] + "/" + files[k]);
                 }
             }
         }
@@ -150,7 +150,7 @@ let apply = async (filterBy = []) => {
         let filterSelect = document.getElementById((filter + "Select"));
 
         if (filter === "gender") {
-        
+
             if (filterSelect.value === "Alle") {
 
             } else if (filterSelect.value === "Herren") {

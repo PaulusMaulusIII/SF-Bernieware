@@ -1,8 +1,7 @@
 let i = 1,
-    genderSelect = document.getElementById("genderSelect"),
     colorSelect = document.getElementById("colorSelect"),
     typeSelect = document.getElementById("typeSelect"),
-    filterList = [false, false, false];
+    filterList = [false, false];
 
 const del = () => {
 
@@ -16,7 +15,7 @@ const del = () => {
 
 const getFilesInDirectory = async (directoryPath) => {
     try {
-        const response = await fetch(directoryPath);
+        const response = await fetch(directoryPath, { mode: "same-origin" });
 
         if (response.ok) {
             const html = await response.text();
@@ -58,10 +57,10 @@ const gen = async () => {
 
         for (let i = 0; i < praktisches.length; i++) {
 
-            let files = await getFilesInDirectory("http://localhost/Medien/" + kategorie + "/" + praktisches[i] + "/" + farbe[j]);
+            let files = await getFilesInDirectory("http://10\.204\.227\.38/Medien/" + kategorie + "/" + praktisches[i] + "/" + farbe[j]);
 
             for (let k = 0; k < files.length; k++) {
-                fileList.push(files[k] + ":" + praktisches[i] + ":" + dingens[e] + ":" + farbe[j] + "$$" + "http://localhost/Medien/" + kategorie + "/" + praktisches[i] + "/" + farbe[j] + "/" + files[k]);
+                fileList.push(files[k] + ":" + praktisches[i] + ":" + farbe[j] + "$$" + "http://10\.204\.227\.38/Medien/" + kategorie + "/" + praktisches[i] + "/" + farbe[j] + "/" + files[k]);
             }
         }
     }
@@ -138,46 +137,14 @@ let apply = async (filterBy = []) => {
         let filter = "";
 
         if (i === 0) {
-            filter = "gender";
-        } else if (i === 1) {
             filter = "color";
-        } else if (i === 2) {
+        } else if (i === 1) {
             filter = "type";
         }
 
         let filterSelect = document.getElementById((filter + "Select"));
 
-        if (filter === "gender") {
-
-            if (filterSelect.value === "Alle") {
-
-            } else if (filterSelect.value === "Herren") {
-
-                for (const el of document.querySelectorAll(".Damen")) {
-                    content.removeChild(el);
-                }
-                for (const el of document.querySelectorAll(".Kinder")) {
-                    content.removeChild(el);
-                }
-            } else if (filterSelect.value === "Damen") {
-                for (const el of document.querySelectorAll(".Herren")) {
-                    content.removeChild(el);
-                }
-                for (const el of document.querySelectorAll(".Kinder")) {
-                    content.removeChild(el);
-                }
-            } else if (filterSelect.value === "Kinder") {
-                for (const el of document.querySelectorAll(".Herren")) {
-                    content.removeChild(el);
-                }
-                for (const el of document.querySelectorAll(".Damen")) {
-                    content.removeChild(el);
-                }
-                for (const el of document.querySelectorAll(".Unisex")) {
-                    content.removeChild(el);
-                }
-            }
-        } else if (filter === "color") {
+        if (filter === "color") {
             let colors = ["weiß", "hBraun", "braun", "rosa", "rot", "dunkelBlau", "schwarz"],
                 Colors = ["Weiß", "Hellbraun", "Braun", "Rosa", "Rot", "Dunkelblau", "Schwarz"];
 
@@ -199,27 +166,15 @@ let apply = async (filterBy = []) => {
         } else if (filter === "type") {
             if (filterSelect.value === "Alle") {
 
-            } else if (filterSelect.value === "Hoodies") {
-                for (const el of document.querySelectorAll(".Jacke")) {
+            } else if (filterSelect.value === "Flaschen") {
+                for (const el of document.querySelectorAll(".Turnbeutel")) {
                     content.removeChild(el);
                 }
-                for (const el of document.querySelectorAll(".T-Shirt")) {
+            } else if (filterSelect.value === "Turnbeutel") {
+                for (const el of document.querySelectorAll(".Flasche")) {
                     content.removeChild(el);
                 }
-            } else if (filterSelect.value === "Jacken") {
-                for (const el of document.querySelectorAll(".Hoodie")) {
-                    content.removeChild(el);
-                }
-                for (const el of document.querySelectorAll(".T-Shirt")) {
-                    content.removeChild(el);
-                }
-            } else if (filterSelect.value === "T-Shirts") {
-                for (const el of document.querySelectorAll(".Hoodie")) {
-                    content.removeChild(el);
-                }
-                for (const el of document.querySelectorAll(".Jacke")) {
-                    content.removeChild(el);
-                }
+
             }
         }
     }
@@ -230,10 +185,6 @@ hover = () => {
 }
 
 gen();
-
-genderSelect.addEventListener("change", () => {
-    apply(filterList);
-});
 
 colorSelect.addEventListener("change", () => {
     apply(filterList);
