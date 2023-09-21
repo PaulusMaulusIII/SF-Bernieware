@@ -1,50 +1,22 @@
-@media screen and (orientation:landscape) {
-    main {
-        grid-row: 3 / 4;
-        grid-column: 2 / 3;
-        grid-template:
-            'item1 item2 item3';
-        grid-gap: 0% 10%;
-    }
-}
-
-@media screen and (orientation:portrait) {
-    main {
-        grid-row: 3 / 4;
-        grid-column: 2 / 3;
-        grid-template:
-            'item1'
-            'item2'
-            'item3'
-    }
-
-}
-
+/* Reset default styles */
 * {
-    max-width: calc(100vw - (100vw - 100%));
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    display: grid;
-    grid-template-columns: 1fr 48fr 1fr;
-    grid-template-rows: 5fr 10fr 35fr 5fr;
-    height: calc(100vh - (100vh - 100%));
-    width: calc(100vw - (100vw - 100%));
-    margin: 0px;
+    font-family: Arial, sans-serif;
+    background-color: white;
+    color: dark-gray;
+    margin: 0;
 }
 
 header {
-    grid-column: 1 / 4;
-    grid-row: 1 / 2;
-    background-image: none;
-    background-color: #555;
-    display: grid;
-    grid-template: 2fr 6fr 2fr;
-    grid-gap: 1%;
-}
-
-#logo {
-    grid-column: 1 / 2;
+    background-color: wine-red;
+    color: white;
+    text-align: center;
+    padding: 20px;
 }
 
 #logo picture img {
@@ -52,151 +24,58 @@ header {
 }
 
 #title {
-    grid-column: 2 / 3;
-    text-align: center;
-    font-size: xx-large;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font: 900;
+    font-size: 24px;
+    font-weight: bold;
     text-transform: uppercase;
-    margin: 0;
-    padding: 0;
-    font-weight: normal;
-    justify-content: center;
+    margin: 10px 0;
 }
 
 #buttons {
-    grid-column: 3 / 4;
-    display: grid;
-    grid-template: 'button1 button2 button3';
-    margin: 0;
-    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .icon {
-    aspect-ratio: 1;
-    height: 5vh;
-}
-
-#button1 {
-    grid-area: button1;
-}
-
-#button2 {
-    grid-area: button2;
-}
-
-#button3 {
-    grid-area: button3;
+    height: 24px;
 }
 
 #banner {
-    grid-column: 1 / 4;
-    grid-row: 2 / 3;
     background-image: url('bannerbsp.png');
     background-size: cover;
     background-position: center;
-    width: 100%;
     height: 170px;
 }
 
 main {
-    max-height: calc(200vh - (100vh - 100%));
+    margin: 20px;
     display: grid;
-    margin: 5%;
+    grid-gap: 20px;
 }
 
 .item {
-    display: grid;
-    aspect-ratio: 1;
-    justify-content: center;
-}
-
-#item1 {
-    grid-area: item1;
-    grid-template:
-        'content-item1'
-        'product-info1';
-}
-
-#item2 {
-    grid-area: item2;
-    grid-template:
-        'content-item2'
-        'product-info2';
-}
-
-#item3 {
-    grid-area: item3;
-    grid-template:
-        'content-item3'
-        'product-info3';
-}
-
-#content-item1 {
-    grid-area: content-item1;
-}
-
-#content-item2 {
-    grid-area: content-item2;
-}
-
-#content-item3 {
-    grid-area: content-item3;
+    background-color: light-gray;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .item picture {
-    aspect-ratio: 1;
-    background-size: cover;
-    background-position: center;
-    height: calc((100vh / 3));
-    min-height: 25vh;
-    justify-content: center;
-}
-
-.item picture img {
-    height: 100%;
+    max-height: 200px;
     width: 100%;
-    object-fit: contain;
+    object-fit: cover;
+    border-radius: 5px;
 }
 
 .item p {
-    margin: 0;
-    background-color: transparent;
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: #555;
-    max-height: min-content;
-    padding-bottom: 2.5%;
-    font-size: xx-large;
-    text-align: center;
-}
-
-#product-info1 {
-    grid-area: product-info1;
-}
-
-#product-info2 {
-    grid-area: product-info2;
-}
-
-#product-info3 {
-    grid-area: product-info3;
-}
-
-a {
-    color: black;
-    text-decoration: none;
-}
-
-a:hover {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+    margin-top: 10px;
+    font-size: 18px;
 }
 
 footer {
-    grid-row: 4 / 5;
-    grid-column: 1 / 4;
-    background-color: #555;
-    align-items: center;
+    background-color: dark-gray;
+    color: light-gray;
+    text-align: center;
+    padding: 10px;
 }

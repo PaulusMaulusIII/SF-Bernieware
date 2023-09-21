@@ -52,7 +52,7 @@ const getFilesInDirectory = async (directoryPath) => {
 };
 
 const gen = async () => {
-    
+
     for (let j = 0; j < farbe.length; j++) {
         for (let e = 0; e < passform.length; e++) {
             for (let i = 0; i < kleidung.length; i++) {
@@ -100,7 +100,6 @@ const gen = async () => {
 
             section.className = "product";
             img.className = "image";
-            img.addEventListener("mouseover", hover());
             p.className = "product-info info";
             select.className = "size info";
             select.name = "size-selection";
@@ -223,10 +222,6 @@ let apply = async (filterBy = []) => {
             }
         }
     }
-}
-
-hover = () => {
-
 }
 
 gen();
