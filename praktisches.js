@@ -51,6 +51,20 @@ const getFilesInDirectory = async (directoryPath) => {
 
 const gen = async () => {
 
+    for (let j = 0; j < farbe.length; j++) {
+
+        for (let i = 0; i < praktisches.length; i++) {
+    
+            let files = await getFilesInDirectory("http://localhost/Medien/" + kategorie + "/" + praktisches[i] + "/" + farbe[j]);
+    
+            for (let k = 0; k < files.length; k++) {
+                fileList.push(files[k] + ":" + praktisches[i] + ":" + farbe[j] + "$$" + "http://localhost/Medien/" + kategorie + "/" + praktisches[i] + "/" + farbe[j] + "/" + files[k]);
+            }
+        }
+    }
+    
+    fileList.sort();
+
     for (let i = 0; i < fileList.length; i++) {
 
         let file = fileList[i].split("$$"),
@@ -163,27 +177,9 @@ let apply = async (filterBy = []) => {
     }
 }
 
-let fillFileList = async () => {
-    for (let j = 0; j < farbe.length; j++) {
-
-        for (let i = 0; i < praktisches.length; i++) {
-    
-            let files = await getFilesInDirectory("http://localhost/Medien/" + kategorie + "/" + praktisches[i] + "/" + farbe[j]);
-    
-            for (let k = 0; k < files.length; k++) {
-                fileList.push(files[k] + ":" + praktisches[i] + ":" + farbe[j] + "$$" + "http://localhost/Medien/" + kategorie + "/" + praktisches[i] + "/" + farbe[j] + "/" + files[k]);
-            }
-        }
-    }
-    
-    fileList.sort();
-}
-
 hover = () => {
 
 }
-
-fillFileList();
 
 gen();
 
