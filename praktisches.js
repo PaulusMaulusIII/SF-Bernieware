@@ -1,7 +1,11 @@
 let i = 1,
     colorSelect = document.getElementById("colorSelect"),
     typeSelect = document.getElementById("typeSelect"),
-    filterList = [false, false];
+    filterList = [false, false],
+    kategorie = "Praktisches",
+    praktisches = ["Flasche", "Turnbeutel"],
+    farbe = ["Weiß", "Hellbraun", "Braun", "Rosa", "Rot", "Dunkelblau", "Schwarz"],
+    fileList = [];
 
 const del = () => {
 
@@ -46,26 +50,6 @@ const getFilesInDirectory = async (directoryPath) => {
 };
 
 const gen = async () => {
-
-    let kategorie = "Praktisches",
-        praktisches = ["Flasche", "Turnbeutel"],
-        farbe = ["Weiß", "Hellbraun", "Braun", "Rosa", "Rot", "Dunkelblau", "Schwarz"];
-
-    let fileList = [];
-
-    for (let j = 0; j < farbe.length; j++) {
-
-        for (let i = 0; i < praktisches.length; i++) {
-
-            let files = await getFilesInDirectory("http://10\.204\.227\.38/Medien/" + kategorie + "/" + praktisches[i] + "/" + farbe[j]);
-
-            for (let k = 0; k < files.length; k++) {
-                fileList.push(files[k] + ":" + praktisches[i] + ":" + farbe[j] + "$$" + "http://10\.204\.227\.38/Medien/" + kategorie + "/" + praktisches[i] + "/" + farbe[j] + "/" + files[k]);
-            }
-        }
-    }
-
-    fileList.sort();
 
     for (let i = 0; i < fileList.length; i++) {
 
@@ -174,15 +158,32 @@ let apply = async (filterBy = []) => {
                 for (const el of document.querySelectorAll(".Flasche")) {
                     content.removeChild(el);
                 }
-
             }
         }
     }
 }
 
+let fillFileList = async () => {
+    for (let j = 0; j < farbe.length; j++) {
+
+        for (let i = 0; i < praktisches.length; i++) {
+    
+            let files = await getFilesInDirectory("http://localhost/Medien/" + kategorie + "/" + praktisches[i] + "/" + farbe[j]);
+    
+            for (let k = 0; k < files.length; k++) {
+                fileList.push(files[k] + ":" + praktisches[i] + ":" + farbe[j] + "$$" + "http://localhost/Medien/" + kategorie + "/" + praktisches[i] + "/" + farbe[j] + "/" + files[k]);
+            }
+        }
+    }
+    
+    fileList.sort();
+}
+
 hover = () => {
 
 }
+
+fillFileList();
 
 gen();
 
