@@ -1,7 +1,9 @@
 let i = 1,
     colorSelect = document.getElementById("colorSelect"),
+    typeSelect = document.getElementById("typeSelect"),
     filterList = [false, false],
     kategorie = "Süßes",
+    artikel = ["Teddy"],
     farbe = ["Weiß", "Hellbraun", "Braun", "Rosa", "Rot", "Dunkelblau", "Schwarz"],
     fileList = [];
 
@@ -148,14 +150,6 @@ let apply = async (filterBy = []) => {
         } else if (filter === "type") {
             if (filterSelect.value === "Alle") {
 
-            } else if (filterSelect.value === "Flaschen") {
-                for (const el of document.querySelectorAll(".Turnbeutel")) {
-                    content.removeChild(el);
-                }
-            } else if (filterSelect.value === "Turnbeutel") {
-                for (const el of document.querySelectorAll(".Flasche")) {
-                    content.removeChild(el);
-                }
             }
         }
     }
@@ -165,11 +159,17 @@ let createFileList = async () => {
 
     for (let j = 0; j < farbe.length; j++) {
 
-        let files = await getFilesInDirectory("http://localhost/Medien/" + kategorie + "/" + farbe[j]);
+        for (let i = 0; i < artikel.length; i++) {
 
-        for (let k = 0; k < files.length; k++) {
-            fileList.push(files[k] + ":" + farbe[j] + "$$" + "http://localhost/Medien/" + kategorie + "/" + farbe[j] + "/" + files[k]);
+            let files = await getFilesInDirectory("http://localhost/Medien/" + kategorie + "/" + artikel[i] + "/" + farbe[j]);
+
+            for (let k = 0; k < files.length; k++) {
+                fileList.push(files[k] + ":" + artikel[i] + ":" + farbe[j] + "$$" + "http://localhost/Medien/" + kategorie + "/" + artikel[i] + "/" + farbe[j] + "/" + files[k]);
+            }
+
         }
+
+
     }
 
     fileList.sort();
@@ -182,3 +182,7 @@ createFileList();
 colorSelect.addEventListener("change", () => {
     apply(filterList);
 });
+
+typeSelect.addEventListener("change", () => {
+    apply(filterList);
+})

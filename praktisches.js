@@ -166,18 +166,17 @@ let apply = async (filterBy = []) => {
 let createFileList = async () => {
 
     for (let j = 0; j < farbe.length; j++) {
-        for (let e = 0; e < passform.length; e++) {
-            for (let i = 0; i < kleidung.length; i++) {
 
-                let files = await getFilesInDirectory("http://localhost/Medien/" + kategorie + "/" + kleidung[i] + "/" + passform[e] + "/" + farbe[j]);
-
-                for (let k = 0; k < files.length; k++) {
-                    fileList.push(files[k] + ":" + kleidung[i] + ":" + passform[e] + ":" + farbe[j] + "$$" + "http://localhost/Medien/" + kategorie + "/" + kleidung[i] + "/" + passform[e] + "/" + farbe[j] + "/" + files[k]);
-                }
+        for (let i = 0; i < praktisches.length; i++) {
+    
+            let files = await getFilesInDirectory("http://localhost/Medien/" + kategorie + "/" + praktisches[i] + "/" + farbe[j]);
+    
+            for (let k = 0; k < files.length; k++) {
+                fileList.push(files[k] + ":" + praktisches[i] + ":" + farbe[j] + "$$" + "http://localhost/Medien/" + kategorie + "/" + praktisches[i] + "/" + farbe[j] + "/" + files[k]);
             }
         }
     }
-
+    
     fileList.sort();
 
     gen();
