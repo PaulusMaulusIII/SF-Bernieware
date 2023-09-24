@@ -179,6 +179,8 @@ let createFileList = async () => {
     
     fileList.sort();
 
+    document.getElementById("loading").style.display = "none";
+
     gen();
 }
 

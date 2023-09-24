@@ -16,7 +16,6 @@ const del = () => {
     for (let el of document.querySelectorAll('.product')) {
         content.removeChild(el);
     }
-
 }
 
 const getFilesInDirectory = async (directoryPath) => {
@@ -226,6 +225,8 @@ let createFileList = async () => {
     }
 
     fileList.sort();
+
+    document.getElementById("loading").style.display = "none";
 
     gen();
 }
