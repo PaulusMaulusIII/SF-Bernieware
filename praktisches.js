@@ -179,7 +179,7 @@ let createFileList = async () => {
     
     fileList.sort();
 
-    document.getElementById("loading").style.display = "none";
+    document.getElementById("content").removeChild(document.getElementById("loading"));
 
     gen();
 }
