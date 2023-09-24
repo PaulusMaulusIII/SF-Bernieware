@@ -92,11 +92,13 @@ const gen = async () => {
             button.textContent = "Warenkorb";
 
             try {
+                let alt;
                 img.src = filePath;
+                img.alt = fileAttr;
             } catch (error) {
 
             }
-            p.textContent = fileName;
+            p.textContent = fileName + "\n" + fileAttr;
 
             for (let g = 0; g < fileAttr.length; g++) {
                 section.classList.add(fileAttr[g]);
@@ -225,10 +227,11 @@ let createFileList = async () => {
     }
 
     fileList.sort();
+
+    gen();
 }
 
-await createFileList();
-gen();
+createFileList();
 
 genderSelect.addEventListener("change", () => {
     apply(filterList);
