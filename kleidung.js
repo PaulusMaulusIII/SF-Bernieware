@@ -92,7 +92,6 @@ const gen = async () => {
             button.textContent = "Warenkorb";
 
             try {
-                let alt;
                 img.src = filePath;
                 img.alt = fileAttr;
             } catch (error) {

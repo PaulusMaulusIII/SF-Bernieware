@@ -83,7 +83,6 @@ const gen = async () => {
 
             section.className = "product";
             img.className = "image";
-            img.addEventListener("mouseover", hover());
             p.className = "product-info info";
             select.className = "size info";
             select.name = "size-selection";
@@ -92,6 +91,7 @@ const gen = async () => {
 
             try {
                 img.src = filePath;
+                img.alt = fileAttr;
             } catch (error) {
 
             }
