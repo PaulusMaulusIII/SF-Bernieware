@@ -55,31 +55,61 @@ button {
     height: 30px;
 }
 
+#filters {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 3fr;
+}
+
+.filter select {
+    width: 100%;
+}
+
 main {
     display: flex;
     flex: 1, 0, 1;
     justify-content: space-around;
 }
 
-.item {
-    width: 30vw;
-    aspect-ratio: 1;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+.product {
+    display: grid;
+    grid-template: 3fr 1fr / 2fr 1fr 1fr;
+    margin: 1%;
     justify-content: center;
+    height: min-content;
 }
 
-.item img {
+.info {
+    max-height: 7vh;
+}
+
+.product picture {
+    grid-area: 1 / 1 / 2 / 4;
+    height: calc((100vh / 3));
+    min-height: 25vh;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
     object-fit: contain;
-    aspect-ratio: 1;
 }
 
-#product-info1,
-#product-info2,
-#product-info3 {
-    clear: both;
-    text-align: center;
+.product-info {
+    grid-area: 2 / 1 / 3 / 2;
+}
+
+.size {
+    grid-area: 2 / 2 / 3 / 3;
+    aspect-ratio: 1.7;
+    margin: 3px;
+}
+
+.to-cart {
+    grid-area: 2 / 3 / 3 / 4;
+    aspect-ratio: 1.7;
+    margin: 3px;
+    background-color: green;
+    border-radius: 3px;
 }
 
 footer {
@@ -103,7 +133,11 @@ a:hover {
 @media screen and (orientation: landscape) {
     main {
         flex-direction: row;
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
+    }
+
+    .product {
+        flex: 1 0 30%;
     }
 }
 
@@ -114,7 +148,7 @@ a:hover {
         justify-content: center;
     }
 
-    .item {
-        width: 90vw;
+    .product {
+        flex: 1 0 90%;
     }
 }
