@@ -55,6 +55,13 @@ button {
     height: 30px;
 }
 
+hr {
+    color: var(--darkGray);
+    width: 80%;
+    margin-bottom: 2.5%;
+    margin-top: 0%;
+}
+
 main {
     display: flex;
     flex: 1, 0, 1;

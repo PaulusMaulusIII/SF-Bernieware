@@ -55,9 +55,16 @@ button {
     height: 30px;
 }
 
+hr {
+    color: var(--darkGray);
+    width: 80%;
+    margin-bottom: 2.5%;
+    margin-top: 2.5%;
+}
+
 #filters {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 3fr;
+    display: flex;
+    justify-content: center;
 }
 
 .filter select {
