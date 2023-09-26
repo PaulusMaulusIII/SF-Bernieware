@@ -29,7 +29,7 @@ body {
 
 header {
     text-align: center;
-    padding: 20px;
+    padding: 1%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -48,7 +48,8 @@ button {
     background-color: transparent;
     border: none;
     cursor: pointer;
-    margin: 1%;
+    margin: 3%;
+    clear: none;
 }
 
 .icon {
@@ -59,14 +60,29 @@ button {
 hr {
     color: var(--darkGray);
     width: 80%;
-    margin-bottom: 2.5%;
-    margin-top: 0%;
+    margin-bottom: .5%;
+    margin-top: .5%;
 }
 
 main {
     display: flex;
     flex: 1, 0, 1;
-    justify-content: space-around;
+    justify-content: center;
+    flex-direction: column;
+}
+
+article {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10% 0 10%;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.products {
+    display: flex;
+    justify-content: center;
 }
 
 .item {
@@ -90,6 +106,46 @@ main {
     text-align: center;
 }
 
+h3 {
+    margin: 0 10% 0 10%;
+    text-align: center;
+}
+
+#info {
+    padding: 1%;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.info {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+}
+
+.infoContain {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 5% 5% 5%;
+}
+
+.button {
+    border: gray solid;
+    background-color: gray;
+    border-radius: 10px;
+    padding: 1%;
+}
+
+span {
+    background-color: darkgray;
+    color: black;
+    border: darkgray solid;
+    border-radius: 10px;
+    padding: 1%;
+    margin: 1%;
+}
+
 footer {
     background-color: var(--wine);
     color: white;
@@ -108,21 +164,51 @@ a:hover {
     font-weight: bold;
 }
 
+@media (pointer: coarse){
+    #background {
+        display: none;
+    }
+
+    #additional {
+        display: none;
+    }
+
+    a:hover {
+        font-weight: normal;
+    }
+}
+
 @media screen and (orientation: landscape) {
-    main {
+    .products {
         flex-direction: row;
         flex-wrap: nowrap;
+    }
+
+    .infoContain {
+        flex-direction: row;
     }
 }
 
 @media screen and (orientation: portrait) {
-    main {
+    .products {
         flex-direction: column;
         flex-grow: 1;
         justify-content: center;
     }
 
+    #background {
+        display: none;
+    }
+
+    #additional {
+        display: none;
+    }
+
     .item {
         width: 90vw;
+    }
+
+    article {
+        height: auto;
     }
 }
