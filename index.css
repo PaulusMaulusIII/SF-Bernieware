@@ -8,6 +8,10 @@
     max-width: var(--maxView);
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body,
 h1,
 p,
@@ -164,7 +168,7 @@ a:hover {
     font-weight: bold;
 }
 
-@media (pointer: coarse){
+@media (pointer: coarse) {
     #background {
         display: none;
     }
