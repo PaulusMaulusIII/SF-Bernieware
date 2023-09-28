@@ -71,6 +71,7 @@ const gen = async () => {
 
             let content = document.getElementById("content"),
                 section = document.createElement("section"),
+                a = document.createElement("a"),
                 picture = document.createElement("picture"),
                 img = document.createElement("img"),
                 p = document.createElement("p"),
@@ -92,6 +93,8 @@ const gen = async () => {
             button.className = "to-cart info";
             button.textContent = "Warenkorb";
 
+            a.href = "einzel-ansicht.html"
+
             try {
                 img.src = filePath;
                 img.alt = fileAttr;
@@ -108,7 +111,8 @@ const gen = async () => {
             }
 
             select.append(optionSelect, optionXS, optionS, optionM, optionL, optionXL, optionXXL);
-            picture.append(img);
+            a.append(img);
+            picture.append(a);
             section.append(picture, p, select, button);
             content.append(section);
 
