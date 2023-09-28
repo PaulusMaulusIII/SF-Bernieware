@@ -25,8 +25,10 @@
         </h1>
 
         <menu id="buttons">
-            <button type="button" id="button1">
-                <img src="about_us.svg" alt="" srcset="" class="icon">
+            <button type="button" id="button1" onclick="aboutUs();">
+                <a href="#background">
+                    <img src="about_us.svg" alt="" srcset="" class="icon">
+                </a>
             </button>
             <button type="button" id="button2">
                 <img src="Magnifying_glass.svg" alt="" srcset="" class="icon">
@@ -40,40 +42,6 @@
 
 
     <main>
-
-        <hr>
-
-        <article id="background">
-
-            <h3>Hintergrundinformationen:</h3>
-
-            <section id="info">
-                2021/22 wollte die Schülerfirma BernieWare in Zusammenarbeit mit dem Schülerrat das Konzept der
-                <br>
-                Schulkleidung am BRG neu denken. Dafür wurden die Lernenden der Kunstleistungskurse gebeten,
-                <br>
-                Designvorschläge zu konzipieren.
-
-                <br>
-                <br>
-
-                Die dabei entstandenen Vorschläge wurden dann der Schülerschaft des BRG zur Wahl gestellt, wobei sich
-                die
-                <br>
-                Designideen von Merle Tischler und Siri Webler als bestplatzierte durchsetzen konnten.
-
-                <br>
-                <br>
-
-                Die Schülerfirma BernieWare hat parallel diverse Druckportale im Internet auf Qualität, Preis-Leistung
-                und
-                <br>
-                Kommunikationsinterface geprüft und sich für einen Anbieter entschieden, mit dem bis auf weiteres
-                <br>
-                zusammengearbeitet wird.
-            </section>
-
-        </article>
 
         <hr>
 
@@ -137,6 +105,40 @@
 
         <hr>
 
+        <article id="background">
+
+            <h3>Hintergrundinformationen:</h3>
+
+            <section id="info">
+                2021/22 wollte die Schülerfirma BernieWare in Zusammenarbeit mit dem Schülerrat das Konzept der
+                <br>
+                Schulkleidung am BRG neu denken. Dafür wurden die Lernenden der Kunstleistungskurse gebeten,
+                <br>
+                Designvorschläge zu konzipieren.
+
+                <br>
+                <br>
+
+                Die dabei entstandenen Vorschläge wurden dann der Schülerschaft des BRG zur Wahl gestellt, wobei sich
+                die
+                <br>
+                Designideen von Merle Tischler und Siri Webler als Bestplatzierte durchsetzen konnten.
+
+                <br>
+                <br>
+
+                Die Schülerfirma BernieWare hat parallel diverse Druckportale im Internet auf Qualität, Preis-Leistung
+                und
+                <br>
+                Kommunikationsinterface geprüft und sich für einen Anbieter entschieden, mit dem bis auf weiteres
+                <br>
+                zusammengearbeitet wird.
+            </section>
+
+        </article>
+
+        <hr>
+
         <article id="additional">
 
             <h3>Zusatzinformationen:</h3>
@@ -164,16 +166,6 @@
                     <br>
 
                     E-Mail: <a href="mailto:info@brgs.de">info@brgs.de</a>
-
-                    <br>
-
-                    <a href="">
-                        <button class="button">Impressum</button>
-                    </a>
-
-                    <a href="">
-                        <button class="button">Datenschutz</button>
-                    </a>
 
                 </section>
 
@@ -210,16 +202,6 @@
                     Dienstag und Donnerstag
                     10:00 Uhr - 12:00 Uhr bzw. nach Vereinbarung
 
-                    <br>
-
-                    <a href="">
-                        <button class="button">Unterrichtszeiten</button>
-                    </a>
-
-                    <a href="">
-                        <button class="button">Stundenplan</button>
-                    </a>
-
                 </section>
 
             </section>
@@ -233,6 +215,10 @@
         «Irgendwas»
 
     </footer>
+
+    <script>
+        console.log(document.getElementById("background"))
+    </script>
 
 </body>
 

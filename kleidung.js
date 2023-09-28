@@ -6,8 +6,10 @@ let i = 1,
     kategorie = "Kleidung",
     kleidung = ["Hoodie", "Jacke", "T-Shirt"],
     passform = ["Damen", "Herren", "Kinder", "Unisex"],
-    farbe = ["Weiß", "Hellbraun", "Braun", "Rosa", "Rot", "Dunkelblau", "Schwarz"],
-    fileList = [];
+    farbe = ["Weiss", "Hellbraun", "Braun", "Rosa", "Rot", "Dunkelblau", "Schwarz"],
+    fileList = [],
+    imgV = [],
+    imgH = [];
 
 const del = () => {
 
@@ -93,8 +95,11 @@ const gen = async () => {
             try {
                 img.src = filePath;
                 img.alt = fileAttr;
+                img.addEventListener("mouseenter", hover, false);
+                img.addEventListener("mouseover", hover, false);
+                img.addEventListener("mouseleave", exit, false);
             } catch (error) {
-
+                console.error("Unknown");
             }
             p.textContent = fileName + "\n" + fileAttr;
 
@@ -106,6 +111,10 @@ const gen = async () => {
             picture.append(img);
             section.append(picture, p, select, button);
             content.append(section);
+
+            imgV.push(filePath);
+        } else {
+            imgH.push(filePath);
         }
     }
 }
@@ -232,6 +241,20 @@ let createFileList = async () => {
 }
 
 createFileList();
+
+let hover = (evt) => {
+    let img = evt.target
+    if (imgV.includes(img.src)) {
+        img.src = imgH[imgV.indexOf(img.src)];
+    }
+}
+
+let exit = (evt) => {
+    let img = evt.target
+    if (imgH.includes(img.src)) {
+        img.src = imgV[imgH.indexOf(img.src)];
+    }
+}
 
 genderSelect.addEventListener("change", () => {
     apply(filterList);

@@ -8,6 +8,10 @@
     max-width: var(--maxView);
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body,
 h1,
 p,
@@ -75,6 +79,8 @@ main {
     display: flex;
     flex: 1, 0, 1;
     justify-content: space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .product {
@@ -92,7 +98,7 @@ main {
 .product picture {
     grid-area: 1 / 1 / 2 / 4;
     height: calc((100vh / 3));
-    min-height: 25vh;
+    min-height: 50vh;
 }
 
 .image {
@@ -138,24 +144,13 @@ a:hover {
 }
 
 @media screen and (orientation: landscape) {
-    main {
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-
     .product {
-        flex: 1 0 30%;
+        flex-basis: 30%;
     }
 }
 
 @media screen and (orientation: portrait) {
-    main {
-        flex-direction: column;
-        flex-grow: 1;
-        justify-content: center;
-    }
-
     .product {
-        flex: 1 0 90%;
+        flex-basis: auto;
     }
 }
