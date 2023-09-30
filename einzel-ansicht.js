@@ -56,7 +56,7 @@ const parseCSV = (str) => {
 
 const gen = async (element = []) => {
     element = element[0];
-    let id = element[0];
+    let id = element[0],
         kategorie = element[1],
         artikel = element[2],
         passform = element[3],
