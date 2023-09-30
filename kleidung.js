@@ -231,7 +231,6 @@ let getCSV = async () => {
             for (const element of parseCSV(response)) {
                 if (element[1] == "Kleidung") {
                     await gen(element);
-
                 }
             }
         })

@@ -1,3 +1,22 @@
+const getCSV = async () => {
+    let arr,
+        id;
+    const urlParams = new URLSearchParams(window.location.search);
+
+    id = urlParams.get("id");
+
+    await fetch("http://localhost/database.csv")
+        .then(response => response.text())
+        .then(async (response) => {
+            arr = (parseCSV(response));
+
+            let interesting = arr.filter(function (value) { return value[0] == id; });
+
+            await gen(interesting);
+        })
+        .catch(err => console.log(err));
+}
+
 const parseCSV = (str) => {
     const arr = [];
     let quote = false;
@@ -35,16 +54,24 @@ const parseCSV = (str) => {
     return arr;
 }
 
-let arr,
-    id;
+const gen = async (element = []) => {
+    element = element[0];
+    let id = element[0];
+        kategorie = element[1],
+        artikel = element[2],
+        passform = element[3],
+        hFarbe = element[4],
+        motiv = element[5],
+        aFarbe = element[6],
+        sizes = element[7],
+        preis = element[8],
+        filePath = element[9],
+        desc = element[10],
+        content = document.getElementsByTagName("main")[0];
 
-fetch("http://localhost/database.csv")
-    .then(response => response.text())
-    .then((response) => {
-        arr = (parseCSV(response));
+    let p = document.createElement("p");
+    p.textContent = element;
+    content.append(p);
+}
 
-        let interesting = arr.filter(function (value) { return value[0] == id; });
-
-        console.log(interesting);
-    })
-    .catch(err => console.log(err));
+getCSV();
