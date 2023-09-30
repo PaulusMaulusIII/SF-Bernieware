@@ -3,10 +3,6 @@ let i = 1,
     colorSelect = document.getElementById("colorSelect"),
     typeSelect = document.getElementById("typeSelect"),
     filterList = [false, false, false],
-    kategorie = "Kleidung",
-    kleidung = ["Hoodie", "Jacke", "T-Shirt"],
-    passform = ["Damen", "Herren", "Kinder", "Unisex"],
-    farbe = ["Weiss", "Hellbraun", "Braun", "Rosa", "Rot", "Dunkelblau", "Schwarz"],
     fileList = [],
     imgV = [],
     imgH = [];
@@ -20,114 +16,120 @@ const del = () => {
     }
 }
 
-const getFilesInDirectory = async (directoryPath) => {
+const parseCSV = (str) => {
+    const arr = [];
+    let quote = false;
+
+    for (let row = 0, col = 0, c = 0; c < str.length; c++) {
+        let cc = str[c], nc = str[c + 1];
+        arr[row] = arr[row] || [];
+        arr[row][col] = arr[row][col] || '';
+
+        if (cc == '"' && quote && nc == '"') {
+            arr[row][col] += cc; ++c; continue;
+        }
+
+        if (cc == '"') {
+            quote = !quote; continue;
+        }
+
+        if (cc == ',' && !quote) {
+            ++col; continue;
+        }
+
+        if (cc == '\r' && nc == '\n' && !quote) {
+            ++row; col = 0; ++c; continue;
+        }
+
+        if (cc == '\n' && !quote) {
+            ++row; col = 0; continue;
+        }
+        if (cc == '\r' && !quote) {
+            ++row; col = 0; continue;
+        }
+
+        arr[row][col] += cc;
+    }
+    return arr;
+}
+
+const gen = (element = []) => {
+
+    let fileAttr = []
+    filePath = element[9] + "/" + element[0];
+
+    let content = document.getElementById("content"),
+        section = document.createElement("section"),
+        a = document.createElement("a"),
+        picture = document.createElement("picture"),
+        img = document.createElement("img"),
+        p = document.createElement("p"),
+        select = document.createElement("select"),
+        optionSelect = document.createElement("option"),
+        button = document.createElement("button");
+
+    for (let e = 2; e <= 8; e++) {
+        fileAttr.push(element[e]);
+    }
+
+    section.className = "product";
+    img.className = "image";
+    p.className = "product-info info";
+    select.className = "size info";
+    select.name = "size-selection";
+    button.className = "to-cart info";
+    button.textContent = fileAttr[6];
+
+    a.href = "einzel-ansicht.html?id="+element[0];
+
     try {
-        const response = await fetch(directoryPath, { mode: "same-origin" });
-
-        if (response.ok) {
-            const html = await response.text();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-
-            const files = Array.from(doc.querySelectorAll('a')).map((a) =>
-                a.textContent.trim()
-            );
-
-            const filteredFiles = files.filter(
-                (entry) => entry !== '../' && entry !== './' && !entry.endsWith('/') && (entry.endsWith('.svg') || entry.endsWith('.jpg') || entry.endsWith('.png'))
-            );
-
-            return filteredFiles;
-        } else {
-            console.error(
-                'Error fetching directory:',
-                response.status,
-                response.statusText
-            );
-            return [];
-        }
+        img.src = filePath + "_v.jpg";
+        img.addEventListener("mouseenter", hover, false);
+        img.addEventListener("mouseover", hover, false);
+        img.addEventListener("mouseleave", exit, false);
     } catch (error) {
-        console.error('Error:', error);
-        return [];
+        console.error("Unknown");
     }
-};
+    p.textContent = element[10];
 
-const gen = async () => {
-
-    for (let i = 0; i < fileList.length; i++) {
-
-        let file = fileList[i].split("$$"),
-            fileFile = file[0],
-            filePath = file[1],
-            fileListSplit = fileFile.split(":"),
-            fileName = fileListSplit[0],
-            fileAttr = [];
-
-        for (let e = 1; e < fileListSplit.length; e++) {
-            fileAttr.push(fileListSplit[e]);
-        }
-
-        if (!fileName.endsWith("_h.jpg")) {
-
-            let content = document.getElementById("content"),
-                section = document.createElement("section"),
-                a = document.createElement("a"),
-                picture = document.createElement("picture"),
-                img = document.createElement("img"),
-                p = document.createElement("p"),
-                select = document.createElement("select"),
-                optionSelect = document.createElement("option"),
-                optionXS = document.createElement("option"),
-                optionS = document.createElement("option"),
-                optionM = document.createElement("option"),
-                optionL = document.createElement("option"),
-                optionXL = document.createElement("option"),
-                optionXXL = document.createElement("option"),
-                button = document.createElement("button");
-
-            section.className = "product";
-            img.className = "image";
-            p.className = "product-info info";
-            select.className = "size info";
-            select.name = "size-selection";
-            button.className = "to-cart info";
-            button.textContent = "Warenkorb";
-
-            a.href = "einzel-ansicht.html"
-
-            try {
-                img.src = filePath;
-                img.alt = fileAttr;
-                img.addEventListener("mouseenter", hover, false);
-                img.addEventListener("mouseover", hover, false);
-                img.addEventListener("mouseleave", exit, false);
-            } catch (error) {
-                console.error("Unknown");
-            }
-            p.textContent = fileName + "\n" + fileAttr;
-
-            for (let g = 0; g < fileAttr.length; g++) {
-                section.classList.add(fileAttr[g]);
-            }
-
-            select.append(optionSelect, optionXS, optionS, optionM, optionL, optionXL, optionXXL);
-            a.append(img);
-            picture.append(a);
-            section.append(picture, p, select, button);
-            content.append(section);
-
-            imgV.push(filePath);
-        } else {
-            imgH.push(filePath);
-        }
+    for (let g = 0; g < fileAttr.length; g++) {
+        section.classList.add(fileAttr[g]);
     }
+
+    optionSelect.textContent = "Größe auswählen";
+    let sizeString = "";
+
+    sizeString = fileAttr[5];
+
+    let sizes = sizeString.split("/"),
+        options = [];
+
+    for (let g = 0; g < sizes.length; g++) {
+        let option = document.createElement("option")
+        option.textContent = sizes[g];
+        option.value = sizes[g];
+        options.push(option);
+    }
+
+    select.append(optionSelect,);
+    options.forEach(element => {
+        select.append(element);
+    });
+    a.append(img);
+    picture.append(a);
+    section.append(picture, p, select, button);
+    content.append(section);
+
+    imgV.push("http://localhost/" + filePath + "_v.jpg");
+    imgH.push("http://localhost/" + filePath + "_h.jpg");
+
 }
 
 let apply = async (filterBy = []) => {
 
     del();
 
-    await gen();
+    await getCSV();
 
     let content = document.getElementById("content");
 
@@ -222,32 +224,28 @@ let apply = async (filterBy = []) => {
     }
 }
 
-let createFileList = async () => {
+let getCSV = async () => {
+    await fetch("http://localhost/database.csv")
+        .then(response => response.text())
+        .then(async (response) => {
+            for (const element of parseCSV(response)) {
+                if (element[1] == "Kleidung") {
+                    await gen(element);
 
-    for (let j = 0; j < farbe.length; j++) {
-        for (let e = 0; e < passform.length; e++) {
-            for (let i = 0; i < kleidung.length; i++) {
-
-                let files = await getFilesInDirectory("http://localhost/Medien/" + kategorie + "/" + kleidung[i] + "/" + passform[e] + "/" + farbe[j]);
-
-                for (let k = 0; k < files.length; k++) {
-                    fileList.push(files[k] + ":" + kleidung[i] + ":" + passform[e] + ":" + farbe[j] + "$$" + "http://localhost/Medien/" + kategorie + "/" + kleidung[i] + "/" + passform[e] + "/" + farbe[j] + "/" + files[k]);
                 }
             }
-        }
+        })
+        .catch(err => console.log(err));
+
+    try {
+        document.getElementById("content").removeChild(document.getElementById("loading"));
+    } catch (error) {
+
     }
-
-    fileList.sort();
-
-    document.getElementById("content").removeChild(document.getElementById("loading"));
-
-    gen();
 }
 
-createFileList();
-
 let hover = (evt) => {
-    let img = evt.target
+    let img = evt.target;
     if (imgV.includes(img.src)) {
         img.src = imgH[imgV.indexOf(img.src)];
     }
@@ -259,6 +257,8 @@ let exit = (evt) => {
         img.src = imgV[imgH.indexOf(img.src)];
     }
 }
+
+getCSV();
 
 genderSelect.addEventListener("change", () => {
     apply(filterList);
