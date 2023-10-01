@@ -1,6 +1,7 @@
 let genderSelect = document.getElementById("genderSelect"),
     colorSelect = document.getElementById("colorSelect"),   //Filter (Geschlecht,Farbe,Passform)
     typeSelect = document.getElementById("typeSelect"),
+    motiveSelect = document.getElementById("motiveSelect"),
     fileList = [],  //Liste aller Produkte aus der CSV
     filteredFileList = [],
     imgV = [], //Liste aller Dateien _v.jpg 
@@ -15,7 +16,8 @@ const onLoad = async () => {
 const createOptions = () => {
     let typeOptions = [],
         genderOptions = [],
-        colorOptions = [];
+        colorOptions = [],
+        motiveOptions = [];
 
     fileList.forEach(element => {
         if (!typeOptions.includes(element[2])) {
@@ -28,6 +30,10 @@ const createOptions = () => {
 
         if (!colorOptions.includes(element[4])) {
             colorOptions.push(element[4])
+        }
+
+        if (!motiveOptions.includes(element[5])) {
+            motiveOptions.push(element[5])
         }
     });
 
@@ -50,6 +56,13 @@ const createOptions = () => {
         option.value = element;
         option.textContent = element;
         colorSelect.append(option);
+    });
+
+    motiveOptions.forEach(element => {
+        let option = document.createElement("option");
+        option.value = element;
+        option.textContent = element;
+        motiveSelect.append(option);
     });
 }
 
@@ -118,9 +131,11 @@ const filterFileList = () => {
     let typeList = [],
         genderList = [],
         colorList = [],
+        motiveList = [],
         type = typeSelect.value,
         gender = genderSelect.value,
-        color = colorSelect.value;
+        color = colorSelect.value,
+        motive = motiveSelect.value;
 
     fileList.forEach(element => {
         if (element[2] === type && type != "Alle") {
@@ -149,7 +164,14 @@ const filterFileList = () => {
             colorList.push(element);
         }
 
-        if (typeList.includes(element) && genderList.includes(element) && colorList.includes(element)) {
+        if (element[5] === motive && motive != "Alle") {
+            motiveList.push(element);
+        } else if (motive == "Alle") {
+            motiveList.push(element);
+        }
+
+
+        if (typeList.includes(element) && genderList.includes(element) && colorList.includes(element) && motiveList.includes(element)) {
             filteredFileList.push(element);
         }
     });
@@ -281,3 +303,5 @@ genderSelect.addEventListener("change", () => gen());
 colorSelect.addEventListener("change", () => gen());
 
 typeSelect.addEventListener("change", () => gen());
+
+motiveSelect.addEventListener("change", () => gen());
