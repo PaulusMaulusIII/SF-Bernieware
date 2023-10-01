@@ -1,8 +1,57 @@
 let genderSelect = document.getElementById("genderSelect"),
     colorSelect = document.getElementById("colorSelect"),   //Filter (Geschlecht,Farbe,Passform)
     typeSelect = document.getElementById("typeSelect"),
+    fileList = [],  //Liste aller Produkte aus der CSV
+    filteredFileList = [],
     imgV = [], //Liste aller Dateien _v.jpg 
     imgH = []; //Liste aller Dateien _h.jpg symmetrisch zu imgV
+
+const onLoad = async () => {
+    await getCSV();
+    createOptions();
+    gen();
+}
+
+const createOptions = () => {
+    let typeOptions = [],
+        genderOptions = [],
+        colorOptions = [];
+
+    fileList.forEach(element => {
+        if (!typeOptions.includes(element[2])) {
+            typeOptions.push(element[2])
+        }
+
+        if (!genderOptions.includes(element[3])) {
+            genderOptions.push(element[3])
+        }
+
+        if (!colorOptions.includes(element[4])) {
+            colorOptions.push(element[4])
+        }
+    });
+
+    typeOptions.forEach(element => {
+        let option = document.createElement("option");
+        option.value = element;
+        option.textContent = element;
+        typeSelect.append(option);
+    });
+
+    genderOptions.forEach(element => {
+        let option = document.createElement("option");
+        option.value = element;
+        option.textContent = element;
+        genderSelect.append(option);
+    });
+
+    colorOptions.forEach(element => {
+        let option = document.createElement("option");
+        option.value = element;
+        option.textContent = element;
+        colorSelect.append(option);
+    });
+}
 
 const parseCSV = (str /*CSV Tabelle*/) => {
     const arr = []; //Zu füllendes Array
@@ -47,7 +96,7 @@ const getCSV = async () => {
         .then(async (response) => {
             for (const element of parseCSV(response)) {
                 if (element[1] == "Kleidung") { //Alle Kleidungsstücke werden in gen gegeben
-                    await gen(element);
+                    fileList.push(element);
                 }
             }
         })
@@ -60,90 +109,142 @@ const getCSV = async () => {
     }
 }
 
-const gen = (element = [] /*Eine Reihe aus der CSV Tabelle*/) => {
+const filterFileList = () => {
 
-    let fileAttr = [], //Attribute (Farbe,Größen,etc.)
-        filePath = element[9] + "/" + element[0]; //Pfad = Pfad aus CSV + / + id (ohne datei-endung)
+    filteredFileList = [];
 
-    let content = document.getElementById("content"), //Parent div die mit den Produkten gefüllt werden soll
-        section = document.createElement("section"), //Parent div für die einzelnen Produkte
-        a = document.createElement("a"),    //Link zu einzelansicht
-        picture = document.createElement("picture"),    //Beinhaltet das Bild
-        img = document.createElement("img"),    //Produktfoto
-        p = document.createElement("p"),    //Produktbeschreibung
-        select = document.createElement("select"),  //Größenauswahl
-        optionSelect = document.createElement("option"),    //Platzhalter "Größe auswählen"
-        button = document.createElement("button");  //Zum Warenkorb hinzufügen Knopf
+    del();
 
-    for (let e = 2; e <= 8; e++) {
-        fileAttr.push(element[e]); //Spalte 2 bis 8 aus CSV sind Attribute
-    }
+    let typeList = [],
+        genderList = [],
+        colorList = [],
+        type = typeSelect.value,
+        gender = genderSelect.value,
+        color = colorSelect.value;
 
-    section.className = "product";
-    img.className = "image";
-    p.className = "product-info info";
-    select.className = "size info";     //Einheitliche Klassen für styling
-    select.name = "size-selection";
-    button.className = "to-cart info";
-    button.textContent = fileAttr[6]; //fileAttr[6] = Preis aus CSV
+    fileList.forEach(element => {
+        if (element[2] === type && type != "Alle") {
+            typeList.push(element);
+        } else if (type == "Alle") {
+            typeList.push(element);
+        }
 
-    a.href = "einzel-ansicht.html?id=" + element[0]; //Anchor leitet zur Einzelansicht weiter mit Produkt id aus CSV als parameter
+        if (gender != "Kinder") {
+            if ((element[3] === gender || element[3] === "Unisex") && gender != "Alle") {
+                genderList.push(element);
+            } else if (gender == "Alle") {
+                genderList.push(element);
+            }
+        } else {
+            if (element[3] === gender && gender != "Alle") {
+                genderList.push(element);
+            } else if (gender == "Alle") {
+                genderList.push(element);
+            }
+        }
 
-    try {
-        img.src = filePath + "_v.jpg"; //Standard bild = vorderseite (_v.jpg) //TODO Modernere Kompressionen aviv, webm, etc.
-        img.addEventListener("mouseenter", hover, false);
-        img.addEventListener("mouseover", hover, false);    //EventListener, damit Rückseite angezeigt wird wenn Nutzer über Bild hovert
-        img.addEventListener("mouseleave", exit, false);
-    } catch (error) {
-        console.error("Unknown");
-    }
-    p.textContent = element[10]; //Beschreibung aus CSV
+        if (element[4] === color && color != "Alle") {
+            colorList.push(element);
+        } else if (color == "Alle") {
+            colorList.push(element);
+        }
 
-    for (let g = 0; g < fileAttr.length; g++) {
-        section.classList.add(fileAttr[g]);     //Vergabe der Klassen nach Attributen aus CSV
-    }
-
-    optionSelect.textContent = "Größe auswählen";
-
-    let sizeString = ""; //Initialisiren, damit Datentyp String feststeht
-    sizeString = fileAttr[5]; //fileAttr[5] = Größen optionen getrennt durch "/"
-    let sizes = sizeString.split("/"), //füllt array sizes mit den möglichen Größen
-        options = []; //Initialisieren von options als array
-    for (let g = 0; g < sizes.length; g++) { //Wird für die Zahl der Größen optionen ausgeführt
-        let option = document.createElement("option"); //Erstelle ein "option" Element
-        option.textContent = sizes[g]; //Setze Inhalt
-        option.value = sizes[g];    //und Value auf korrespondierende Größe
-        options.push(option);   //Ergänzt options um das Element
-    }
-
-    select.append(optionSelect,);
-    options.forEach(element => {
-        select.append(element);
+        if (typeList.includes(element) && genderList.includes(element) && colorList.includes(element)) {
+            filteredFileList.push(element);
+        }
     });
 
-    a.append(img);
-    picture.append(a);
-    section.append(picture, p, select, button);
-    content.append(section);
+    console.log(filteredFileList);
+}
 
-    /*
-    Grundlegende DOM-Struktur
-    
-    body
-    |_content
-        |_section
-            |_anchor element
-                |_picture
-                    |_img
-            |_p
-            |_select
-                |_optionSelect
-                |_...
-            |_button
-    */
+const gen = () => {
 
-    imgV.push("http://localhost/" + filePath + "_v.jpg"); //Ergänzt Bilder von Vorder- und Rückseite in entsprechende Listen um zwischen den Beiden zu wechseln
-    imgH.push("http://localhost/" + filePath + "_h.jpg");
+    filterFileList();
+
+    filteredFileList.forEach(element => {
+        let fileAttr = [], //Attribute (Farbe,Größen,etc.)
+            filePath = element[9] + "/" + element[0]; //Pfad = Pfad aus CSV + / + id (ohne datei-endung)
+
+        let content = document.getElementById("content"), //Parent div die mit den Produkten gefüllt werden soll
+            section = document.createElement("section"), //Parent div für die einzelnen Produkte
+            a = document.createElement("a"),    //Link zu einzelansicht
+            picture = document.createElement("picture"),    //Beinhaltet das Bild
+            img = document.createElement("img"),    //Produktfoto
+            p = document.createElement("p"),    //Produktbeschreibung
+            select = document.createElement("select"),  //Größenauswahl
+            optionSelect = document.createElement("option"),    //Platzhalter "Größe auswählen"
+            button = document.createElement("button");  //Zum Warenkorb hinzufügen Knopf
+
+        for (let e = 2; e <= 8; e++) {
+            fileAttr.push(element[e]); //Spalte 2 bis 8 aus CSV sind Attribute
+        }
+
+        section.className = "product";
+        img.className = "image";
+        p.className = "product-info info";
+        select.className = "size info";     //Einheitliche Klassen für styling
+        select.name = "size-selection";
+        button.className = "to-cart info";
+        button.textContent = fileAttr[6]; //fileAttr[6] = Preis aus CSV
+
+        a.href = "einzel-ansicht.html?id=" + element[0]; //Anchor leitet zur Einzelansicht weiter mit Produkt id aus CSV als parameter
+
+        try {
+            img.src = filePath + "_v.jpg"; //Standard bild = vorderseite (_v.jpg) //TODO Modernere Kompressionen aviv, webm, etc.
+            img.addEventListener("mouseenter", hover, false);
+            img.addEventListener("mouseover", hover, false);    //EventListener, damit Rückseite angezeigt wird wenn Nutzer über Bild hovert
+            img.addEventListener("mouseleave", exit, false);
+        } catch (error) {
+            console.error("Unknown");
+        }
+        p.textContent = element[10]; //Beschreibung aus CSV
+
+        for (let g = 0; g < fileAttr.length; g++) {
+            section.classList.add(fileAttr[g]);     //Vergabe der Klassen nach Attributen aus CSV
+        }
+
+        optionSelect.textContent = "Größe auswählen";
+
+        let sizeString = ""; //Initialisiren, damit Datentyp String feststeht
+        sizeString = fileAttr[5]; //fileAttr[5] = Größen optionen getrennt durch "/"
+        let sizes = sizeString.split("/"), //füllt array sizes mit den möglichen Größen
+            options = []; //Initialisieren von options als array
+        for (let g = 0; g < sizes.length; g++) { //Wird für die Zahl der Größen optionen ausgeführt
+            let option = document.createElement("option"); //Erstelle ein "option" Element
+            option.textContent = sizes[g]; //Setze Inhalt
+            option.value = sizes[g];    //und Value auf korrespondierende Größe
+            options.push(option);   //Ergänzt options um das Element
+        }
+
+        select.append(optionSelect,);
+        options.forEach(element => {
+            select.append(element);
+        });
+
+        a.append(img);
+        picture.append(a);
+        section.append(picture, p, select, button);
+        content.append(section);
+
+        /*
+        Grundlegende DOM-Struktur
+        
+        body
+        |_content
+            |_section
+                |_anchor element
+                    |_picture
+                        |_img
+                |_p
+                |_select
+                    |_optionSelect
+                    |_...
+                |_button
+        */
+
+        imgV.push("http://localhost/" + filePath + "_v.jpg"); //Ergänzt Bilder von Vorder- und Rückseite in entsprechende Listen um zwischen den Beiden zu wechseln
+        imgH.push("http://localhost/" + filePath + "_h.jpg");
+    });
 
 }
 
@@ -153,104 +254,6 @@ const del = () => {
 
     for (let el of document.querySelectorAll('.product')) {
         content.removeChild(el);    //Löscht jedes Produkt
-    }
-}
-
-const apply = async () => {
-
-    del(); //Löscht alle Produkte
-
-    await getCSV(); //Wartet bis alle Produkte generiert werden
-
-    let content = document.getElementById("content");   //content
-
-    for (let i = 0; i < 3; i++) {   //Läuft alle drei filter nacheinander durch
-        let filter = ""; //Initialisiert Filter
-
-        if (i === 0) {
-            filter = "gender";  //Filter erst nach Geschlecht
-        } else if (i === 1) {
-            filter = "color";   //Dann Farbe
-        } else if (i === 2) {
-            filter = "type";    //Dann Passform
-        }
-
-        let filterSelect = document.getElementById((filter + "Select")); //Wählt entsprechendes select elemnt aus
-
-        if (filter === "gender") {  //Für das Geschlecht
-
-            if (filterSelect.value === "Alle") {    //Wenn alle, dann
-                //Nichts
-            } else if (filterSelect.value === "Herren") { //Wenn Herren, dann nur Herren und Unisex sachen anzeigen
-                for (const el of document.querySelectorAll(".Damen")) { //Alle Damen sachen entfernen
-                    content.removeChild(el);
-                }
-                for (const el of document.querySelectorAll(".Kinder")) { //Alle Kinder sachen entferen
-                    content.removeChild(el);
-                }
-            } else if (filterSelect.value === "Damen") {
-                for (const el of document.querySelectorAll(".Herren")) {
-                    content.removeChild(el);
-                }
-                for (const el of document.querySelectorAll(".Kinder")) {
-                    content.removeChild(el);
-                }
-            } else if (filterSelect.value === "Kinder") {
-                for (const el of document.querySelectorAll(".Herren")) {
-                    content.removeChild(el);
-                }
-                for (const el of document.querySelectorAll(".Damen")) {
-                    content.removeChild(el);
-                }
-                for (const el of document.querySelectorAll(".Unisex")) {
-                    content.removeChild(el);
-                }
-            }
-        } else if (filter === "color") { //Für Farb Filter
-            let colors = ["weiß", "hBraun", "braun", "rosa", "rot", "dunkelBlau", "schwarz"],
-                Colors = ["Weiß", "Hellbraun", "Braun", "Rosa", "Rot", "Dunkelblau", "Schwarz"];
-
-            if (filterSelect.value === "Alle") {
-
-            } else {
-                for (let e = 0; e < colors.length; e++) {
-                    if (filterSelect.value === colors[e]) {
-                        for (let j = 0; j < Colors.length; j++) {
-                            for (const el of document.querySelectorAll("." + Colors[j])) {
-                                if (j !== e) {
-                                    content.removeChild(el);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        } else if (filter === "type") {
-            if (filterSelect.value === "Alle") {
-
-            } else if (filterSelect.value === "Hoodies") {
-                for (const el of document.querySelectorAll(".Jacke")) {
-                    content.removeChild(el);
-                }
-                for (const el of document.querySelectorAll(".T-Shirt")) {
-                    content.removeChild(el);
-                }
-            } else if (filterSelect.value === "Jacken") {
-                for (const el of document.querySelectorAll(".Hoodie")) {
-                    content.removeChild(el);
-                }
-                for (const el of document.querySelectorAll(".T-Shirt")) {
-                    content.removeChild(el);
-                }
-            } else if (filterSelect.value === "T-Shirts") {
-                for (const el of document.querySelectorAll(".Hoodie")) {
-                    content.removeChild(el);
-                }
-                for (const el of document.querySelectorAll(".Jacke")) {
-                    content.removeChild(el);
-                }
-            }
-        }
     }
 }
 
@@ -268,16 +271,11 @@ const exit = (evt) => {
     }
 }
 
-getCSV();
 
-genderSelect.addEventListener("change", () => {
-    apply();
-});
+onLoad();
 
-colorSelect.addEventListener("change", () => {
-    apply();
-});
+genderSelect.addEventListener("change", () => gen());
 
-typeSelect.addEventListener("change", () => {
-    apply();
-});
+colorSelect.addEventListener("change", () => gen());
+
+typeSelect.addEventListener("change", () => gen());
