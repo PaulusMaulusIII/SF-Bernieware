@@ -203,27 +203,29 @@ const gen = () => {
             section.classList.add(fileAttr[g]);     //Vergabe der Klassen nach Attributen aus CSV
         }
 
-        optionSelect.textContent = "Größe auswählen";
+        if (element[7] != "N/A") {
+            optionSelect.textContent = "Größe auswählen";
 
-        let sizeString = ""; //Initialisiren, damit Datentyp String feststeht
-        sizeString = fileAttr[5]; //fileAttr[5] = Größen optionen getrennt durch "/"
-        let sizes = sizeString.split("/"), //füllt array sizes mit den möglichen Größen
-            options = []; //Initialisieren von options als array
-        for (let g = 0; g < sizes.length; g++) { //Wird für die Zahl der Größen optionen ausgeführt
-            let option = document.createElement("option"); //Erstelle ein "option" Element
-            option.textContent = sizes[g]; //Setze Inhalt
-            option.value = sizes[g];    //und Value auf korrespondierende Größe
-            options.push(option);   //Ergänzt options um das Element
+            let sizeString = ""; //Initialisiren, damit Datentyp String feststeht
+            sizeString = fileAttr[5]; //fileAttr[5] = Größen optionen getrennt durch "/"
+            let sizes = sizeString.split("/"), //füllt array sizes mit den möglichen Größen
+                options = []; //Initialisieren von options als array
+            for (let g = 0; g < sizes.length; g++) { //Wird für die Zahl der Größen optionen ausgeführt
+                let option = document.createElement("option"); //Erstelle ein "option" Element
+                option.textContent = sizes[g]; //Setze Inhalt
+                option.value = sizes[g];    //und Value auf korrespondierende Größe
+                options.push(option);   //Ergänzt options um das Element
+                select.append(optionSelect,);
+                options.forEach(element => {
+                    select.append(element);
+                });
+                section.append(select);
+            }
         }
-
-        select.append(optionSelect,);
-        options.forEach(element => {
-            select.append(element);
-        });
 
         a.append(img);
         picture.append(a);
-        section.append(picture, p, select, button);
+        section.append(picture, p, button);
         content.append(section);
 
         /*
