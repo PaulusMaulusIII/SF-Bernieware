@@ -107,11 +107,10 @@ The code is currently divided into HTML files for the basic structure of the web
           <b>index.css:</b>
         </summary>
         <ul>
-          <li>Currently gives styling info for index.html AND einzel-ansicht.html</li>
+          <li>Currently gives styling info for index.html/li>
         </ul>
 
       ![image](https://github.com/PaulusMaulusIII/SF-Bernieware/assets/143496143/edcfcdbb-e897-4beb-811f-84d7007feaef)
-      ![image](https://github.com/PaulusMaulusIII/SF-Bernieware/assets/143496143/4774c03b-af40-4600-885c-0714fb301a5a)
 
       </details>
       <details>
@@ -123,6 +122,17 @@ The code is currently divided into HTML files for the basic structure of the web
         </ul>
 
       ![image](https://github.com/PaulusMaulusIII/SF-Bernieware/assets/143496143/39274584-6136-454e-95af-28030be93602)
+
+      </details>
+       <details>
+        <summary>
+          <b>index.css:</b>
+        </summary>
+        <ul>
+          <li>Currently gives styling info for einzel-ansicht.html</li>
+        </ul>
+
+      ![image](https://github.com/PaulusMaulusIII/SF-Bernieware/assets/143496143/4774c03b-af40-4600-885c-0714fb301a5a)
 
       </details>
 

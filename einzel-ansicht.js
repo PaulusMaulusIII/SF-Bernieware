@@ -1,3 +1,23 @@
+const openPopupButton = document.getElementById("openPopup");
+const closePopupButton = document.getElementById("closePopup");
+const overlay = document.getElementById("overlay");
+const popup = document.getElementById("popup");
+
+openPopupButton.addEventListener("click", () => {
+    overlay.style.display = "block";
+    popup.style.display = "block";
+});
+
+closePopupButton.addEventListener("click", () => {
+    overlay.style.display = "none";
+    popup.style.display = "none";
+});
+
+overlay.addEventListener("click", () => {
+    overlay.style.display = "none";
+    popup.style.display = "none";
+});
+
 const getCSV = async () => {
     let arr,
         id;
@@ -67,11 +87,10 @@ const gen = async (element = []) => {
         preis = element[8],
         filePath = element[9],
         desc = element[10],
-        content = document.getElementsByTagName("main")[0];
+        content = document.getElementsByTagName("p")[0];
 
-    let p = document.createElement("p");
-    p.textContent = element;
-    content.append(p);
+    content.textContent = element;
+
 }
 
 getCSV();
