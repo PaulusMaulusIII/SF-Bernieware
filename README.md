@@ -134,12 +134,23 @@ The code is currently divided into HTML files for the basic structure of the web
         <ul>
           <li>Give functionality to their corresponding HTML documents, only difference being the filters</li>
         </ul>
-
+            
                                             ╷->  kleidung.html -<-╷   
                                     ╷---<---|         |           |
                      getCSV -> parseCSV -> gen -> apply -> del ->-╵
                         |                   ╵-------<-------╵
           database.csv->╵
+
+      <ul>
+        <li>How it should work in the future:</li>
+      </ul>
+    
+                                                              ╷-> kleidung.html
+                                                              |
+                     getCSV -> parseCSV -> createFileList -> gen
+                        |
+          database.csv->╵
+          
                       
       </details>
       <details>
