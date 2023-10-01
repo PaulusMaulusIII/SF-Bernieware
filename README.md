@@ -4,8 +4,8 @@ It is created without the use of any libaries, framework, or code from other cod
 OpenAI's ChatGPT was used in the making of SF-Bernieware, but it's usage does not exceed inspirational purposes and is almost exclusive to the CSS part of the project.
 
 ## To-Dos and corrections
-- [ ] Improve filter logic to increase efficiency
-- [ ] Improve filter logic to increase functionality
+- [x] Improve filter logic to increase efficiency
+- [x] Improve filter logic to increase functionality
 - [ ] Change file formats to next gen formats (aviv)
 - [ ] Add alt to elements to increase accessebility
 - [ ] Add comments so that the code could maybe even be understood a hour after writing
@@ -134,24 +134,9 @@ The code is currently divided into HTML files for the basic structure of the web
         <ul>
           <li>Give functionality to their corresponding HTML documents, only difference being the filters</li>
         </ul>
-            
-                                            ╷->  kleidung.html -<-╷   
-                                    ╷---<---|         |           |
-                     getCSV -> parseCSV -> gen -> apply -> del ->-╵
-                        |                   ╵-------<-------╵
-          database.csv->╵
-
-      <ul>
-        <li>How it should work in the future:</li>
-      </ul>
-    
-                                                              ╷-> kleidung.html
-                                                              |
-                     getCSV -> parseCSV -> createFileList -> gen
-                        |
-          database.csv->╵
-          
-                      
+  
+          onLoad -> getCSV -> parseCSV -> fileList -> filterFileList -> gen
+       
       </details>
       <details>
         <summary>
