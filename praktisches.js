@@ -184,7 +184,7 @@ const gen = () => {
 
         try {
             img.src = filePath + "_v.jpg"; //Standard bild = vorderseite (_v.jpg) //TODO Modernere Kompressionen aviv, webm, etc.
-            if (element[0] > 68) {
+            if (element[11] == "j") {
                 img.addEventListener("mouseenter", hover, false);
                 img.addEventListener("mouseover", hover, false);    //EventListener, damit Rückseite angezeigt wird wenn Nutzer über Bild hovert
                 img.addEventListener("mouseleave", exit, false);
