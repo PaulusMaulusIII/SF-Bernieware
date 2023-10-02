@@ -239,6 +239,12 @@ a:hover {
     border-radius: 5px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     z-index: 2;
+    height: 80vh;
+    width: 80vw;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
 }
 
 .close-button {
@@ -246,4 +252,14 @@ a:hover {
     top: 10px;
     right: 10px;
     cursor: pointer;
+}
+
+#searchbar {
+    width: 80%;
+    padding: 1%;
+    font-size: xx-large;
+    color: var(--darkGray);
+    background-color: darkgray;
+    border-radius: 50px;
+    height: fit-content;
 }
