@@ -52,8 +52,9 @@ button {
     background-color: transparent;
     border: none;
     cursor: pointer;
+    margin: 3%;
+    clear: none;
 }
-
 .icon {
     width: 30px;
     height: 30px;
