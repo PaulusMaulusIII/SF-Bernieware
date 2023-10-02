@@ -149,7 +149,7 @@ const filterFileList = () => {
             typeList.push(element);
         }
 
-        if (gender != "Kinder") {
+        if (gender === "Herren" && gender === "Damen") {
             if ((element[3] === gender || element[3] === "Unisex") && gender != "Alle") {
                 genderList.push(element);
             } else if (gender == "Alle") {
