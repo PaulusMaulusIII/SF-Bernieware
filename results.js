@@ -104,11 +104,16 @@ const parseCSV = (str /*CSV Tabelle*/) => {
 }
 
 const getCSV = async () => {
+    let search = "";
+    const urlParams = new URLSearchParams(window.location.search);
+
+    search = urlParams.get("search");
+
     await fetch("http://localhost/database.csv") //Fetch zieht die tabelle als HTML
         .then(response => response.text()) //HTML zu String
         .then(async (response) => {
             for (const element of parseCSV(response)) {
-                if (element[1] == "Kleidung") { //Alle Kleidungsstücke werden in gen gegeben
+                if (element.includes(search)) { //Alle Kleidungsstücke werden in gen gegeben
                     fileList.push(element);
                 }
             }
