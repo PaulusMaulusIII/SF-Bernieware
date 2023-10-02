@@ -1,4 +1,5 @@
-let colorSelect = document.getElementById("colorSelect"),   //Filter (Geschlecht,Farbe,Passform)
+let genderSelect = document.getElementById("genderSelect"),
+    colorSelect = document.getElementById("colorSelect"),   //Filter (Geschlecht,Farbe,Passform)
     typeSelect = document.getElementById("typeSelect"),
     motiveSelect = document.getElementById("motiveSelect"),
     fileList = [],  //Liste aller Produkte aus der CSV
@@ -14,12 +15,17 @@ const onLoad = async () => {
 
 const createOptions = () => {
     let typeOptions = [],
+        genderOptions = [],
         colorOptions = [],
         motiveOptions = [];
 
     fileList.forEach(element => {
         if (!typeOptions.includes(element[2])) {
             typeOptions.push(element[2])
+        }
+
+        if (!genderOptions.includes(element[3])) {
+            genderOptions.push(element[3])
         }
 
         if (!colorOptions.includes(element[4])) {
@@ -36,6 +42,13 @@ const createOptions = () => {
         option.value = element;
         option.textContent = element;
         typeSelect.append(option);
+    });
+
+    genderOptions.forEach(element => {
+        let option = document.createElement("option");
+        option.value = element;
+        option.textContent = element;
+        genderSelect.append(option);
     });
 
     colorOptions.forEach(element => {
@@ -91,11 +104,16 @@ const parseCSV = (str /*CSV Tabelle*/) => {
 }
 
 const getCSV = async () => {
+    let search = "";
+    const urlParams = new URLSearchParams(window.location.search);
+
+    search = urlParams.get("search");
+
     await fetch("http://localhost/database.csv") //Fetch zieht die tabelle als HTML
         .then(response => response.text()) //HTML zu String
         .then(async (response) => {
             for (const element of parseCSV(response)) {
-                if (element[1] == "Sonstiges") { //Alle Kleidungsstücke werden in gen gegeben
+                if (element.includes(search)) { //Alle Kleidungsstücke werden in gen gegeben
                     fileList.push(element);
                 }
             }
@@ -116,9 +134,11 @@ const filterFileList = () => {
     del();
 
     let typeList = [],
+        genderList = [],
         colorList = [],
         motiveList = [],
         type = typeSelect.value,
+        gender = genderSelect.value,
         color = colorSelect.value,
         motive = motiveSelect.value;
 
@@ -127,6 +147,20 @@ const filterFileList = () => {
             typeList.push(element);
         } else if (type == "Alle") {
             typeList.push(element);
+        }
+
+        if (gender != "Kinder") {
+            if ((element[3] === gender || element[3] === "Unisex") && gender != "Alle") {
+                genderList.push(element);
+            } else if (gender == "Alle") {
+                genderList.push(element);
+            }
+        } else {
+            if (element[3] === gender && gender != "Alle") {
+                genderList.push(element);
+            } else if (gender == "Alle") {
+                genderList.push(element);
+            }
         }
 
         if (element[4] === color && color != "Alle") {
@@ -142,7 +176,7 @@ const filterFileList = () => {
         }
 
 
-        if (typeList.includes(element) && colorList.includes(element) && motiveList.includes(element)) {
+        if (typeList.includes(element) && genderList.includes(element) && colorList.includes(element) && motiveList.includes(element)) {
             filteredFileList.push(element);
         }
     });
@@ -269,6 +303,8 @@ const exit = (evt) => {
 }
 
 onLoad();
+
+genderSelect.addEventListener("change", () => gen());
 
 colorSelect.addEventListener("change", () => gen());
 

@@ -184,7 +184,7 @@ const gen = () => {
 
         try {
             img.src = filePath + "_v.jpg"; //Standard bild = vorderseite (_v.jpg) //TODO Modernere Kompressionen aviv, webm, etc.
-            if (element[0] > 68) {
+            if (element[11] == "j") {
                 img.addEventListener("mouseenter", hover, false);
                 img.addEventListener("mouseover", hover, false);    //EventListener, damit Rückseite angezeigt wird wenn Nutzer über Bild hovert
                 img.addEventListener("mouseleave", exit, false);
@@ -276,3 +276,28 @@ colorSelect.addEventListener("change", () => gen());
 typeSelect.addEventListener("change", () => gen());
 
 motiveSelect.addEventListener("change", () => gen());
+
+const openPopupButton = document.getElementById("suchen"),
+    closePopupButton = document.getElementById("closePopup"),
+    overlay = document.getElementById("overlay"),
+    popup = document.getElementById("popup"),
+    enter = document.getElementById("eingabe");
+
+openPopupButton.addEventListener("click", () => {
+    overlay.style.display = "block";
+    popup.style.display = "flex";
+});
+
+closePopupButton.addEventListener("click", () => {
+    overlay.style.display = "none";
+    popup.style.display = "none";
+});
+
+overlay.addEventListener("click", () => {
+    overlay.style.display = "none";
+    popup.style.display = "none";
+});
+
+enter.addEventListener("click", () => {
+    window.location.href = "http://localhost/results.html?search=" + document.getElementById("searchbar").value;
+})

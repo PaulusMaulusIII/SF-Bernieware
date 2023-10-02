@@ -169,11 +169,11 @@ The code is currently divided into HTML files for the basic structure of the web
           <li>This file is the result of very very <b>very</b> hard labour and includes all of the product available in the webshop, inlcuding all relevant details.</li>
         </ul>
   
-     id | kategorie | artikel | geschlecht | hFarbe       | motiv   | aFarbe | groesse      | preis | pfad                    | beschreibung
-     ---|-----------|---------|------------|--------------|---------|--------|--------------|-------|-------------------------|--------------
-      1	| Kleidung	| Hoodie	| Unisex	   | Braun	      | Haende	| Rosa	 | S/M/L/XL/XXL	| 35€	  | Medien/Kleidung/Haende	| placeholder
-      2	| Kleidung	| Hoodie	| Unisex	   | Dunkelblau	  | Haende	| Rosa	 | S/M/L/XL/XXL	| 35€	  | Medien/Kleidung/Haende	| placeholder
-      3	| Kleidung	| Hoodie	| Unisex	   | Schwarz	    | Haende	| Rosa	 | S/M/L/XL/XXL	| 35€ 	| Medien/Kleidung/Haende	| placeholder
-    ... | ...       | ...     | ...        | ...          | ...     | ...    | ...          | ...   | ...                     | ...
+     id | kategorie | artikel | geschlecht | hFarbe       | motiv   | aFarbe | groesse      | preis | pfad                    | beschreibung | rückseite
+     ---|-----------|---------|------------|--------------|---------|--------|--------------|-------|-------------------------|--------------|-----------
+      1	| Kleidung	| Hoodie	| Unisex	   | Braun	      | Haende	| Rosa	 | S/M/L/XL/XXL	| 35€	  | Medien/Kleidung/Haende	| placeholder  | j
+      2	| Kleidung	| Hoodie	| Unisex	   | Dunkelblau	  | Haende	| Rosa	 | S/M/L/XL/XXL	| 35€	  | Medien/Kleidung/Haende	| placeholder  | j
+      3	| Kleidung	| Hoodie	| Unisex	   | Schwarz	    | Haende	| Rosa	 | S/M/L/XL/XXL	| 35€ 	| Medien/Kleidung/Haende	| placeholder  | j
+    ... | ...       | ...     | ...        | ...          | ...     | ...    | ...          | ...   | ...                     | ...          | ...
 
       </details>

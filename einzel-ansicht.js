@@ -1,23 +1,3 @@
-const openPopupButton = document.getElementById("openPopup");
-const closePopupButton = document.getElementById("closePopup");
-const overlay = document.getElementById("overlay");
-const popup = document.getElementById("popup");
-
-openPopupButton.addEventListener("click", () => {
-    overlay.style.display = "block";
-    popup.style.display = "block";
-});
-
-closePopupButton.addEventListener("click", () => {
-    overlay.style.display = "none";
-    popup.style.display = "none";
-});
-
-overlay.addEventListener("click", () => {
-    overlay.style.display = "none";
-    popup.style.display = "none";
-});
-
 const getCSV = async () => {
     let arr,
         id;
@@ -94,3 +74,28 @@ const gen = async (element = []) => {
 }
 
 getCSV();
+
+const openPopupButton = document.getElementById("suchen"),
+    closePopupButton = document.getElementById("closePopup"),
+    overlay = document.getElementById("overlay"),
+    popup = document.getElementById("popup"),
+    enter = document.getElementById("eingabe");
+
+openPopupButton.addEventListener("click", () => {
+    overlay.style.display = "block";
+    popup.style.display = "flex";
+});
+
+closePopupButton.addEventListener("click", () => {
+    overlay.style.display = "none";
+    popup.style.display = "none";
+});
+
+overlay.addEventListener("click", () => {
+    overlay.style.display = "none";
+    popup.style.display = "none";
+});
+
+enter.addEventListener("click", () => {
+    window.location.href = "http://localhost/results.html?search=" + document.getElementById("searchbar").value;
+})

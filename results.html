@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>placeholder</title>
+    <title>Hauptseite</title>
     <link rel="stylesheet" href="sub.css">
 </head>
 
@@ -25,9 +25,9 @@
         </h1>
 
         <menu id="buttons">
-            <button type="button" id="button1" aria-label="Über uns" onclick="aboutUs();">
+            <button type="button" id="button1" onclick="aboutUs();">
                 <a href="http://localhost/#background">
-                    <img src="about_us.svg" srcset="" class="icon">
+                    <img src="about_us.svg" alt="" srcset="" class="icon">
                 </a>
             </button>
             <button type="button" id="suchen">
@@ -52,15 +52,24 @@
 
     <section id="filters">
 
+        <fieldset id="gender" class="filter">
+            <select name="" id="genderSelect">
+                <option value="Alle">Alle Passformen</option>
+
+            </select>
+        </fieldset>
+
         <fieldset id="color" class="filter">
             <select name="" id="colorSelect">
                 <option value="Alle">Alle Farben</option>
+
             </select>
         </fieldset>
 
         <fieldset id="type" class="filter">
             <select name="" id="typeSelect">
                 <option value="Alle">Alle Arten</option>
+
             </select>
         </fieldset>
 
@@ -87,7 +96,7 @@
 
     </footer>
 
-    <script src="praktisches.js">
+    <script src="results.js">
 
     </script>
 
