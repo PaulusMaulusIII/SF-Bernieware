@@ -25,6 +25,10 @@ const createOptions = () => {
         if (!colorOptions.includes(element[4])) {
             colorOptions.push(element[4])
         }
+
+        if (!motiveOptions.includes(element[5])) {
+            motiveOptions.push(element[5])
+        }
     });
 
     typeOptions.forEach(element => {
