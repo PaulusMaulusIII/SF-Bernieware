@@ -281,7 +281,8 @@ const openPopupButton = document.getElementById("suchen"),
     closePopupButton = document.getElementById("closePopup"),
     overlay = document.getElementById("overlay"),
     popup = document.getElementById("popup"),
-    enter = document.getElementById("eingabe");
+    enter = document.getElementById("eingabe"),
+    searchbar = document.getElementById("searchbar");
 
 openPopupButton.addEventListener("click", () => {
     overlay.style.display = "block";
@@ -300,4 +301,10 @@ overlay.addEventListener("click", () => {
 
 enter.addEventListener("click", () => {
     window.location.href = "http://localhost/results.html?search=" + document.getElementById("searchbar").value;
-})
+});
+
+searchbar.addEventListener("keypress", (evt) => {
+    if (evt.code === "Enter") {
+        window.location.href = "http://localhost/results.html?search="+document.getElementById("searchbar").value;
+    }
+});
