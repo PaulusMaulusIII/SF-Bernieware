@@ -1,10 +1,12 @@
-let colorSelect = document.getElementById("colorSelect"),   //Filter (Geschlecht,Farbe,Passform)
-    typeSelect = document.getElementById("typeSelect"),
-    motiveSelect = document.getElementById("motiveSelect"),
-    fileList = [],  //Liste aller Produkte aus der CSV
+let fileList = [],  //Liste aller Produkte aus der CSV
     filteredFileList = [],
     imgV = [], //Liste aller Dateien _v.jpg 
-    imgH = []; //Liste aller Dateien _h.jpg symmetrisch zu imgV
+    imgH = [], //Liste aller Dateien _h.jpg symmetrisch zu imgV
+    genderSelect = document.getElementById("genderSelect"),
+    colorSelect = document.getElementById("colorSelect"),
+    typeSelect = document.getElementById("typeSelect"),
+    motiveSelect = document.getElementById("motiveSelect");
+
 
 const onLoad = async () => {
     await getCSV();
@@ -14,12 +16,17 @@ const onLoad = async () => {
 
 const createOptions = () => {
     let typeOptions = [],
+        genderOptions = [],
         colorOptions = [],
         motiveOptions = [];
 
     fileList.forEach(element => {
         if (!typeOptions.includes(element[2])) {
             typeOptions.push(element[2])
+        }
+
+        if (!genderOptions.includes(element[3])) {
+            genderOptions.push(element[3])
         }
 
         if (!colorOptions.includes(element[4])) {
@@ -36,6 +43,13 @@ const createOptions = () => {
         option.value = element;
         option.textContent = element;
         typeSelect.append(option);
+    });
+
+    genderOptions.forEach(element => {
+        let option = document.createElement("option");
+        option.value = element;
+        option.textContent = element;
+        genderSelect.append(option);
     });
 
     colorOptions.forEach(element => {
@@ -91,12 +105,34 @@ const parseCSV = (str /*CSV Tabelle*/) => {
 }
 
 const getCSV = async () => {
+    let search,
+        category;
+    const urlParams = new URLSearchParams(window.location.search);
+
+    try {
+        search = urlParams.get("search");
+    } catch (error) { }
+
+    try {
+        category = urlParams.get("category");
+    } catch (error) { }
+
     await fetch("http://localhost/database.csv") //Fetch zieht die tabelle als HTML
         .then(response => response.text()) //HTML zu String
         .then(async (response) => {
-            for (const element of parseCSV(response)) {
-                if (element[1] == "Praktisches") { //Alle Kleidungsstücke werden in gen gegeben
-                    fileList.push(element);
+            if (search != null) {
+                for (const element of parseCSV(response)) {
+                    for (const el of element) {
+                        if (el.includes(search)) {
+                            fileList.push(element);
+                        }
+                    }
+                }
+            } else if (category != null) {
+                for (const element of parseCSV(response)) {
+                    if (element[1] === category) {
+                        fileList.push(element);
+                    }
                 }
             }
         })
@@ -116,9 +152,11 @@ const filterFileList = () => {
     del();
 
     let typeList = [],
+        genderList = [],
         colorList = [],
         motiveList = [],
         type = typeSelect.value,
+        gender = genderSelect.value,
         color = colorSelect.value,
         motive = motiveSelect.value;
 
@@ -127,6 +165,20 @@ const filterFileList = () => {
             typeList.push(element);
         } else if (type == "Alle") {
             typeList.push(element);
+        }
+
+        if (gender === "Herren" && gender === "Damen") {
+            if ((element[3] === gender || element[3] === "Unisex") && gender != "Alle") {
+                genderList.push(element);
+            } else if (gender == "Alle") {
+                genderList.push(element);
+            }
+        } else {
+            if (element[3] === gender && gender != "Alle") {
+                genderList.push(element);
+            } else if (gender == "Alle") {
+                genderList.push(element);
+            }
         }
 
         if (element[4] === color && color != "Alle") {
@@ -142,7 +194,7 @@ const filterFileList = () => {
         }
 
 
-        if (typeList.includes(element) && colorList.includes(element) && motiveList.includes(element)) {
+        if (typeList.includes(element) && genderList.includes(element) && colorList.includes(element) && motiveList.includes(element)) {
             filteredFileList.push(element);
         }
     });
@@ -268,43 +320,12 @@ const exit = (evt) => {
     }
 }
 
-
 onLoad();
+
+genderSelect.addEventListener("change", () => gen());
 
 colorSelect.addEventListener("change", () => gen());
 
 typeSelect.addEventListener("change", () => gen());
 
 motiveSelect.addEventListener("change", () => gen());
-
-const openPopupButton = document.getElementById("suchen"),
-    closePopupButton = document.getElementById("closePopup"),
-    overlay = document.getElementById("overlay"),
-    popup = document.getElementById("popup"),
-    enter = document.getElementById("eingabe"),
-    searchbar = document.getElementById("searchbar");
-
-openPopupButton.addEventListener("click", () => {
-    overlay.style.display = "block";
-    popup.style.display = "flex";
-});
-
-closePopupButton.addEventListener("click", () => {
-    overlay.style.display = "none";
-    popup.style.display = "none";
-});
-
-overlay.addEventListener("click", () => {
-    overlay.style.display = "none";
-    popup.style.display = "none";
-});
-
-enter.addEventListener("click", () => {
-    window.location.href = "http://localhost/results.html?search=" + document.getElementById("searchbar").value;
-});
-
-searchbar.addEventListener("keypress", (evt) => {
-    if (evt.code === "Enter") {
-        window.location.href = "http://localhost/results.html?search="+document.getElementById("searchbar").value;
-    }
-});
