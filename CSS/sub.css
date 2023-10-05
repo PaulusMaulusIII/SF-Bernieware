@@ -118,7 +118,7 @@ main {
     margin: 3px;
 }
 
-.to-cart {
+.toCart {
     grid-area: 2 / 3 / 3 / 4;
     aspect-ratio: 1.7;
     margin: 3px;

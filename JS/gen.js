@@ -229,7 +229,9 @@ const gen = () => {
         p.className = "product-info info";
         select.className = "size info";     //Einheitliche Klassen für styling
         select.name = "size-selection";
-        button.className = "to-cart info";
+        button.className = "toCart info";
+        button.id = element[0];
+        button.addEventListener("click", () => addToCart(button.id));
         button.textContent = fileAttr[6]; //fileAttr[6] = Preis aus CSV
 
         a.href = "einzel-ansicht.html?id=" + element[0]; //Anchor leitet zur Einzelansicht weiter mit Produkt id aus CSV als parameter
