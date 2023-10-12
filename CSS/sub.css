@@ -55,6 +55,7 @@ button {
     margin: 3%;
     clear: none;
 }
+
 .icon {
     width: 30px;
     height: 30px;
@@ -165,6 +166,39 @@ a:hover {
     }
 }
 
+@media (hover: none) {
+    #closeCartPopup {
+        display: block;
+    }
+
+    .popup {
+        width: 80vw;
+        height: 90vh;
+        top: 50%;
+        left: 50%;
+    }
+
+    #cartPopup {
+        width: 80vw;
+        height: 90vh;
+        top: 50%;
+        left: 50%;
+    }
+}
+
+@media (hover: hover) {
+    #closeCartPopup {
+        display: none;
+    }
+
+    #cartPopup {
+        width: 20vw;
+        height: 50vh;
+        top: 40%;
+        left: 87.5%;
+    }
+}
+
 .overlay {
     display: none;
     position: fixed;
@@ -179,20 +213,25 @@ a:hover {
 .popup {
     display: none;
     position: fixed;
-    top: 50%;
-    left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     z-index: 2;
-    height: max-content;
-    width: 80vw;
     justify-content: center;
     align-items: center;
     flex-direction: row;
     flex-wrap: nowrap;
+    overflow-y: auto;
+    width: 80vw;
+    height: max-content;
+    top: 50%;
+    left: 50%;
+}
+
+#cartPopup {
+    flex-direction: column;
 }
 
 .close-button {
@@ -210,4 +249,31 @@ a:hover {
     background-color: darkgray;
     border-radius: 50px;
     height: fit-content;
+}
+
+#cartContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    width: 18vw;
+    height: 48vh;
+}
+
+.cartItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.cartItem input {
+    width: 4vw;
+}
+
+.cartItem picture img {
+    height: 8vh;
 }
