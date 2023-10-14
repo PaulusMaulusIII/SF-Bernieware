@@ -135,7 +135,7 @@ const getCSVByID = async () => {
         .then(async (response) => {
             let preCartList = [];
 
-            for (const element of parseCSV(response)) {
+            for (const element of genCSV.parseCSV(response)) {
                 if (userCart.items.includes(element[0])) {
                     if (!preCartList.includes(element)) {
                         preCartList.push(element);
