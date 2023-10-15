@@ -38,13 +38,13 @@ SF-Bernieware is the renewal of the old redundant BRG webshop under the managmen
   
   ### JS
   - #### gen.js
-
+    
 
   - #### search.js
 
 
   - #### wagen.js
-
+  
 
   - #### einzel-ansicht.js
 
