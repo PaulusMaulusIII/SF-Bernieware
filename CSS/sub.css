@@ -2,7 +2,8 @@
     --wine: #8B0000;
     --darkGray: #444;
     --maxView: calc(100vw - (100vw - 100%));
-    --thumbInner: #ffffff;
+    --thumbInner1: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font-size='10'></text></svg>");
+    --thumbInner2: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font-size='10'></text></svg>");
     --thumbOuter: var(--darkGray);
 }
 
@@ -264,7 +265,6 @@ a:hover {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
     width: 18vw;
     height: 48vh;
 }
@@ -286,8 +286,14 @@ a:hover {
     height: 8vh;
 }
 
+.range {
+    width: 20vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .range-slider {
-    margin-top: 2.5%;
     height: 5px;
     position: relative;
     background-color: #e1e9f6;
@@ -324,9 +330,17 @@ a:hover {
     width: 20px;
     border-radius: 50%;
     border: 3px solid var(--thumbOuter);
-    background-color: var(--thumbInner);
+    background-color: white;
     pointer-events: auto;
     -webkit-appearance: none;
+}
+
+.min::-webkit-slider-thumb {
+    background-image: var(--thumbInner1);
+}
+
+.max::-webkit-slider-thumb {
+    background-image: var(--thumbInner2);
 }
 
 .range-input input::-moz-range-thumb {
@@ -334,28 +348,29 @@ a:hover {
     width: 15px;
     border-radius: 50%;
     border: 3px solid var(--thumbOuter);
-    background-color: var(--thumbInner);
     pointer-events: auto;
     -moz-appearance: none;
 }
 
-.range-price {
-    margin: 1% 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.min::-moz-range-thumb {
+    background-color: var(--thumbInner1);
 }
 
-.range-price label {
-    margin-right: 5px;
+.max::-moz-range-thumb {
+    background-color: var(--thumbInner2);
 }
 
-.range-price input {
-    width: 40px;
-    padding: 5px;
-}
+@media screen and (orientation: portrait) {
+    .range {
+        width: 75vw;
+    }
 
-.range-price input:first-of-type {
-    margin-right: 15px;
+    #filters {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filter {
+        width: 75vw;
+    }
 }

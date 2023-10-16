@@ -88,13 +88,19 @@ const genCSV = {
     },
 
     checkCSV: (column) => {
-        let filled;
+        let checkList = [];
 
         fileList.forEach(element => {
-            if (element[column] != "N/A") {
-                filled = true;
+            if (element[column] != "N/A" && !checkList.includes(element[column])) {
+                checkList.push(element[column]);
             }
         });
+
+        let filled = false;
+
+        if (checkList.length > 1) {
+            filled = true;
+        }
 
         return filled;
     },
@@ -220,14 +226,9 @@ const filter = {
             let fieldset = document.createElement("fieldset"),
                 rangeSlider = document.createElement("section"),
                 rangeInput = document.createElement("section"),
-                rangePrice = document.createElement("section"),
                 rangeSelected = document.createElement("span"),
                 range1 = document.createElement("input"),
-                range2 = document.createElement("input"),
-                number1 = document.createElement("input"),
-                number2 = document.createElement("input"),
-                label1 = document.createElement("label"),
-                label2 = document.createElement("label");
+                range2 = document.createElement("input");
 
             fieldset.classList.add("range");
 
@@ -242,32 +243,15 @@ const filter = {
                 element.type = "range";
                 element.min = genCSV.getMin(8);
                 element.max = genCSV.getMax(8);
-                element.step = ".1";
+                element.step = "1";
                 element.classList.add("priceRange");
             });
             range1.value = genCSV.getMin(8);
             range2.value = genCSV.getMax(8);
 
-            rangePrice.classList.add("range-price");
-            label1.htmlFor = "min";
-            label1.textContent = "Min";
-            number1.name = "min";
-            number1.id = "min";
-            number1.value = genCSV.getMin(8);
-            let numbers = [number1, number2];
-            numbers.forEach(element => {
-                element.type = "number";
-            });
-            label2.htmlFor = "max";
-            label2.textContent = "Max";
-            number2.name = "max";
-            number2.id = "max";
-            number2.value = genCSV.getMax(8);
-
             rangeSlider.append(rangeSelected);
             rangeInput.append(range1, range2);
-            rangePrice.append(label1, number1, label2, number2);
-            fieldset.append(rangeSlider, rangeInput, rangePrice);
+            fieldset.append(rangeSlider, rangeInput);
             filterSection.append(fieldset);
         }
     },
@@ -487,7 +471,7 @@ const sliders = {
         let rangeMin = 1;
         const range = document.querySelector(".range-selected");
         const rangeInput = document.querySelectorAll(".range-input input");
-        const rangePrice = document.querySelectorAll(".range-price input");
+        const root = document.querySelector(':root');
 
         rangeInput.forEach((input) => {
             input.addEventListener("input", (e) => {
@@ -500,8 +484,8 @@ const sliders = {
                         rangeInput[1].value = minRange + rangeMin;
                     }
                 } else {
-                    rangePrice[0].value = minRange;
-                    rangePrice[1].value = maxRange;
+                    root.style.setProperty('--thumbInner1', "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font-size='10'>" + rangeInput[0].value + "</text></svg>\")");
+                    root.style.setProperty('--thumbInner2', "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font-size='10'>" + rangeInput[1].value + "</text></svg>\")");
                     range.style.left = ((minRange - rangeInput[0].min) / (rangeInput[0].max - rangeInput[0].min)) * 100 + "%";
                     range.style.right = 100 - ((maxRange - rangeInput[1].min) / (rangeInput[1].max - rangeInput[1].min)) * 100 + "%";
                 }
@@ -512,41 +496,12 @@ const sliders = {
             });
         });
 
-        rangePrice.forEach((input) => {
-            input.addEventListener("input", (e) => {
-                let minPrice = rangePrice[0].value;
-                let maxPrice = rangePrice[1].value;
-                if (maxPrice - minPrice >= rangeMin && maxPrice <= rangeInput[1].max) {
-                    if (e.target.className === "min") {
-                        rangeInput[0].value = minPrice;
-                        range.style.left = (minPrice / rangeInput[0].max) * 100 + "%";
-                    } else {
-                        rangeInput[1].value = maxPrice;
-                        range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
-                    }
-                }
-            });
-
-            input.addEventListener("change", () => {
-                gen.gen();
-            });
-        });
-
         let minRange = parseInt(rangeInput[0].value);
         let maxRange = parseInt(rangeInput[1].value);
-        if (maxRange - minRange < rangeMin) {
-            if (e.target.className === "min") {
-                rangeInput[0].value = maxRange - rangeMin;
-            } else {
-                rangeInput[1].value = minRange + rangeMin;
-            }
-        } else {
-            rangePrice[0].value = minRange;
-            rangePrice[1].value = maxRange;
-            range.style.left = ((minRange - rangeInput[0].min) / (rangeInput[0].max - rangeInput[0].min)) * 100 + "%";
-            range.style.right = 100 - ((maxRange - rangeInput[1].min) / (rangeInput[1].max - rangeInput[1].min)) * 100 + "%";
-        }
-
+        root.style.setProperty('--thumbInner1', "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font-size='10'>" + rangeInput[0].value + "</text></svg>\")");
+        root.style.setProperty('--thumbInner2', "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font-size='10'>" + rangeInput[1].value + "</text></svg>\")");
+        range.style.left = ((minRange - rangeInput[0].min) / (rangeInput[0].max - rangeInput[0].min)) * 100 + "%";
+        range.style.right = 100 - ((maxRange - rangeInput[1].min) / (rangeInput[1].max - rangeInput[1].min)) * 100 + "%";
     },
 
     getVals: () => {
