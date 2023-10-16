@@ -97,6 +97,26 @@ const genCSV = {
         });
 
         return filled;
+    },
+
+    getMin: (column) => {
+        let sortList = [];
+
+        fileList.forEach(element => {
+            sortList.push(parseInt(element[column]));
+        });
+
+        return sortList.sort((a, b) => a - b)[0];
+    },
+
+    getMax: (column) => {
+        let sortList = [];
+
+        fileList.forEach(element => {
+            sortList.push(parseInt(element[column]));
+        });
+
+        return sortList.sort((a, b) => a - b).pop();
     }
 }
 
@@ -105,12 +125,14 @@ const filter = {
     genderFilter: false,
     colorFilter: false,
     motiveFilter: false,
+    priceFilter: false,
 
     init: () => {
         filter.typeFilter = genCSV.checkCSV(2);
         filter.genderFilter = genCSV.checkCSV(3);
         filter.colorFilter = genCSV.checkCSV(4);
         filter.motiveFilter = genCSV.checkCSV(5);
+        filter.priceFilter = genCSV.checkCSV(8);
 
         filter.createFilters();
     },
@@ -132,10 +154,14 @@ const filter = {
         if (filter.motiveFilter) {
             filter.createMotiveFilter();
         }
+
+        if (filter.priceFilter) {
+            filter.createPriceFilter();
+        }
     },
 
     createTypeFilter: () => {
-        typeSelect = filter.createFilterElement("type", "Alle Arten");
+        typeSelect = filter.createFilterElement("type", "Alle Arten", "select");
         filter.createOptions(typeSelect, 2);
         typeSelect.addEventListener("change", () => {
             gen.gen();
@@ -143,7 +169,7 @@ const filter = {
     },
 
     createGenderFilter: () => {
-        genderSelect = filter.createFilterElement("gender", "Alle Passformen");
+        genderSelect = filter.createFilterElement("gender", "Alle Passformen", "select");
         filter.createOptions(genderSelect, 3);
         genderSelect.addEventListener("change", () => {
             gen.gen();
@@ -151,7 +177,7 @@ const filter = {
     },
 
     createColorFilter: () => {
-        colorSelect = filter.createFilterElement("color", "Alle Farben")
+        colorSelect = filter.createFilterElement("color", "Alle Farben", "select")
         filter.createOptions(colorSelect, 4);
         colorSelect.addEventListener("change", () => {
             gen.gen();
@@ -159,31 +185,91 @@ const filter = {
     },
 
     createMotiveFilter: () => {
-        motiveSelect = filter.createFilterElement("motive", "Alle Motive");
+        motiveSelect = filter.createFilterElement("motive", "Alle Motive", "select");
         filter.createOptions(motiveSelect, 5);
         motiveSelect.addEventListener("change", () => {
             gen.gen();
         })
     },
 
-    createFilterElement: (filterType, optContent) => {
-        let fieldset = document.createElement("fieldset"),
-            select = document.createElement("select"),
-            option = document.createElement("option");
+    createPriceFilter: () => {
+        filter.createFilterElement("price", "Alle Preise", "range");
+        sliders.init();
+    },
 
+    createFilterElement: (filterType, optContent, type) => {
+        let fieldset = document.createElement("fieldset");
         fieldset.id = filterType;
         fieldset.classList.add("filter");
 
-        select.id = filterType + "Select";
+        if (type === "select") {
+            let select = document.createElement("select"),
+                option = document.createElement("option");
 
-        option.value = "Alle";
-        option.textContent = optContent;
+            select.id = filterType + "Select";
 
-        select.append(option);
-        fieldset.append(select);
-        filterSection.append(fieldset);
+            option.value = "Alle";
+            option.textContent = optContent;
 
-        return document.getElementById(filterType + "Select");
+            select.append(option);
+            fieldset.append(select);
+            filterSection.append(fieldset);
+
+            return document.getElementById(filterType + "Select");
+        } else if (type === "range") {
+            let fieldset = document.createElement("fieldset"),
+                rangeSlider = document.createElement("section"),
+                rangeInput = document.createElement("section"),
+                rangePrice = document.createElement("section"),
+                rangeSelected = document.createElement("span"),
+                range1 = document.createElement("input"),
+                range2 = document.createElement("input"),
+                number1 = document.createElement("input"),
+                number2 = document.createElement("input"),
+                label1 = document.createElement("label"),
+                label2 = document.createElement("label");
+
+            fieldset.classList.add("range");
+
+            rangeSlider.classList.add("range-slider");
+            rangeSelected.classList.add("range-selected");
+
+            rangeInput.classList.add("range-input");
+            range1.classList.add("min");
+            range2.classList.add("max");
+            let ranges = [range1, range2];
+            ranges.forEach(element => {
+                element.type = "range";
+                element.min = genCSV.getMin(8);
+                element.max = genCSV.getMax(8);
+                element.step = ".1";
+                element.classList.add("priceRange");
+            });
+            range1.value = genCSV.getMin(8);
+            range2.value = genCSV.getMax(8);
+
+            rangePrice.classList.add("range-price");
+            label1.htmlFor = "min";
+            label1.textContent = "Min";
+            number1.name = "min";
+            number1.id = "min";
+            number1.value = genCSV.getMin(8);
+            let numbers = [number1, number2];
+            numbers.forEach(element => {
+                element.type = "number";
+            });
+            label2.htmlFor = "max";
+            label2.textContent = "Max";
+            number2.name = "max";
+            number2.id = "max";
+            number2.value = genCSV.getMax(8);
+
+            rangeSlider.append(rangeSelected);
+            rangeInput.append(range1, range2);
+            rangePrice.append(label1, number1, label2, number2);
+            fieldset.append(rangeSlider, rangeInput, rangePrice);
+            filterSection.append(fieldset);
+        }
     },
 
     createOptions: (filterSelect, column) => {
@@ -210,11 +296,13 @@ const filter = {
             gender = "Alle",
             color = "Alle",
             motive = "Alle",
+            price = [0, 9999],
 
             typeList = [],
             genderList = [],
             colorList = [],
-            motiveList = [];
+            motiveList = [],
+            priceList = [];
 
         filteredFileList = [];
 
@@ -232,6 +320,10 @@ const filter = {
 
         if (filter.motiveFilter) {
             motive = motiveSelect.value;
+        }
+
+        if (filter.priceFilter) {
+            price = sliders.getVals();
         }
 
         gen.del();
@@ -270,8 +362,12 @@ const filter = {
                 motiveList.push(element);
             }
 
+            if ((parseInt(element[8]) >= price[0] && parseInt(element[8]) <= price[1])) {
+                priceList.push(element);
+            }
 
-            if (typeList.includes(element) && genderList.includes(element) && colorList.includes(element) && motiveList.includes(element)) {
+
+            if (typeList.includes(element) && genderList.includes(element) && colorList.includes(element) && motiveList.includes(element) && priceList.includes(element)) {
                 filteredFileList.push(element);
             }
         });
@@ -384,11 +480,78 @@ const gen = {
             content.removeChild(el);    //Löscht jedes Produkt
         }
     },
+}
 
-    onLoad: async () => {
-        await genCSV.getCSV();
-        filter.init();
-        gen.gen();
+const sliders = {
+    init: () => {
+        let rangeMin = 1;
+        const range = document.querySelector(".range-selected");
+        const rangeInput = document.querySelectorAll(".range-input input");
+        const rangePrice = document.querySelectorAll(".range-price input");
+
+        rangeInput.forEach((input) => {
+            input.addEventListener("input", (e) => {
+                let minRange = parseInt(rangeInput[0].value);
+                let maxRange = parseInt(rangeInput[1].value);
+                if (maxRange - minRange < rangeMin) {
+                    if (e.target.className === "min") {
+                        rangeInput[0].value = maxRange - rangeMin;
+                    } else {
+                        rangeInput[1].value = minRange + rangeMin;
+                    }
+                } else {
+                    rangePrice[0].value = minRange;
+                    rangePrice[1].value = maxRange;
+                    range.style.left = ((minRange - rangeInput[0].min) / (rangeInput[0].max - rangeInput[0].min)) * 100 + "%";
+                    range.style.right = 100 - ((maxRange - rangeInput[1].min) / (rangeInput[1].max - rangeInput[1].min)) * 100 + "%";
+                }
+            });
+
+            input.addEventListener("change", () => {
+                gen.gen();
+            });
+        });
+
+        rangePrice.forEach((input) => {
+            input.addEventListener("input", (e) => {
+                let minPrice = rangePrice[0].value;
+                let maxPrice = rangePrice[1].value;
+                if (maxPrice - minPrice >= rangeMin && maxPrice <= rangeInput[1].max) {
+                    if (e.target.className === "min") {
+                        rangeInput[0].value = minPrice;
+                        range.style.left = (minPrice / rangeInput[0].max) * 100 + "%";
+                    } else {
+                        rangeInput[1].value = maxPrice;
+                        range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
+                    }
+                }
+            });
+
+            input.addEventListener("change", () => {
+                gen.gen();
+            });
+        });
+
+        let minRange = parseInt(rangeInput[0].value);
+        let maxRange = parseInt(rangeInput[1].value);
+        if (maxRange - minRange < rangeMin) {
+            if (e.target.className === "min") {
+                rangeInput[0].value = maxRange - rangeMin;
+            } else {
+                rangeInput[1].value = minRange + rangeMin;
+            }
+        } else {
+            rangePrice[0].value = minRange;
+            rangePrice[1].value = maxRange;
+            range.style.left = ((minRange - rangeInput[0].min) / (rangeInput[0].max - rangeInput[0].min)) * 100 + "%";
+            range.style.right = 100 - ((maxRange - rangeInput[1].min) / (rangeInput[1].max - rangeInput[1].min)) * 100 + "%";
+        }
+
+    },
+
+    getVals: () => {
+        const rangeInput = document.querySelectorAll(".range-input input");
+        return [rangeInput[0].value, rangeInput[1].value];
     }
 }
 
@@ -406,4 +569,8 @@ const exit = (evt) => {
     }
 }
 
-gen.onLoad();
+window.onload = async () => {
+    await genCSV.getCSV();
+    filter.init();
+    gen.gen();
+}
