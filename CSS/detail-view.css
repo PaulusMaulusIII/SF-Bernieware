@@ -6,6 +6,7 @@
 
 * {
     max-width: var(--maxView);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 html {
@@ -68,79 +69,6 @@ hr {
     margin-top: .5%;
 }
 
-main {
-    display: flex;
-    flex: 1, 0, 1;
-    justify-content: center;
-    flex-direction: column;
-}
-
-article {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 10% 0 10%;
-    height: 100vh;
-    flex-direction: column;
-}
-
-.products {
-    display: flex;
-    justify-content: center;
-}
-
-.item {
-    width: 30vw;
-    aspect-ratio: 1;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    justify-content: center;
-}
-
-.item img {
-    object-fit: contain;
-    aspect-ratio: 1;
-}
-
-#product-info1,
-#product-info2,
-#product-info3 {
-    clear: both;
-    text-align: center;
-}
-
-h3 {
-    margin: 0 10% 0 10%;
-    text-align: center;
-}
-
-#info {
-    padding: 1%;
-    display: flex;
-    justify-content: center;
-    border-radius: 10px;
-}
-
-.info {
-    width: 25%;
-    display: flex;
-    flex-direction: column;
-}
-
-.infoContain {
-    display: flex;
-    justify-content: space-around;
-    padding: 0 5% 5% 5%;
-}
-
-.button {
-    border: gray solid;
-    background-color: gray;
-    border-radius: 10px;
-    padding: 1%;
-}
-
 span {
     background-color: darkgray;
     color: black;
@@ -168,52 +96,36 @@ a:hover {
     font-weight: bold;
 }
 
-@media (pointer: coarse) {
-    #background {
-        display: none;
+@media (hover: none) {
+    #closeCartPopup {
+        display: block;
     }
 
-    #additional {
-        display: none;
+    .popup {
+        width: 80vw;
+        height: 90vh;
+        top: 50%;
+        left: 50%;
     }
 
-    a:hover {
-        font-weight: normal;
-    }
-}
-
-@media screen and (orientation: landscape) {
-    .products {
-        flex-direction: row;
-        flex-wrap: nowrap;
-    }
-
-    .infoContain {
-        flex-direction: row;
+    #cartPopup {
+        width: 80vw;
+        height: 90vh;
+        top: 50%;
+        left: 50%;
     }
 }
 
-@media screen and (orientation: portrait) {
-    .products {
-        flex-direction: column;
-        flex-grow: 1;
-        justify-content: center;
-    }
-
-    #background {
+@media (hover: hover) {
+    #closeCartPopup {
         display: none;
     }
 
-    #additional {
-        display: none;
-    }
-
-    .item {
-        width: 90vw;
-    }
-
-    article {
-        height: auto;
+    #cartPopup {
+        width: 20vw;
+        height: 50vh;
+        top: 40%;
+        left: 87.5%;
     }
 }
 
@@ -231,20 +143,25 @@ a:hover {
 .popup {
     display: none;
     position: fixed;
-    top: 50%;
-    left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     z-index: 2;
-    height: max-content;
-    width: 80vw;
     justify-content: center;
     align-items: center;
     flex-direction: row;
     flex-wrap: nowrap;
+    overflow-y: auto;
+    width: 80vw;
+    height: max-content;
+    top: 50%;
+    left: 50%;
+}
+
+#cartPopup {
+    flex-direction: column;
 }
 
 .close-button {
@@ -262,4 +179,80 @@ a:hover {
     background-color: darkgray;
     border-radius: 50px;
     height: fit-content;
+}
+
+#cartContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    width: 18vw;
+    height: 48vh;
+}
+
+.cartItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.cartItem input {
+    width: 4vw;
+}
+
+.cartItem picture img {
+    height: 8vh;
+}
+
+main {
+    display: grid;
+    grid-template: 1fr / 1fr 1fr;
+    padding: 2.5%;
+}
+
+main picture {
+    height: 60vh;
+    padding-right: 2.5%;
+}
+
+main picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+main section {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+main section h2,
+main section h3,
+main section p,
+main section section {
+    margin: 1%;
+    width: 90%;
+    height: fit-content;
+}
+
+main section section select {
+    width: 23%;
+    height: 5vh;
+    margin: 1%;
+}
+
+main section button {
+    width: 30%;
+    background-color: green;
+    border-radius: 10px;
+    color: white;
+    font-size: large;
 }

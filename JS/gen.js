@@ -391,7 +391,7 @@ const gen = {
             button.addEventListener("click", () => addToCart(button.id));
             button.textContent = fileAttr[6]; //fileAttr[6] = Preis aus CSV
 
-            a.href = "einzel-ansicht.html?id=" + element[0]; //Anchor leitet zur Einzelansicht weiter mit Produkt id aus CSV als parameter
+            a.href = "detail-view.html?id=" + element[0]; //Anchor leitet zur Einzelansicht weiter mit Produkt id aus CSV als parameter
 
             try {
                 img.src = filePath + "_v.jpg"; //Standard bild = vorderseite (_v.jpg) //TODO Modernere Kompressionen aviv, webm, etc.
@@ -484,8 +484,8 @@ const sliders = {
                         rangeInput[1].value = minRange + rangeMin;
                     }
                 } else {
-                    root.style.setProperty('--thumbInner1', "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font-size='10'>" + rangeInput[0].value + "</text></svg>\")");
-                    root.style.setProperty('--thumbInner2', "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font-size='10'>" + rangeInput[1].value + "</text></svg>\")");
+                    root.style.setProperty('--thumbInner1', "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font='Arial' font-size='10'>" + rangeInput[0].value + "</text></svg>\")");
+                    root.style.setProperty('--thumbInner2', "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font='Arial' font-size='10'>" + rangeInput[1].value + "</text></svg>\")");
                     range.style.left = ((minRange - rangeInput[0].min) / (rangeInput[0].max - rangeInput[0].min)) * 100 + "%";
                     range.style.right = 100 - ((maxRange - rangeInput[1].min) / (rangeInput[1].max - rangeInput[1].min)) * 100 + "%";
                 }
@@ -498,8 +498,8 @@ const sliders = {
 
         let minRange = parseInt(rangeInput[0].value);
         let maxRange = parseInt(rangeInput[1].value);
-        root.style.setProperty('--thumbInner1', "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font-size='10'>" + rangeInput[0].value + "</text></svg>\")");
-        root.style.setProperty('--thumbInner2', "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font-size='10'>" + rangeInput[1].value + "</text></svg>\")");
+        root.style.setProperty('--thumbInner1', "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font='Arial' font-size='10'>" + rangeInput[0].value + "</text></svg>\")");
+        root.style.setProperty('--thumbInner2', "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font='Arial' font-size='10'>" + rangeInput[1].value + "</text></svg>\")");
         range.style.left = ((minRange - rangeInput[0].min) / (rangeInput[0].max - rangeInput[0].min)) * 100 + "%";
         range.style.right = 100 - ((maxRange - rangeInput[1].min) / (rangeInput[1].max - rangeInput[1].min)) * 100 + "%";
     },

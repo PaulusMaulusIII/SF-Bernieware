@@ -1,5 +1,4 @@
 const CartButton = document.getElementById("cart"),
-    toCartButtons = document.getElementsByClassName("toCart"),
     cartPopup = document.getElementById("cartPopup"),
     clearCartButton = document.getElementById("clearCartButton"),
     cartDisplay = document.getElementById("cartContent"),
