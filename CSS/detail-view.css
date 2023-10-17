@@ -210,7 +210,6 @@ a:hover {
 
 main {
     display: grid;
-    grid-template: 1fr / 1fr 1fr;
     padding: 2.5%;
 }
 
@@ -255,4 +254,16 @@ main section button {
     border-radius: 10px;
     color: white;
     font-size: large;
+}
+
+@media screen and (orientation: landscape) {
+    main {
+        grid-template: 1fr / 1fr 1fr;
+    }
+}
+
+@media screen and (orientation: portrait) {
+    main {
+        grid-template: 1fr 1fr / 1fr;
+    }
 }

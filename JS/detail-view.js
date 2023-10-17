@@ -1,5 +1,7 @@
 let interesting,
-    filteredList = [];
+    typeList = [],
+    colorList = [],
+    genderList = [];
 
 const detailCSV = {
     parseCSV: (str) => {
@@ -48,36 +50,32 @@ const detailCSV = {
                 arr = (detailCSV.parseCSV(response));
 
                 interesting = arr.filter(function (value) { return value[0] == id; })[0];
-                console.log(interesting);
             })
             .catch(err => console.log(err));
     },
 
-    checkCSV: async (column) => {
+    checkCSV: async (column, list = []) => {
         await fetch("http://localhost/database.csv") //Fetch zieht die tabelle als HTML
             .then(response => response.text()) //HTML zu String
             .then(async (response) => {
-                filteredList = [];
+                list.length = 0;
 
-                for (const element of detailCSV.parseCSV(response)) {
-                    let equal = false;
-                    for (let i = 0; i < interesting.length; i++) {
+                detailCSV.parseCSV(response).forEach(element => {
+                    equal = true;
+                    let banned = [6,7,8]
+
+                    for (let i = 1; i < interesting.length; i++) {
                         if (i != column) {
-                            if (element[i] === interesting[i]) {
-                                equal = true;
-                            }
-                        } else if (i === column) {
-                            continue;
-                        } else {
-                            equal = false;
-                            break;
+                            if (element[i] !== interesting[i] && !banned.includes(i)) {
+                                equal = false;
+                            } 
                         }
                     }
 
-                    if ((equal && element[column] != interesting[column]) && ((!filteredList.includes(element[column]) && element[column] != "N/A"))) {
-                        filteredList.push(element[column]);
+                    if (equal && (element[column] != interesting[column])) {
+                        list.push(element);
                     }
-                }
+                });
             })
             .catch(err => console.log(err));
     }
@@ -117,32 +115,51 @@ const detailGen = {
             sizeSelect.append(option);
         });
 
-        detailGen.createOptions(4, colorSelect);
-        detailGen.createOptions(2, typeSelect);
-        detailGen.createOptions(3, genderSelect);
+        detailGen.createOptions(4, colorSelect, colorList);
+        detailGen.createOptions(2, typeSelect, typeList);
+        detailGen.createOptions(3, genderSelect, genderList);
 
-        colorSelect.addEventListener("change", () => {
-            
-        })
+        colorSelect.addEventListener("change", async () => {
+            window.location = "http://localhost/detail-view.html?id=" + detailGen.getElementIDByAttr(4, colorSelect.value, colorList);
+        });
+
+        typeSelect.addEventListener("change", async () => {
+            window.location = "http://localhost/detail-view.html?id=" + detailGen.getElementIDByAttr(2, typeSelect.value, typeList);
+        });
+
+        genderSelect.addEventListener("change", async () => {
+            window.location = "http://localhost/detail-view.html?id=" + detailGen.getElementIDByAttr(3, genderSelect.value, genderList);
+        });
     },
 
-    createOptions: async (column, select) => {
-        await detailCSV.checkCSV(column);
+    createOptions: async (column, select, list = []) => {
+
+        await detailCSV.checkCSV(column, list);
 
         let option = document.createElement("option");
-        option.value = interesting[column];
-        option.textContent = interesting[column];
+            option.value = interesting[column];
+            option.textContent = interesting[column];
 
-        select.append(option);
+            select.append(option);
 
-        filteredList.forEach(element => {
+        list.forEach(element => {
             option = document.createElement("option");
 
-            option.value = element;
-            option.textContent = element;
+            option.value = element[column];
+            option.textContent = element[column];
 
             select.append(option);
         });
+    },
+
+    getElementIDByAttr: (column, attr, list = []) => {
+        let id = 0;
+        list.forEach(element => {
+            if (element[column] === attr) {
+                id = element[0];
+            }
+        });
+        return id;
     }
 }
 
