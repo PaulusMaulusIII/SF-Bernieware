@@ -65,7 +65,7 @@ const genCSV = {
                 if (search != null) {
                     for (const element of genCSV.parseCSV(response)) {
                         for (const el of element) {
-                            if (el.includes(search)) {
+                            if (el.includes(search) && !fileList.includes(element)) {
                                 fileList.push(element);
                             }
                         }
@@ -388,7 +388,7 @@ const gen = {
             select.name = "size-selection";
             button.className = "toCart info";
             button.id = element[0];
-            button.addEventListener("click", () => addToCart(button.id));
+            button.addEventListener("click", () => addToCart(button.id, select.value));
             button.textContent = fileAttr[6]; //fileAttr[6] = Preis aus CSV
 
             a.href = "detail-view.html?id=" + element[0]; //Anchor leitet zur Einzelansicht weiter mit Produkt id aus CSV als parameter

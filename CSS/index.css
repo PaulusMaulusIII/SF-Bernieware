@@ -244,10 +244,10 @@ a:hover {
     }
 
     #cartPopup {
-        width: 20vw;
+        width: 40vw;
         height: 50vh;
         top: 40%;
-        left: 87.5%;
+        left: 76%;
     }
 }
 
@@ -308,8 +308,7 @@ a:hover {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
-    width: 18vw;
+    width: max-content;
     height: 48vh;
 }
 
@@ -322,10 +321,44 @@ a:hover {
     width: 100%;
 }
 
-.cartItem input {
-    width: 4vw;
+.cartItem span,
+.cartItem fieldset span {
+    background-color: white;
+    border: none;
+    border-radius: 0;
+}
+
+.cartItem fieldset button,
+.cartItem fieldset span {
+    background-color: none;
+    border: darkgray solid 1px;
+    border-radius: 5px;
+    width: 3vw;
+    height: 3vw;
+}
+
+.cartItem fieldset span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cartItem fieldset {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    appearance: none;
+    border: none;
+}
+
+.cartItem picture {
+    width: 16vh;
+    height: 16vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .cartItem picture img {
-    height: 8vh;
+    height: 15vh;
 }

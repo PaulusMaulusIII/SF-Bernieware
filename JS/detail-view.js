@@ -62,13 +62,13 @@ const detailCSV = {
 
                 detailCSV.parseCSV(response).forEach(element => {
                     equal = true;
-                    let banned = [6,7,8]
+                    let banned = [6, 7, 8]
 
                     for (let i = 1; i < interesting.length; i++) {
                         if (i != column) {
                             if (element[i] !== interesting[i] && !banned.includes(i)) {
                                 equal = false;
-                            } 
+                            }
                         }
                     }
 
@@ -92,7 +92,8 @@ const detailGen = {
             sizeSelect = document.getElementById("sizes"),
             colorSelect = document.getElementById("colors"),
             typeSelect = document.getElementById("types"),
-            genderSelect = document.getElementById("genders");
+            genderSelect = document.getElementById("genders"),
+            selects = [colorSelect, typeSelect, genderSelect];
 
 
         img.src = "http://localhost/" + interesting[9] + "/" + interesting[0] + "_v.jpg";
@@ -100,20 +101,25 @@ const detailGen = {
         subtitle.textContent = interesting[5];
         desc.textContent = interesting[10];
         button.addEventListener("click", () => {
-            addToCart(interesting[0]);
+            addToCart(interesting[0], sizeSelect.value);
         });
 
         let sizes = "";
         sizes = interesting[7];
 
-        sizes.split("/").forEach(element => {
-            let option = document.createElement("option");
+        if (sizes != "N/A") {
+            sizes.split("/").forEach(element => {
+                let option = document.createElement("option");
 
-            option.value = element;
-            option.textContent = element;
+                option.value = element;
+                option.textContent = element;
 
-            sizeSelect.append(option);
-        });
+                sizeSelect.append(option);
+            });
+        } else {
+            sizeSelect.style.display = "none";
+        }
+
 
         detailGen.createOptions(4, colorSelect, colorList);
         detailGen.createOptions(2, typeSelect, typeList);
@@ -137,10 +143,10 @@ const detailGen = {
         await detailCSV.checkCSV(column, list);
 
         let option = document.createElement("option");
-            option.value = interesting[column];
-            option.textContent = interesting[column];
+        option.value = interesting[column];
+        option.textContent = interesting[column];
 
-            select.append(option);
+        select.append(option);
 
         list.forEach(element => {
             option = document.createElement("option");
@@ -150,6 +156,20 @@ const detailGen = {
 
             select.append(option);
         });
+
+        let listContent = [];
+        if (interesting[column] != "N/A") {
+            listContent.push(interesting[column]);
+        }
+        list.forEach(element => {
+            if (!listContent.includes(element[column]) && element[column] != "N/A") {
+                listContent.push(element[column]);
+            }
+        });
+
+        if (listContent.length < 1) {
+            select.style.display = "none";
+        }
     },
 
     getElementIDByAttr: (column, attr, list = []) => {
