@@ -137,15 +137,6 @@ main {
     border-radius: 3px;
 }
 
-.popup span {
-    background-color: darkgray;
-    color: black;
-    border: darkgray solid;
-    border-radius: 10px;
-    padding: 1%;
-    margin: 1%;
-}
-
 footer {
     background-color: var(--wine);
     color: white;
