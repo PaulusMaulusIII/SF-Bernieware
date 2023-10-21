@@ -137,6 +137,13 @@ main {
     border-radius: 3px;
 }
 
+.popup span {
+    color: black;
+    border-radius: 10px;
+    padding: 1%;
+    margin: 1%;
+}
+
 footer {
     background-color: var(--wine);
     color: white;
