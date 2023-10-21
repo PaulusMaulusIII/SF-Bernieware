@@ -92,8 +92,7 @@ const detailGen = {
             sizeSelect = document.getElementById("sizes"),
             colorSelect = document.getElementById("colors"),
             typeSelect = document.getElementById("types"),
-            genderSelect = document.getElementById("genders"),
-            selects = [colorSelect, typeSelect, genderSelect];
+            genderSelect = document.getElementById("genders");
 
 
         img.src = "http://localhost/" + interesting[9] + "/" + interesting[0] + "_v.jpg";
@@ -101,7 +100,7 @@ const detailGen = {
         subtitle.textContent = interesting[5];
         desc.textContent = interesting[10];
         button.addEventListener("click", () => {
-            addToCart(interesting[0], sizeSelect.value);
+            addToCart(interesting[0], interesting[2], sizeSelect.value, interesting[8]);
         });
 
         let sizes = "";

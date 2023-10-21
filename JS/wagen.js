@@ -12,10 +12,12 @@ let userCart = {
 }
 
 class cartItem {
-    constructor(id, size, amount) {
+    constructor(id, type, size, amount, price) {
         this.id = id;
+        this.type = type;
         this.size = size;
         this.amount = amount;
+        this.price = price;
     }
 }
 
@@ -42,7 +44,7 @@ const closePopup = () => {
     cartPopup.style.display = "none";
 }
 
-const addToCart = (id, size) => {
+const addToCart = (id, type, size, price) => {
     if (size !== "Größe auswählen") {
         let cartItems = [];
 
@@ -53,7 +55,7 @@ const addToCart = (id, size) => {
         if (cartItems.includes(id + "/" + size)) {
             userCart.items[cartItems.indexOf(id + "/" + size)].amount++;
         } else {
-            userCart.items.push(new cartItem(id, size, 1))
+            userCart.items.push(new cartItem(id, type, size, 1, price))
         }
 
         saveCartToLocalStorage();
@@ -84,6 +86,7 @@ const displayCart = async () => {
     cartDisplay.innerHTML = "";
 
     if (userCart.items.length > 0) {
+        cartDisplay.style.justifyContent = "flex-start";
         userCart.items.forEach(element => {
             const CSVElement = cartList[cartListIDs.indexOf(element.id)];
 
@@ -155,6 +158,7 @@ const displayCart = async () => {
 
         cartDisplay.insertAdjacentHTML("beforeend", "<button id = \"clearCartButton\" onclick = \"clearCart();\">Warenkorb leeren</button>");
     } else {
+        cartDisplay.style.justifyContent = "center";
         cartDisplay.innerHTML = "<p id=\"cartEmpty\">Der Warenkorb ist leer</p>";
     }
 }

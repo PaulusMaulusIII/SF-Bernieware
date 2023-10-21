@@ -42,7 +42,7 @@
 
     <section id="overlay" class="overlay"></section>
 
-    <section id="popup" class="popup">
+    <section id="searchPopup" class="popup">
         <span id="closePopup" class="close-button">&times;</span>
         <input type="text" name="searchbar" id="searchbar">
         <button id="eingabe"><img src="Medien/Magnifying_glass.svg" alt="" srcset="" class="icon"></button>
@@ -53,6 +53,24 @@
         <p>Warenkorb:</p>
         <section id="cartContent">
             <button id="clearCartButton">Korb leeren</button>
+        </section>
+        <button id="buy">Zur Kasse</button>
+    </section>
+
+    <section id="orderPopup" class="popup">
+        <span id="closeOrderPopup" class="close-button">&times;</span>
+        <h2>Bestellung</h2>
+        <hr>
+        <section id="items">
+            <table>
+                <tbody id="itemTable">
+
+                </tbody>
+            </table>
+        </section>
+        <hr>
+        <section id="sum">
+
         </section>
     </section>
 
@@ -80,15 +98,15 @@
                 </select>
 
                 <select name="" id="colors">
-                    
+
                 </select>
 
                 <select name="" id="types">
-                    
+
                 </select>
 
                 <select name="" id="genders">
-                    
+
                 </select>
             </section>
 
@@ -105,6 +123,7 @@
     <script src="JS/detail-view.js"></script>
     <script src="JS/search.js"></script>
     <script src="JS/wagen.js"></script>
+    <script src="JS/order.js"></script>
 
 </body>
 

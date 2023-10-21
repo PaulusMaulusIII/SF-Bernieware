@@ -1,7 +1,7 @@
 const openPopupButton = document.getElementById("suchen"),
     closePopupButton = document.getElementById("closePopup"),
     overlay = document.getElementById("overlay"),
-    popup = document.getElementById("popup"),
+    popup = document.getElementById("searchPopup"),
     enter = document.getElementById("eingabe"),
     searchbar = document.getElementById("searchbar");
 
@@ -18,6 +18,7 @@ closePopupButton.addEventListener("click", () => {
 overlay.addEventListener("click", () => {
     overlay.style.display = "none";
     popup.style.display = "none";
+    orderPopup.style.display = "none";
 });
 
 enter.addEventListener("click", () => {

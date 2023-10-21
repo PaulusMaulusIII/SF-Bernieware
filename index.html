@@ -42,7 +42,7 @@
 
     <section id="overlay" class="overlay"></section>
 
-    <section id="popup" class="popup">
+    <section id="searchPopup" class="popup">
         <span id="closePopup" class="close-button">&times;</span>
         <input type="text" name="searchbar" id="searchbar">
         <button id="eingabe">
@@ -55,6 +55,24 @@
         <p>Warenkorb:</p>
         <section id="cartContent">
             <button id="clearCartButton">Korb leeren</button>
+        </section>
+        <button id="buy">Zur Kasse</button>
+    </section>
+
+    <section id="orderPopup" class="popup">
+        <span id="closeOrderPopup" class="close-button">&times;</span>
+        <h2>Bestellung</h2>
+        <hr>
+        <section id="items">
+            <table>
+                <tbody id="itemTable">
+
+                </tbody>
+            </table>
+        </section>
+        <hr>
+        <section id="sum">
+
         </section>
     </section>
 
@@ -235,6 +253,7 @@
 
     <script src="JS/search.js"></script>
     <script src="JS/wagen.js"></script>
+    <script src="JS/order.js"></script>
 
 </body>
 
