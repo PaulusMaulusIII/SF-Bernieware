@@ -119,11 +119,11 @@
 	open() => void,
 	close() => void
 ## code
-		cartButton.addEventListener("mouseover", () => popupCart.open());
-		cartPopup.addEventListener("mouseleave", () => popupCart.close());
-		cartButton.addEventListener("click", () => popupCart.open());
-		closeButton.addEventListener("click", () => popupCart.close());
-		cart.loadFromLocalStorage();
+	cartButton.addEventListener("mouseover", () => popupCart.open());
+	cartPopup.addEventListener("mouseleave", () => popupCart.close());
+	cartButton.addEventListener("click", () => popupCart.open());
+	closeButton.addEventListener("click", () => popupCart.close());
+	cart.loadFromLocalStorage();
 # order.js
 ## variables
 	HTMLElement orderPopup,
@@ -134,18 +134,18 @@
 ## methods
 	displayOrder() => void
 ## code
-		orderButton.addEventListener("click", () => {
-			overlay.style.display = "block";
-			orderPopup.style.display = "flex";
-			cartPopup.style.display = "none";
-			popup.style.display = "none";
-			displayOrder();
-		});
+	orderButton.addEventListener("click", () => {
+		overlay.style.display = "block";
+		orderPopup.style.display = "flex";
+		cartPopup.style.display = "none";
+		popup.style.display = "none";
+		displayOrder();
+	});
 
-		closeOrderPopup.addEventListener("click", () => {
-			overlay.style.display = "none";
-			orderPopup.style.display = "none";
-		});
+	closeOrderPopup.addEventListener("click", () => {
+		overlay.style.display = "none";
+		orderPopup.style.display = "none";
+	});
 # search.js
 ## variables
 	HTMLElement openPopupButton,
@@ -155,28 +155,28 @@
 	HTMLElement enter,
 	HTMLElement searchbar
 ## code
-		openPopupButton.addEventListener("click", () => {
-			overlay.style.display = "block";
-			popup.style.display = "flex";
-		});
+	openPopupButton.addEventListener("click", () => {
+		overlay.style.display = "block";
+		popup.style.display = "flex";
+	});
 
-		closePopupButton.addEventListener("click", () => {
-			overlay.style.display = "none";
-			popup.style.display = "none";
-		});
+	closePopupButton.addEventListener("click", () => {
+		overlay.style.display = "none";
+		popup.style.display = "none";
+	});
 
-		overlay.addEventListener("click", () => {
-			overlay.style.display = "none";
-			popup.style.display = "none";
-			orderPopup.style.display = "none";
-		});
+	overlay.addEventListener("click", () => {
+		overlay.style.display = "none";
+		popup.style.display = "none";
+		orderPopup.style.display = "none";
+	});
 
-		enter.addEventListener("click", () => {
+	enter.addEventListener("click", () => {
+		window.location.href = "http://localhost/sub.html?search="+document.getElementById("searchbar").value;
+	});
+
+	searchbar.addEventListener("keypress", (evt) => {
+		if (evt.code === "Enter") {
 			window.location.href = "http://localhost/sub.html?search="+document.getElementById("searchbar").value;
-		});
-
-		searchbar.addEventListener("keypress", (evt) => {
-			if (evt.code === "Enter") {
-				window.location.href = "http://localhost/sub.html?search="+document.getElementById("searchbar").value;
-			}
-		});
+		}
+	});
