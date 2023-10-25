@@ -100,7 +100,7 @@ const detailGen = {
         subtitle.textContent = interesting[5];
         desc.textContent = interesting[10];
         button.addEventListener("click", () => {
-            addToCart(interesting[0], interesting[2], sizeSelect.value, interesting[8]);
+            cart.add(interesting[0], interesting[2], sizeSelect.value, interesting[8]);
         });
 
         let sizes = "";

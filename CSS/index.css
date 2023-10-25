@@ -362,6 +362,7 @@ a:hover {
 }
 
 .cartItem picture img {
+    object-fit: contain;
     height: 15vh;
 }
 
