@@ -72,10 +72,10 @@
 	getElementIDByAttr(int column, String attr, String[] list) => int
 ## methods
 	window.onload() => void
-			const urlParams = new URLSearchParams(window.location.search);
-			let id = urlParams.get("id");
-			await detailCSV.getCSV(id);
-			await detailGen.gen();
+		const urlParams = new URLSearchParams(window.location.search);
+		let id = urlParams.get("id");
+		await detailCSV.getCSV(id);
+		await detailGen.gen();
 # wagen.js
 ## variables
 	HTMLElement cartButton,
