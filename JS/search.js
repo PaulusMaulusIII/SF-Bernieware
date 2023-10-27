@@ -1,4 +1,4 @@
-const openPopupButton = document.getElementById("suchen"),
+const openPopupButton = document.getElementById("search"),
     closePopupButton = document.getElementById("closePopup"),
     overlay = document.getElementById("overlay"),
     popup = document.getElementById("searchPopup"),

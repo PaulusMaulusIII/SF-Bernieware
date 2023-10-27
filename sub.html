@@ -24,13 +24,20 @@
             Bernhards Nationales Textilien Depot GmbH CoKG
         </h1>
 
+        <section class="theme-switch-wrapper">
+            <label class="theme-switch" for="checkbox">
+                <input type="checkbox" id="checkbox" />
+                <div class="slider round"></div>
+            </label>
+        </section>
+
         <menu id="buttons">
-            <button type="button" id="button1" aria-label="Über uns" onclick="aboutUs();">
+            <button type="button" id="aboutUs" aria-label="Über uns" onclick="aboutUs();">
                 <a href="http://localhost/#background">
                     <img src="Medien/about_us.svg" srcset="" class="icon">
                 </a>
             </button>
-            <button type="button" id="suchen" aria-label="Suchen">
+            <button type="button" id="search" aria-label="Suchen">
                 <img src="Medien/Magnifying_glass.svg" srcset="" class="icon">
             </button>
             <button type="button" id="cart" aria-label="Warenkorb">
@@ -96,8 +103,9 @@
 
     <script src="JS/gen.js"></script>
     <script src="JS/search.js"></script>
-    <script src="JS/wagen.js"></script>
+    <script src="JS/cart.js"></script>
     <script src="JS/order.js"></script>
+    <script src="JS/dark-mode.js"></script>
 
 </body>
 

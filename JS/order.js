@@ -42,13 +42,14 @@ const displayOrder = () => {
             price.textContent = element.price;
             subsum.textContent = (parseInt(element.amount) * parseInt(element.price)) + "€";
 
-            sumList.push(parseInt(element.price));
+            sumList.push(parseInt(element.amount) * parseInt(element.price));
 
             item.append(amount, id, type, size, price, subsum);
             items.append(item);
         });
 
         let sumAmount = 0;
+        sum.innerHTML = "";
 
         sumList.forEach(element => {
             sumAmount += element;

@@ -4,7 +4,7 @@ let interesting,
     genderList = [];
 
 const detailCSV = {
-    parseCSV: (str) => {
+    parseCSV: str => {
         const arr = []; //Zu füllendes Array
         let quote = false; //Boolean für "Quoted fields" (Falls ein Komma in CSV in einem Wert ist muss es in Anührungszeichen angegeben werden, dies soll auch der Parser erkennen können)
 
@@ -41,7 +41,7 @@ const detailCSV = {
         return arr; //array returnen
     },
 
-    getCSV: async (id) => {
+    getCSV: async id => {
         let arr;
 
         await fetch("http://localhost/database.csv")
@@ -107,6 +107,13 @@ const detailGen = {
         sizes = interesting[7];
 
         if (sizes != "N/A") {
+            let option = document.createElement("option");
+
+            option.value = "Größe Auswählen";
+            option.textContent = "Größe Auswählen";
+
+            sizeSelect.append(option);
+
             sizes.split("/").forEach(element => {
                 let option = document.createElement("option");
 

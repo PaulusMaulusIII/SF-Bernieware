@@ -9,7 +9,7 @@ let fileList = [],  //Liste aller Produkte aus der CSV
     motiveSelect;
 
 const genCSV = {
-    parseCSV: (str) => {
+    parseCSV: str => {
         const arr = []; //Zu füllendes Array
         let quote = false; //Boolean für "Quoted fields" (Falls ein Komma in CSV in einem Wert ist muss es in Anührungszeichen angegeben werden, dies soll auch der Parser erkennen können)
 
@@ -87,7 +87,7 @@ const genCSV = {
         }
     },
 
-    checkCSV: (column) => {
+    checkCSV: column => {
         let checkList = [];
 
         fileList.forEach(element => {
@@ -105,7 +105,7 @@ const genCSV = {
         return filled;
     },
 
-    getMin: (column) => {
+    getMin: column => {
         let sortList = [];
 
         fileList.forEach(element => {
@@ -115,7 +115,7 @@ const genCSV = {
         return sortList.sort((a, b) => a - b)[0];
     },
 
-    getMax: (column) => {
+    getMax: column => {
         let sortList = [];
 
         fileList.forEach(element => {
@@ -146,61 +146,41 @@ const filter = {
     createFilters: () => {
 
         if (filter.typeFilter) {
-            filter.createTypeFilter();
+            typeSelect = filter.createFilterElement("type", "Alle Arten", "select");
+            filter.createOptions(typeSelect, 2);
+            typeSelect.addEventListener("change", () => {
+                gen.gen();
+            });
         }
 
         if (filter.genderFilter) {
-            filter.createGenderFilter();
+            genderSelect = filter.createFilterElement("gender", "Alle Passformen", "select");
+            filter.createOptions(genderSelect, 3);
+            genderSelect.addEventListener("change", () => {
+                gen.gen();
+            });
         }
 
         if (filter.colorFilter) {
-            filter.createColorFilter();
+            colorSelect = filter.createFilterElement("color", "Alle Farben", "select")
+            filter.createOptions(colorSelect, 4);
+            colorSelect.addEventListener("change", () => {
+                gen.gen();
+            });
         }
 
         if (filter.motiveFilter) {
-            filter.createMotiveFilter();
+            motiveSelect = filter.createFilterElement("motive", "Alle Motive", "select");
+            filter.createOptions(motiveSelect, 5);
+            motiveSelect.addEventListener("change", () => {
+                gen.gen();
+            });
         }
 
         if (filter.priceFilter) {
-            filter.createPriceFilter();
+            filter.createFilterElement("price", "Alle Preise", "range");
+            sliders.init();
         }
-    },
-
-    createTypeFilter: () => {
-        typeSelect = filter.createFilterElement("type", "Alle Arten", "select");
-        filter.createOptions(typeSelect, 2);
-        typeSelect.addEventListener("change", () => {
-            gen.gen();
-        });
-    },
-
-    createGenderFilter: () => {
-        genderSelect = filter.createFilterElement("gender", "Alle Passformen", "select");
-        filter.createOptions(genderSelect, 3);
-        genderSelect.addEventListener("change", () => {
-            gen.gen();
-        });
-    },
-
-    createColorFilter: () => {
-        colorSelect = filter.createFilterElement("color", "Alle Farben", "select")
-        filter.createOptions(colorSelect, 4);
-        colorSelect.addEventListener("change", () => {
-            gen.gen();
-        });
-    },
-
-    createMotiveFilter: () => {
-        motiveSelect = filter.createFilterElement("motive", "Alle Motive", "select");
-        filter.createOptions(motiveSelect, 5);
-        motiveSelect.addEventListener("change", () => {
-            gen.gen();
-        })
-    },
-
-    createPriceFilter: () => {
-        filter.createFilterElement("price", "Alle Preise", "range");
-        sliders.init();
     },
 
     createFilterElement: (filterType, optContent, type) => {
@@ -510,14 +490,14 @@ const sliders = {
     }
 }
 
-const hover = (evt) => {
+const hover = evt => {
     let img = evt.target;
     if (imgV.includes(img.src)) {
         img.src = imgH[imgV.indexOf(img.src)];
     }
 }
 
-const exit = (evt) => {
+const exit = evt => {
     let img = evt.target
     if (imgH.includes(img.src)) {
         img.src = imgV[imgH.indexOf(img.src)];

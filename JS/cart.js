@@ -109,6 +109,7 @@ const cart = {
     clear: () => {
         userCart.items = [];
         localStorage.removeItem('userCart');
+        cartDisplay.innerHTML = "";
         cart.display();
     },
 
@@ -198,7 +199,7 @@ const cart = {
 
             cart.saveToLocalStorage();
 
-            cartDisplay.insertAdjacentHTML("beforeend", "<button id = \"clearCartButton\" onclick = \"cart.clearCart();\">Warenkorb leeren</button>");
+            cartDisplay.insertAdjacentHTML("beforeend", "<button id = \"clearCartButton\" onclick = \"cart.clear();\">Warenkorb leeren</button>");
         } else {
             cartDisplay.style.justifyContent = "center";
             cartDisplay.innerHTML = "<p id=\"cartEmpty\">Der Warenkorb ist leer</p>";
