@@ -109,8 +109,8 @@ const detailGen = {
         if (sizes != "N/A") {
             let option = document.createElement("option");
 
-            option.value = "Größe Auswählen";
-            option.textContent = "Größe Auswählen";
+            option.value = "Größe auswählen";
+            option.textContent = "Größe auswählen";
 
             sizeSelect.append(option);
 
