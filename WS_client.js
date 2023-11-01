@@ -13,7 +13,7 @@ class FileRequest {
 const getPromise = () => {
     return new Promise((resolve) => {
         const listener = (message) => {
-            const {successful, } = JSON.parse(message);
+            const { successful, } = JSON.parse(message);
             if (successful) {
                 resolve();
             } else {
@@ -32,11 +32,16 @@ const sendRequest = async (file = "", method = "", data = []) => {
     await getPromise("message");
 }
 
+const modifiyFile = async (file = "", method = "", data = []) => {
+    await sendRequest(file, "UNS");
+    await sendRequest(file, method, data);
+    await sendRequest(file, "SUB");
+}
+
 ws.on("open", async () => {
     console.log("Connected to the WebSocket server");
-    await sendRequest("names.txt", "UNS");
-    await sendRequest("names.txt", "ADD", ["Auch auch ein Test", 1]);
-    await sendRequest("names.txt", "SUB");
+    await modifiyFile("names.txt", "ADD", ["Test", 0]);
+    await modifiyFile("names.txt", "CHA", ["Auch Test", 0]);
 });
 
 ws.on("message", (message) => {
