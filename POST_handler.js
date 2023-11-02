@@ -38,11 +38,9 @@ const server = http.createServer((req, res) => {
         });
         req.on("end", () => {
             const postData = JSON.parse(body);
-            const name = postData.name;
-            const id = postData.id;
-            const file = postData.file;
+            const { file, id, surname, name, course, email, items } = postData;
 
-            fs.appendFile(file, id + "\n", (err) => {
+            fs.appendFile(file, id + "\t" + surname + "\t" + name + "\t" + course + "\t" + email + "\t" + items + "\n", (err) => {
                 if (err) {
                     console.error(err);
                     res.writeHead(500, { "Content-Type": "application/json" });

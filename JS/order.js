@@ -73,12 +73,15 @@ const getID = async () => {
     return localStorage.getItem("id");
 }
 
-document.getElementById('nameForm').addEventListener('submit', async (e) => {
+document.getElementById('orderForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const file = "orders.list"
-    const surname = document.getElementById('surname').value;
-    const name = document.getElementById('name').value;
-    const items = [1, 122, 13, 35];
+    const file = "orders.tsv",
+        surname = document.getElementById('surname').value,
+        name = document.getElementById('name').value,
+        course = document.getElementById('class').value,
+        email = document.getElementById('email').value;
+    let items = [];
+    userCart.items.map(element => items.push(element.id));
     let id = await getID();
 
     console.log(id);
@@ -89,7 +92,7 @@ document.getElementById('nameForm').addEventListener('submit', async (e) => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ file: file, id: id, surname: surname, name: name, items: items })
+        body: JSON.stringify({ file: file, id: id, surname: surname, name: name, course: course, email: email, items: items })
     })
         .then(response => response.json())
         .then(data => {
@@ -143,8 +146,8 @@ const modifiyFile = async (file = "", method = "", data = []) => {
 
 ws.addEventListener("open", async () => {
     console.log("Connected to the WebSocket server");
-    await modifiyFile("orders.list", "ADD", ["Test", 0]);
-    await modifiyFile("orders.list", "CHA", ["Auch Test", 0]);
+    await modifiyFile("orders.tsv", "ADD", ["Test", 0]);
+    await modifiyFile("orders.tsv", "CHA", ["Auch Test", 0]);
 });
 
 ws.addEventListener("message", (event) => {

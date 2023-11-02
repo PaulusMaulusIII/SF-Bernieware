@@ -279,3 +279,20 @@ th {
     width: 10vw;
     text-align: center;
 }
+
+#orderForm {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+button[type="submit"] {
+    border: 2px solid var(--black);
+    background-color: var(--white);
+    border-radius: 10px;
+    padding: 2%;
+    justify-self: center;
+    margin-top: 0.5%;
+}
