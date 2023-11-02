@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/PaulusMaulusIII/SF-Bernieware/issues"
   },
-  "homepage": "https://github.com/PaulusMaulusIII/SF-Bernieware#readme"
+  "homepage": "https://github.com/PaulusMaulusIII/SF-Bernieware#readme",
+  "dependencies": {
+    "ws": "^8.14.2"
+  }
 }

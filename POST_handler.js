@@ -1,5 +1,6 @@
 const http = require("http");
 const { WebSocketServer } = require("ws");
+const crypto = require('crypto');
 const fs = require("fs");
 const port = 8080;
 
@@ -12,6 +13,24 @@ const server = http.createServer((req, res) => {
         res.writeHead(204);
         res.end();
         return;
+    } else if (req.method === "GET") {
+        const expiry = new Date(Date.now() + 31557600000).toUTCString();
+        res.setHeader("Expires", expiry);
+        console.log(expiry);
+
+        const file = "users.list";
+        const id = crypto.randomUUID();
+        fs.appendFile(file, id + "\n", (err) => {
+            if (err) {
+                console.error(err);
+                res.writeHead(500, { "Content-Type": "application/json" });
+                res.end(JSON.stringify({ success: false, id: 0 }));
+            } else {
+                console.log(`ID "${id}" saved to ${file} and sent`);
+                res.writeHead(200, { "Content-Type": "application/json" });
+                res.end(JSON.stringify({ success: true, id: id }));
+            }
+        });
     } else if (req.method === "POST" && req.url === "/submit") {
         let body = "";
         req.on("data", (data) => {
@@ -20,16 +39,18 @@ const server = http.createServer((req, res) => {
         req.on("end", () => {
             const postData = JSON.parse(body);
             const name = postData.name;
+            const id = postData.id;
+            const file = postData.file;
 
-            fs.appendFile("names.txt", name + "\n", (err) => {
+            fs.appendFile(file, id + "\n", (err) => {
                 if (err) {
                     console.error(err);
                     res.writeHead(500, { "Content-Type": "application/json" });
-                    res.end(JSON.stringify({ success: false }));
+                    res.end(JSON.stringify({ success: false, id: 0 }));
                 } else {
-                    console.log(`Name "${name}" saved to names.txt`);
+                    console.log(`ID "${id}" saved to ${file}`);
                     res.writeHead(200, { "Content-Type": "application/json" });
-                    res.end(JSON.stringify({ success: true }));
+                    res.end(JSON.stringify({ success: true, id: id }));
                 }
             });
         });
