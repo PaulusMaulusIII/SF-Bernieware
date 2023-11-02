@@ -292,7 +292,7 @@ button[type="submit"] {
     border: 2px solid var(--black);
     background-color: var(--white);
     border-radius: 10px;
-    padding: 2%;
+    padding: 1%;
     justify-self: center;
-    margin-top: 0.5%;
+    margin-top: 0.25%;
 }
