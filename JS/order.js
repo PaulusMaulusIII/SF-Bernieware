@@ -173,9 +173,9 @@ ws.addEventListener("message", (event) => {
         }
 
         console.log(orders);
-        document.getElementById("content").innerHTML = "";
+        document.getElementById("contents").innerHTML = "";
         orders.forEach(element => {
-            document.getElementById("content").innerHTML += element + "<br>";
+            document.getElementById("contents").innerHTML += element + "<br>";
         });
     } else {
         if (!successful) {
