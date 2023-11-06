@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/PaulusMaulusIII/SF-Bernieware#readme",
   "dependencies": {
+    "nodemailer": "^6.9.7",
     "ws": "^8.14.2"
   }
 }

@@ -1,5 +1,6 @@
 const http = require("http");
 const { WebSocketServer } = require("ws");
+//TODO Implement EMAIL (SMTP)
 const crypto = require('crypto');
 const fs = require("fs");
 const port = 8080;

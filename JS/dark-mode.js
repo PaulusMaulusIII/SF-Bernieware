@@ -3,7 +3,8 @@ const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"
 
 let state = localStorage.getItem("darkMode");
 
-if (state === "on") {
+
+if (state === "on" || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     root.style.setProperty('--darkGray', '#aaa');
     root.style.setProperty('--white', '#111');
     root.style.setProperty('--black', '#fff');

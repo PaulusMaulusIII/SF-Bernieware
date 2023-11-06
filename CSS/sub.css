@@ -51,6 +51,7 @@ main {
     margin: 1%;
     justify-content: center;
     height: min-content;
+    width: min-content;
 }
 
 .info {
@@ -59,8 +60,7 @@ main {
 
 .product picture {
     grid-area: 1 / 1 / 2 / 4;
-    height: calc((100vh / 3));
-    min-height: 50vh;
+    height: 50vh;
 }
 
 .image {
@@ -87,10 +87,9 @@ main {
     border-radius: 3px;
 }
 
-
 @media screen and (orientation: landscape) {
     .product {
-        flex-basis: 30%;
+        flex-basis: 20%;
     }
 }
 
@@ -196,63 +195,4 @@ main {
     .filter {
         width: 75vw;
     }
-}
-
-.theme-switch-wrapper {
-    display: flex;
-    align-items: center;
-
-    em {
-        margin-left: 10px;
-        font-size: 1rem;
-    }
-}
-
-.theme-switch {
-    display: inline-block;
-    height: 34px;
-    position: relative;
-    width: 60px;
-}
-
-.theme-switch input {
-    display: none;
-}
-
-.theme-switch .slider {
-    background-color: var(--lightGray);
-    bottom: 0;
-    cursor: pointer;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transition: .4s;
-}
-
-.theme-switch .slider:before {
-    background-color: var(--white);
-    bottom: 4px;
-    content: "";
-    height: 26px;
-    left: 4px;
-    position: absolute;
-    transition: .4s;
-    width: 26px;
-}
-
-input:checked+.slider {
-    background-color: #66bb6a;
-}
-
-input:checked+.slider:before {
-    transform: translateX(26px);
-}
-
-.theme-switch .slider.round {
-    border-radius: 34px;
-}
-
-.theme-switch .slider.round:before {
-    border-radius: 50%;
 }
