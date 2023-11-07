@@ -80,11 +80,11 @@ document.getElementById('orderForm').addEventListener('submit', async (e) => {
         name = document.getElementById('name').value,
         course = document.getElementById('class').value,
         email = document.getElementById('email').value;
-    let items = [];
-    userCart.items.map(element => items.push(element.id));
     let id = await getID();
 
     console.log(id);
+
+    let items = userCart.items.map(element => JSON.stringify(element));
 
     // Send the data to the Node.js server
     fetch('http://localhost:8080/submit', {
@@ -141,13 +141,14 @@ const sendRequest = async (file = "", method = "", data = []) => {
 };
 
 const modifiyFile = async (file = "", method = "", data = []) => {
+    await sendRequest(file, "UNS");
+    await sendRequest(file, method, data);
     await sendRequest(file, "SUB");
 };
 
 ws.addEventListener("open", async () => {
     console.log("Connected to the WebSocket server");
-    await modifiyFile("orders.tsv", "ADD", ["Test", 0]);
-    await modifiyFile("orders.tsv", "CHA", ["Auch Test", 0]);
+    await sendRequest("orders.tsv", "SUB");
 });
 
 ws.addEventListener("message", (event) => {
