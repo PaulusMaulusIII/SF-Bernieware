@@ -44,7 +44,7 @@ const detailCSV = {
     getCSV: async id => {
         let arr;
 
-        await fetch("http://localhost/database.csv")
+        await fetch("http://localhost:8080/database.csv")
             .then(response => response.text())
             .then(async (response) => {
                 arr = (detailCSV.parseCSV(response));
@@ -55,7 +55,7 @@ const detailCSV = {
     },
 
     checkCSV: async (column, list = []) => {
-        await fetch("http://localhost/database.csv") //Fetch zieht die tabelle als HTML
+        await fetch("http://localhost:8080/database.csv") //Fetch zieht die tabelle als HTML
             .then(response => response.text()) //HTML zu String
             .then(async (response) => {
                 list.length = 0;
@@ -95,7 +95,7 @@ const detailGen = {
             genderSelect = document.getElementById("genders");
 
 
-        img.src = "http://localhost/" + interesting[9] + "/" + interesting[0] + "_v.jpg";
+        img.src = interesting[9] + "/" + interesting[0] + "_v.jpg";
         title.textContent = interesting[2];
         subtitle.textContent = interesting[5];
         desc.innerHTML = interesting[10];
@@ -132,15 +132,15 @@ const detailGen = {
         detailGen.createOptions(3, genderSelect, genderList);
 
         colorSelect.addEventListener("change", async () => {
-            window.location = "http://localhost/detail-view.html?id=" + detailGen.getElementIDByAttr(4, colorSelect.value, colorList);
+            window.location = "http://localhost:8080/detail-view.html?id=" + detailGen.getElementIDByAttr(4, colorSelect.value, colorList);
         });
 
         typeSelect.addEventListener("change", async () => {
-            window.location = "http://localhost/detail-view.html?id=" + detailGen.getElementIDByAttr(2, typeSelect.value, typeList);
+            window.location = "http://localhost:8080/detail-view.html?id=" + detailGen.getElementIDByAttr(2, typeSelect.value, typeList);
         });
 
         genderSelect.addEventListener("change", async () => {
-            window.location = "http://localhost/detail-view.html?id=" + detailGen.getElementIDByAttr(3, genderSelect.value, genderList);
+            window.location = "http://localhost:8080/detail-view.html?id=" + detailGen.getElementIDByAttr(3, genderSelect.value, genderList);
         });
     },
 

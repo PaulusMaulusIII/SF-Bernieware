@@ -15,22 +15,27 @@ const server = http.createServer((req, res) => {
         res.end();
         return;
     } else if (req.method === "GET") { //Wenn eine UUID angefordert wird
-        const expiry = new Date(Date.now() + 31557600000).toUTCString();
-        res.setHeader("Expires", expiry); //Setze den Cache Control Header der Antwort auf das Jetzt + 1 Jahr
+        if (req.url === "/database.csv") {
+            res.writeHead(200, { "Content-Type": "basic" }); //Sende "erfolgreich"
+            res.end(fs.readFileSync("database.csv", "utf-8"));
+        } else {
+            const expiry = new Date(Date.now() + 31557600000).toUTCString();
+            res.setHeader("Expires", expiry); //Setze den Cache Control Header der Antwort auf das Jetzt + 1 Jahr
 
-        const file = "users.list";
-        const id = crypto.randomUUID(); //Generiert eine UUID(v4)
-        fs.appendFile(file, id + "\n", (err) => {
-            if (err) {
-                console.error(err);
-                res.writeHead(500, { "Content-Type": "application/json" }); //Falls die Datei nicht gelesen werden kann, sende Fehlermeldung
-                res.end(JSON.stringify({ success: false, id: 0 })); //Sende keine daten
-            } else {
-                console.log(`ID "${id}" saved to ${file} and sent`);
-                res.writeHead(200, { "Content-Type": "application/json" }); //Sende "erfolgreich"
-                res.end(JSON.stringify({ success: true, id: id })); //Sende UUID, die der browser im cache speichert
-            }
-        });
+            const file = "users.list";
+            const id = crypto.randomUUID(); //Generiert eine UUID(v4)
+            fs.appendFile(file, id + "\n", (err) => {
+                if (err) {
+                    console.error(err);
+                    res.writeHead(500, { "Content-Type": "application/json" }); //Falls die Datei nicht gelesen werden kann, sende Fehlermeldung
+                    res.end(JSON.stringify({ success: false, id: 0 })); //Sende keine daten
+                } else {
+                    console.log(`ID "${id}" saved to ${file} and sent`);
+                    res.writeHead(200, { "Content-Type": "application/json" }); //Sende "erfolgreich"
+                    res.end(JSON.stringify({ success: true, id: id })); //Sende UUID, die der browser im cache speichert
+                }
+            });
+        }
     } else if (req.method === "POST" && req.url === "/submit") { //Wenn eine Bestellung gespeichert werden soll
         let body = "";
         req.on("data", (data) => { //Sobald daten ankommen
