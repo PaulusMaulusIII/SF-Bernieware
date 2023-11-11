@@ -91,9 +91,10 @@ wss.on("connection", (ws) => { //Wenn ein nutzer sich verbindet
                 fs.watchFile(file, (curr, prev) => { //löst callback bei jeder änderung der datei aus
                     if (curr.mtime > prev.mtime) { //Wenn es zu einer relevanten änderung kommt
                         const content = fs.readFileSync(file, 'utf8'); //lese den neuen inhalt der datei ein
-                        let newFileSize = content.split("\n").length; //und die neue länge der datei
+                        let newFileSize = content.split("\n").length, //und die neue länge der datei
+                            sizeDiff = fileSize - newFileSize;
 
-                        if (newFileSize > fileSize) { // falls die neue datei mehr zeilen hat als die alte //FIXME: When there are additions AND changes the handler notes the changes as additions
+                        if (newFileSize > fileSize && sizeDiff == 1) { // falls die neue datei mehr zeilen hat als die alte //FIXME: When there are additions AND changes the handler notes the changes as additions
                             fileContent = fileContent.split("\n");
                             let addedContent = content.split("\n").filter(element => !fileContent.includes(element)); //Gibt uns nur die Zeilen die NICHT in der alten version vorhanden sind
                             addedContent = addedContent.map(element => [element, content.split("\n").indexOf(element)]); //ERgänzt die zeile, in der die änderungen vorkommmen
@@ -105,6 +106,10 @@ wss.on("connection", (ws) => { //Wenn ein nutzer sich verbindet
                             let deletedContent = fileContent.split("\n").filter(element => !newFileContent.includes(element)); //Gibt uns nur die zeilen die in der neuen version fehlen
                             clients.forEach((client) => {
                                 client.send(JSON.stringify({ successful: true, method: "REM", data: deletedContent })); //ERfolgreich, "Entfernt", entfernte inhalte
+                            });
+                        } else if (newFileSize > fileSize && sizeDiff > 1) {
+                            clients.forEach((client) => {
+                                client.send(JSON.stringify({ successful: true, method: "CHA", data: content })); //siehe ADD
                             });
                         } else { //Falls nur der inhalt der zeilen geändert wurde
                             fileContent = fileContent.split("\n");
