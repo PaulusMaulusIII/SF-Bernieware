@@ -383,7 +383,7 @@ const gen = {
             } catch (error) {
                 console.error("Unknown");
             }
-            p.textContent = element[10]; //Beschreibung aus CSV
+            p.innerHTML = element[10]; //Beschreibung aus CSV
 
             for (let g = 0; g < fileAttr.length; g++) {
                 section.classList.add(fileAttr[g]);     //Vergabe der Klassen nach Attributen aus CSV

@@ -98,7 +98,7 @@ const detailGen = {
         img.src = "http://localhost/" + interesting[9] + "/" + interesting[0] + "_v.jpg";
         title.textContent = interesting[2];
         subtitle.textContent = interesting[5];
-        desc.textContent = interesting[10];
+        desc.innerHTML = interesting[10];
         button.addEventListener("click", () => {
             cart.add(interesting[0], interesting[2], sizeSelect.value, interesting[8]);
         });
