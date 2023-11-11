@@ -60,7 +60,7 @@ const cartCSV = {
     },
 
     getCSV: async () => {
-        await fetch("http://localhost/database.csv") //Fetch zieht die tabelle als HTML
+        await fetch("http://localhost:8080/database.csv") //Fetch zieht die tabelle als HTML
             .then(response => response.text()) //HTML zu String
             .then(async (response) => {
                 for (const element of cartCSV.parseCSV(response)) {

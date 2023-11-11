@@ -59,9 +59,10 @@ const genCSV = {
             category = urlParams.get("category");
         } catch (error) { }
 
-        await fetch("http://localhost/database.csv") //Fetch zieht die tabelle als HTML
+        await fetch("http://localhost:8080/database.csv") //Fetch zieht die tabelle als HTML
             .then(response => response.text()) //HTML zu String
             .then(async (response) => {
+                console.log(response);
                 if (search != null) {
                     for (const element of genCSV.parseCSV(response)) {
                         for (const el of element) {
@@ -430,8 +431,8 @@ const gen = {
                     |_button
             */
 
-            imgV.push("http://localhost/" + filePath + "_v.jpg"); //Ergänzt Bilder von Vorder- und Rückseite in entsprechende Listen um zwischen den Beiden zu wechseln
-            imgH.push("http://localhost/" + filePath + "_h.jpg");
+            imgV.push(filePath + "_v.jpg"); //Ergänzt Bilder von Vorder- und Rückseite in entsprechende Listen um zwischen den Beiden zu wechseln
+            imgH.push(filePath + "_h.jpg");
         });
 
     },
