@@ -91,20 +91,21 @@ ws.addEventListener("message", (event) => {
 
         cartItems.map(element => JSON.parse(element)).map(element => {
             const { id, type, size, amount, price } = element;
-            if (!orderList.products.includes(`${id}`)) {
-                orderList.products.push([id, 1]);
+            if (orderList.products.filter(element => element.split("/")[0] == id).length == 0) {
+                orderList.products.push(`${id}/1`);
             } else {
                 orderList.products.map((element) => {
-                    if (element == [id,]) {
-                        element[1]++;
+                    if (element.split("/")[0] === id) {
+                        console.log("Working",`${id}/${element.split("/")[1]+1}`);
+                        element = `${id}/${element.split("/")[1]+1}`
                     }
                 });
             }
         });
 
-        orderList.products.sort((a, b) => a[0] - b[0]);
+        orderList.products.sort((a, b) => a.split("/")[0] - b.split("/")[0]);
         orderList.products.map(element => {
-            const [id, amount] = element;
+            const [id, amount] = element.split("/");
             let order = document.createElement("section");
 
             order.classList.add("order");

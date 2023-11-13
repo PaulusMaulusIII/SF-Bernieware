@@ -62,7 +62,7 @@ const detailCSV = {
 
                 detailCSV.parseCSV(response).forEach(element => {
                     equal = true;
-                    let banned = [6, 7, 8]
+                    let banned = [6, 7, 8, 9, 10]
 
                     for (let i = 1; i < interesting.length; i++) {
                         if (i != column) {
@@ -132,15 +132,15 @@ const detailGen = {
         detailGen.createOptions(3, genderSelect, genderList);
 
         colorSelect.addEventListener("change", async () => {
-            window.location = "http://localhost:8080/detail-view.html?id=" + detailGen.getElementIDByAttr(4, colorSelect.value, colorList);
+            window.location = "detail-view.html?id=" + detailGen.getElementIDByAttr(4, colorSelect.value, colorList);
         });
 
         typeSelect.addEventListener("change", async () => {
-            window.location = "http://localhost:8080/detail-view.html?id=" + detailGen.getElementIDByAttr(2, typeSelect.value, typeList);
+            window.location = "detail-view.html?id=" + detailGen.getElementIDByAttr(2, typeSelect.value, typeList);
         });
 
         genderSelect.addEventListener("change", async () => {
-            window.location = "http://localhost:8080/detail-view.html?id=" + detailGen.getElementIDByAttr(3, genderSelect.value, genderList);
+            window.location = "detail-view.html?id=" + detailGen.getElementIDByAttr(3, genderSelect.value, genderList);
         });
     },
 
