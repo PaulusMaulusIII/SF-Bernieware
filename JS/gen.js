@@ -353,7 +353,6 @@ const gen = {
                 a = document.createElement("a"),    //Link zu einzelansicht
                 picture = document.createElement("picture"),    //Beinhaltet das Bild
                 img = document.createElement("img"),    //Produktfoto
-                p = document.createElement("p"),    //Produktbeschreibung
                 select = document.createElement("select"),  //Größenauswahl
                 optionSelect = document.createElement("option"),    //Platzhalter "Größe auswählen"
                 button = document.createElement("button");  //Zum Warenkorb hinzufügen Knopf
@@ -364,7 +363,6 @@ const gen = {
 
             section.className = "product";
             img.className = "image";
-            p.className = "product-info info";
             select.className = "size info";     //Einheitliche Klassen für styling
             select.name = "size-selection";
             button.className = "toCart info";
@@ -384,7 +382,6 @@ const gen = {
             } catch (error) {
                 console.error("Unknown");
             }
-            p.innerHTML = element[10]; //Beschreibung aus CSV
 
             for (let g = 0; g < fileAttr.length; g++) {
                 section.classList.add(fileAttr[g]);     //Vergabe der Klassen nach Attributen aus CSV
@@ -412,7 +409,7 @@ const gen = {
 
             a.append(img);
             picture.append(a);
-            section.append(picture, p, button);
+            section.append(picture, button);
             content.append(section);
 
             /*

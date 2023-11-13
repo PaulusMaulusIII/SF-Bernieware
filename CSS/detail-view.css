@@ -46,6 +46,7 @@ main section button {
     border-radius: 10px;
     color: var(--white);
     font-size: large;
+    min-height: 10vh;
 }
 
 @media screen and (orientation: landscape) {
