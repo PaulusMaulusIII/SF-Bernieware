@@ -493,7 +493,7 @@ const sliders = {
 
 const hover = evt => {
     let img = evt.target
-    const src = img.src.split("/").filter((element, index) => index > 2).reduce((prev,curr) => prev + "/" + curr);
+    const src = img.src.split("/").filter((element, index) => index > img.src.split("/").length - 5 && index <= img.src.split("/").length).reduce((prev,curr) => prev + "/" + curr);
     if (imgV.includes(src)) {
         img.src = imgH[imgV.indexOf(src)];
     }
@@ -501,7 +501,7 @@ const hover = evt => {
 
 const exit = evt => {
     let img = evt.target
-    const src = img.src.split("/").filter((element, index) => index > 2).reduce((prev,curr) => prev + "/" + curr);
+    const src = img.src.split("/").filter((element, index) => index > img.src.split("/").length - 5 && index <= img.src.split("/").length).reduce((prev,curr) => prev + "/" + curr);
     if (imgH.includes(src)) {
         img.src = imgV[imgH.indexOf(src)];
     }

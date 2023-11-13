@@ -64,7 +64,7 @@ const displayOrder = () => {
 const getID = async () => {
     if (!localStorage.getItem("id")) {
         console.log("Working");
-        await fetch("http://localhost:8080/submit", {
+        await fetch("http://localhost:8080/uuid", {
             method: "GET"
         })
             .then(response => response.text())
@@ -88,7 +88,7 @@ document.getElementById('orderForm').addEventListener('submit', async (e) => {
     let items = userCart.items.map(element => JSON.stringify(element));
 
     // Send the data to the Node.js server
-    fetch('http://localhost:8080/uuid', {
+    fetch('http://localhost:8080/submit', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
