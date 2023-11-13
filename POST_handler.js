@@ -6,7 +6,7 @@ const fs = require("fs");
 const port = 8080;
 
 const server = http.createServer((req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "http://localhost"); //Gestattet Zugriff von der Hauptseite auf den POST Handler
+    res.setHeader("Access-Control-Allow-Origin", "*"); //Gestattet Zugriff von der Hauptseite auf den POST Handler
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE"); //Erlaubt die genannten methoden, die sonst von CORS blockiert werden
     res.setHeader("Access-Control-Allow-Headers", "Content-Type"); //Erlaubt Content-Type Header
 
