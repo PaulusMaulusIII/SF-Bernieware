@@ -354,3 +354,8 @@ input:checked+.slider:before {
 .theme-switch .slider.round:before {
     border-radius: 50%;
 }
+
+option {
+    background-color: var(--white);
+    color: var(--black);
+}

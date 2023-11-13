@@ -60,6 +60,7 @@ const displayOrder = () => {
         sum.append(sumElement);
     }
 }
+
 const getID = async () => {
     if (!localStorage.getItem("id")) {
         console.log("Working");
@@ -87,12 +88,12 @@ document.getElementById('orderForm').addEventListener('submit', async (e) => {
     let items = userCart.items.map(element => JSON.stringify(element));
 
     // Send the data to the Node.js server
-    fetch('http://localhost:8080/submit', {
+    fetch('http://localhost:8080/uuid', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ file: file, id: id, surname: surname, name: name, course: course, email: email, items: items })
+        body: JSON.stringify({ file: file, id: id, surname: surname, name: name, course: course, email: email, items: JSON.stringify({ data: items }) })
     })
         .then(response => response.json())
         .then(data => {
@@ -105,88 +106,4 @@ document.getElementById('orderForm').addEventListener('submit', async (e) => {
         .catch(error => {
             console.error('Error:', error);
         });
-});
-
-const ws = new WebSocket("ws://localhost:8080");
-let orders = [];
-
-class FileRequest {
-    constructor(file, method, data) {
-        this.file = file;
-        this.method = method;
-        this.data = data;
-    }
-}
-
-const getPromise = () => {
-    return new Promise((resolve) => {
-        const listener = (event) => {
-            const { successful } = JSON.parse(event.data);
-            if (successful) {
-                resolve();
-            } else {
-                console.error("Request failed");
-            }
-        };
-        ws.addEventListener("message", listener);
-    });
-};
-
-const sendRequest = async (file = "", method = "", data = []) => {
-    const req = new FileRequest(file, method, data);
-
-    ws.send(JSON.stringify(req));
-    console.log(`Sent: ${JSON.stringify(req)}`);
-    await getPromise();
-};
-
-const modifiyFile = async (file = "", method = "", data = []) => {
-    await sendRequest(file, "UNS");
-    await sendRequest(file, method, data);
-    await sendRequest(file, "SUB");
-};
-
-ws.addEventListener("open", async () => {
-    console.log("Connected to the WebSocket server");
-    await sendRequest("orders.tsv", "SUB");
-});
-
-ws.addEventListener("message", (event) => {
-    const messageObj = JSON.parse(event.data);
-    const { successful, method, data } = messageObj;
-
-    if (successful) {
-        console.log(`Received from server: \n${event.data}`);
-        if (method === "NEW") {
-            orders = data;
-        } else if (method === "ADD") {
-            data.forEach((element) => {
-                orders.splice(element[1], 0, element[0]);
-            });
-        } else if (method === "REM") {
-            orders = orders.filter((element) => !data.includes(element));
-        } else if (method === "CHA") {
-            data.forEach((element) => {
-                orders[element[1]] = element[0];
-            });
-        } else {
-            console.log("Request successful");
-        }
-
-        console.log(orders);
-        document.getElementById("contents").innerHTML = "";
-        orders.forEach(element => {
-            document.getElementById("contents").innerHTML += element + "<br>";
-        });
-    } else {
-        if (!successful) {
-            console.error("Request failed");
-        } else {
-            console.error("Something went wrong");
-        }
-    }
-});
-
-ws.addEventListener("close", () => {
-    console.log("Disconnected from the WebSocket server");
 });

@@ -1,10 +1,17 @@
 const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]'),
     root = document.querySelector(':root');
 
+if (localStorage.getItem("darkMode") == null) {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        localStorage.setItem("darkMode", "on");
+    } else {
+        localStorage.setItem("darkMode", "on");
+    }
+}
+
 let state = localStorage.getItem("darkMode");
 
-
-if (state === "on" || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+if (state === "on") {
     root.style.setProperty('--darkGray', '#aaa');
     root.style.setProperty('--white', '#111');
     root.style.setProperty('--black', '#fff');

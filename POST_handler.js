@@ -100,16 +100,21 @@ wss.on("connection", (ws) => { //Wenn ein nutzer sich verbindet
                             addedContent = addedContent.map(element => [element, content.split("\n").indexOf(element)]); //ERgänzt die zeile, in der die änderungen vorkommmen
                             clients.forEach((client) => { //Sende an jeden client
                                 client.send(JSON.stringify({ successful: true, method: "ADD", data: addedContent })); //Erfolgreich, "neuer Inhalt", Inhalt
+                                console.log(`Updated Client listening for changes to ${file}\n Added ${addedContent}`);
                             });
                         } else if (newFileSize < fileSize) { //Falls die alte datei länger ist als die neue
                             let newFileContent = content.split("\n");
                             let deletedContent = fileContent.split("\n").filter(element => !newFileContent.includes(element)); //Gibt uns nur die zeilen die in der neuen version fehlen
+                            deletedContent = deletedContent.map(element => [fileContent.split("\n").indexOf(element), fileContent.split("\n").indexOf(element) + 1]);
+                            console.log(deletedContent);
                             clients.forEach((client) => {
                                 client.send(JSON.stringify({ successful: true, method: "REM", data: deletedContent })); //ERfolgreich, "Entfernt", entfernte inhalte
+                                console.log(`Updated Client listening for changes to ${file}\n Removed ${deletedContent}`);
                             });
                         } else if (newFileSize > fileSize && sizeDiff > 1) {
                             clients.forEach((client) => {
                                 client.send(JSON.stringify({ successful: true, method: "CHA", data: content })); //siehe ADD
+                                console.log(`Updated Client listening for changes to ${file}`);
                             });
                         } else { //Falls nur der inhalt der zeilen geändert wurde
                             fileContent = fileContent.split("\n");
@@ -117,10 +122,8 @@ wss.on("connection", (ws) => { //Wenn ein nutzer sich verbindet
                             changedContent = changedContent.map(element => [element, content.split("\n").indexOf(element)]); //siehe ADD
                             clients.forEach((client) => {
                                 client.send(JSON.stringify({ successful: true, method: "CHA", data: changedContent })); //siehe ADD
+                                console.log(`Updated Client listening for changes to ${file}\n Changed ${changedContent}`);
                             });
-                        }
-                        if (clients.size > 0) {
-                            console.log(`Updated all clients listening for ${file}`);
                         }
                         fileSize = content.split("\n").length; //speichere jetzigen stand
                         fileContent = content;
@@ -140,7 +143,11 @@ wss.on("connection", (ws) => { //Wenn ein nutzer sich verbindet
             //TODO: remove file from watchlist
         } else if (method === "ADD") {
             const [content, line] = data;
-            orders.splice(line, 0, content);
+            while (orders.length < line) {
+                orders.push("");
+            }
+
+            orders.splice(line - 1, 0, content);
             fs.writeFileSync(file, "");
             let writer = fs.createWriteStream(file, { flags: "a" });
             orders.forEach((element, index) => {
