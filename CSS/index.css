@@ -43,9 +43,7 @@ article {
     aspect-ratio: 1;
 }
 
-#product-info1,
-#product-info2,
-#product-info3 {
+.item p {
     clear: both;
     text-align: center;
 }

@@ -6,15 +6,6 @@
     --thumbOuter: var(--darkGray);
 }
 
-header {
-    text-align: center;
-    padding: 20px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-}
-
 hr {
     color: var(--darkGray);
     width: 80%;
@@ -95,7 +86,8 @@ main {
 
 @media screen and (orientation: portrait) {
     .product {
-        flex-basis: auto;
+        flex-basis: 90%;
+        width: auto;
     }
 }
 

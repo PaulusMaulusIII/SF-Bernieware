@@ -18,7 +18,7 @@ const server = http.createServer((req, res) => {
         if (req.url === "/database.csv") {
             res.writeHead(200, { "Content-Type": "basic" }); //Sende "erfolgreich"
             res.end(fs.readFileSync("database.csv", "utf-8"));
-        } else {
+        } else if (req.url === "/uuid") {
             const expiry = new Date(Date.now() + 31557600000).toUTCString();
             res.setHeader("Expires", expiry); //Setze den Cache Control Header der Antwort auf das Jetzt + 1 Jahr
 
@@ -35,6 +35,25 @@ const server = http.createServer((req, res) => {
                     res.end(JSON.stringify({ success: true, id: id })); //Sende UUID, die der browser im cache speichert
                 }
             });
+        } else if (req.url === "/categories") {
+            let categories = fs.readdirSync("Kategorien");
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ success: true, data: categories }));
+        } else if (req.url.endsWith(".jpg")) {
+            let url = req.url.split("/");
+            url = url.filter((element, index) => index != 0);
+            url = url.reduce((prev, curr) => prev + "/" + curr);
+            if (fs.existsSync(url)) {
+                let img = fs.readFileSync(url);
+                res.writeHead(200, { "Content-Type": "image/jpeg" });
+                res.end(img);
+            } else {
+                res.writeHead(404, "Not Found");
+                res.end();
+            }
+        } else {
+            res.writeHead(404, "Not Found");
+            res.end();
         }
     } else if (req.method === "POST" && req.url === "/submit") { //Wenn eine Bestellung gespeichert werden soll
         let body = "";
