@@ -37,6 +37,7 @@ const server = http.createServer((req, res) => {
             });
         } else if (req.url === "/categories") {
             let categories = fs.readdirSync("Kategorien");
+            categories = categories.map(element => element.replaceAll("-ae-", "ä").replaceAll("-ue-", "ü").replaceAll("-oe-", "ö").replaceAll("-sz-", "ß"));
             res.writeHead(200, { "Content-Type": "application/json" });
             res.end(JSON.stringify({ success: true, data: categories }));
         } else if (req.url.endsWith(".jpg")) {

@@ -1,5 +1,5 @@
 const body = document.getElementById("orders"),
-    ws = new WebSocket("ws://localhost:8080");
+    ws = new WebSocket(settings.websocket);
 let orders = [];
 
 class FileRequest {

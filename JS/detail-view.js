@@ -46,7 +46,7 @@ const detailCSV = {
     getCSV: async id => {
         let arr;
 
-        await fetch("http://localhost:8080/database.csv")
+        await fetch(settings.backend_ip + "database.csv")
             .then(response => response.text())
             .then(async (response) => {
                 arr = (detailCSV.parseCSV(response));
@@ -57,7 +57,7 @@ const detailCSV = {
     },
 
     checkCSV: async (column, list = []) => {
-        await fetch("http://localhost:8080/database.csv") //Fetch zieht die tabelle als HTML
+        await fetch(settings.backend_ip + "database.csv") //Fetch zieht die tabelle als HTML
             .then(response => response.text()) //HTML zu String
             .then(async (response) => {
                 list.length = 0;
@@ -106,8 +106,8 @@ const detailGen = {
         });
 
         if (interesting[11] == "j") {
-            imgH.push(interesting[9] + "/" + interesting[0] + "_h.jpg");
-            imgV.push(interesting[9] + "/" + interesting[0] + "_v.jpg");
+            imgH.push("/" + interesting[9] + "/" + interesting[0] + "_h.jpg");
+            imgV.push("/" + interesting[9] + "/" + interesting[0] + "_v.jpg");
             img.addEventListener("mouseenter", hover, false);
             img.addEventListener("mouseover", hover, false);    //EventListener, damit Rückseite angezeigt wird wenn Nutzer über Bild hovert
             img.addEventListener("mouseleave", exit, false);
@@ -208,7 +208,7 @@ window.onload = async () => {
 
 const hover = evt => {
     let img = evt.target
-    const src = img.src.split("/").filter((element, index) => index > img.src.split("/").length - 5 && index <= img.src.split("/").length).reduce((prev, curr) => prev + "/" + curr);
+    const src = img.src.replace(window.location.origin, "");
     if (imgV.includes(src)) {
         img.src = imgH[imgV.indexOf(src)];
     }
@@ -216,7 +216,7 @@ const hover = evt => {
 
 const exit = evt => {
     let img = evt.target
-    const src = img.src.split("/").filter((element, index) => index > img.src.split("/").length - 5 && index <= img.src.split("/").length).reduce((prev, curr) => prev + "/" + curr);
+    const src = img.src.replace(window.location.origin, "");
     if (imgH.includes(src)) {
         img.src = imgV[imgH.indexOf(src)];
     }

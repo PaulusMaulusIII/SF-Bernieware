@@ -64,7 +64,7 @@ const displayOrder = () => {
 const getID = async () => {
     if (!localStorage.getItem("id")) {
         console.log("Working");
-        await fetch("http://localhost:8080/uuid", {
+        await fetch(settings.backend_ip + "uuid", {
             method: "GET"
         })
             .then(response => response.text())

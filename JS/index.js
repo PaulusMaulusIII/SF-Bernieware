@@ -21,11 +21,12 @@ const products = document.querySelector(".products");
 const getCategories = async () => {
     let categories = [];
     let categoryImages = [];
-    await fetch("http://localhost:8080/categories")
+    await fetch(settings.backend_ip + "categories")
         .then(response => response.text())
         .then(response => JSON.parse(response).data.map(element => {
             categories.push(element.split(".")[0]);
-            categoryImages.push("http://localhost:8080/Kategorien/"+element);
+            element = element.replaceAll("ä", "-ae-").replaceAll("ü", "-ue-").replaceAll("ö", "-oe-").replaceAll("ß", "-sz-");
+            categoryImages.push(settings.backend_ip + "Kategorien/" + element);
         }));
 
     categories.map((element, index) => {
@@ -36,13 +37,13 @@ const getCategories = async () => {
             br = document.createElement("br"),
             p = document.createElement("p");
 
-        a.href = "sub.html?category="+element;
+        a.href = "sub.html?category=" + element;
         item.classList.add("item");
         img.src = categoryImages[index];
         p.textContent = element;
 
         picture.append(img);
-        item.append(picture,br,p);
+        item.append(picture, br, p);
         a.append(item);
         products.append(a);
     });

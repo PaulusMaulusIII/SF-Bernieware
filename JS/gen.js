@@ -59,7 +59,7 @@ const genCSV = {
             category = urlParams.get("category");
         } catch (error) { }
 
-        await fetch("http://localhost:8080/database.csv") //Fetch zieht die tabelle als HTML
+        await fetch(settings.backend_ip + "database.csv") //Fetch zieht die tabelle als HTML
             .then(response => response.text()) //HTML zu String
             .then(async (response) => {
                 console.log(response);
@@ -428,8 +428,8 @@ const gen = {
                     |_button
             */
 
-            imgV.push(filePath + "_v.jpg"); //Ergänzt Bilder von Vorder- und Rückseite in entsprechende Listen um zwischen den Beiden zu wechseln
-            imgH.push(filePath + "_h.jpg");
+            imgV.push("/" + filePath + "_v.jpg"); //Ergänzt Bilder von Vorder- und Rückseite in entsprechende Listen um zwischen den Beiden zu wechseln
+            imgH.push("/" + filePath + "_h.jpg");
         });
 
     },
@@ -490,7 +490,7 @@ const sliders = {
 
 const hover = evt => {
     let img = evt.target
-    const src = img.src.split("/").filter((element, index) => index > img.src.split("/").length - 5 && index <= img.src.split("/").length).reduce((prev,curr) => prev + "/" + curr);
+    const src = img.src.replace(window.location.origin, "");
     if (imgV.includes(src)) {
         img.src = imgH[imgV.indexOf(src)];
     }
@@ -498,7 +498,7 @@ const hover = evt => {
 
 const exit = evt => {
     let img = evt.target
-    const src = img.src.split("/").filter((element, index) => index > img.src.split("/").length - 5 && index <= img.src.split("/").length).reduce((prev,curr) => prev + "/" + curr);
+    const src = img.src.replace(window.location.origin, "");
     if (imgH.includes(src)) {
         img.src = imgV[imgH.indexOf(src)];
     }
