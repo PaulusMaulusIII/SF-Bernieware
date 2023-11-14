@@ -1,7 +1,9 @@
 let interesting,
     typeList = [],
     colorList = [],
-    genderList = [];
+    genderList = [],
+    imgV = [],
+    imgH = [];
 
 const detailCSV = {
     parseCSV: str => {
@@ -103,6 +105,14 @@ const detailGen = {
             cart.add(interesting[0], interesting[2], sizeSelect.value, interesting[8]);
         });
 
+        if (interesting[11] == "j") {
+            imgH.push(interesting[9] + "/" + interesting[0] + "_h.jpg");
+            imgV.push(interesting[9] + "/" + interesting[0] + "_v.jpg");
+            img.addEventListener("mouseenter", hover, false);
+            img.addEventListener("mouseover", hover, false);    //EventListener, damit Rückseite angezeigt wird wenn Nutzer über Bild hovert
+            img.addEventListener("mouseleave", exit, false);
+        }
+
         let sizes = "";
         sizes = interesting[7];
 
@@ -194,4 +204,20 @@ window.onload = async () => {
     let id = urlParams.get("id");
     await detailCSV.getCSV(id);
     await detailGen.gen();
+}
+
+const hover = evt => {
+    let img = evt.target
+    const src = img.src.split("/").filter((element, index) => index > img.src.split("/").length - 5 && index <= img.src.split("/").length).reduce((prev, curr) => prev + "/" + curr);
+    if (imgV.includes(src)) {
+        img.src = imgH[imgV.indexOf(src)];
+    }
+}
+
+const exit = evt => {
+    let img = evt.target
+    const src = img.src.split("/").filter((element, index) => index > img.src.split("/").length - 5 && index <= img.src.split("/").length).reduce((prev, curr) => prev + "/" + curr);
+    if (imgH.includes(src)) {
+        img.src = imgV[imgH.indexOf(src)];
+    }
 }

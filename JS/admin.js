@@ -94,16 +94,16 @@ ws.addEventListener("message", (event) => {
             if (orderList.products.filter(element => element.split("/")[0] == id).length == 0) {
                 orderList.products.push(`${id}/1`);
             } else {
-                orderList.products.map((element) => {
+                orderList.products.map((element,index) => {
                     if (element.split("/")[0] === id) {
-                        console.log("Working",`${id}/${element.split("/")[1]+1}`);
-                        element = `${id}/${element.split("/")[1]+1}`
+                        console.log("Working", `${id}/${parseInt(element.split("/")[1]) + 1}`, orderList.products);
+                        orderList.products[index] = `${id}/${parseInt(element.split("/")[1]) + 1}`
                     }
                 });
             }
         });
 
-        orderList.products.sort((a, b) => a.split("/")[0] - b.split("/")[0]);
+        orderList.products.sort((a, b) => a.split("/")[1] - b.split("/")[1]);
         orderList.products.map(element => {
             const [id, amount] = element.split("/");
             let order = document.createElement("section");
