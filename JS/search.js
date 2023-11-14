@@ -22,11 +22,11 @@ overlay.addEventListener("click", () => {
 });
 
 enter.addEventListener("click", () => {
-    window.location.href = "http://localhost:8080/sub.html?search="+document.getElementById("searchbar").value;
+    window.location.href = "sub.html?search="+document.getElementById("searchbar").value;
 });
 
 searchbar.addEventListener("keypress", (evt) => {
     if (evt.code === "Enter") {
-        window.location.href = "http://localhost:8080/sub.html?search="+document.getElementById("searchbar").value;
+        window.location.href = "sub.html?search="+document.getElementById("searchbar").value;
     }
 });
