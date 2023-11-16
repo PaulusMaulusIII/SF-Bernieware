@@ -26,7 +26,7 @@ if (state === "on") {
     document.getElementById("search").getElementsByClassName("icon")[0].src = "Medien/Magnifying_glass_dark.svg";
     document.getElementById("cart").getElementsByClassName("icon")[0].src = "Medien/korb_dark.svg";
     try {
-        Array.from(document.getElementsByClassName("item")).map(element => element.style.filter = "grayscale(1)");
+        Array.from(document.querySelectorAll(".item picture img")).map(element => element.style.filter = "grayscale(1)");
     } catch (error) {
         
     }
@@ -48,7 +48,7 @@ const switchTheme = e => {
         document.getElementById("search").getElementsByClassName("icon")[0].src = "Medien/Magnifying_glass_dark.svg";
         document.getElementById("cart").getElementsByClassName("icon")[0].src = "Medien/korb_dark.svg";
         try {
-            Array.from(document.getElementsByClassName("item")).map(element => element.style.filter = "grayscale(1)");
+            Array.from(document.querySelectorAll(".item picture img")).map(element => element.style.filter = "grayscale(1)");
         } catch (error) {
             
         }
@@ -68,7 +68,7 @@ const switchTheme = e => {
         document.getElementById("search").getElementsByClassName("icon")[0].src = "Medien/Magnifying_glass.svg";
         document.getElementById("cart").getElementsByClassName("icon")[0].src = "Medien/korb.svg";
         try {
-            Array.from(document.getElementsByClassName("item")).map(element => element.style.filter = "grayscale(0)");
+            Array.from(document.querySelectorAll(".item picture img")).map(element => element.style.filter = "grayscale(0)");
         } catch (error) {
             
         }
