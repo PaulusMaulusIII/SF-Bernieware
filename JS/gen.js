@@ -211,7 +211,7 @@ const filter = {
                 range1 = document.createElement("input"),
                 range2 = document.createElement("input");
 
-            fieldset.classList.add("range filter");
+            fieldset.classList.add(["range","filter"]);
 
             rangeSlider.classList.add("range-slider");
             rangeSelected.classList.add("range-selected");

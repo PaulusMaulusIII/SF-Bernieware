@@ -19,6 +19,8 @@ hr {
     border: solid var(--black) 1px;
     border-radius: 10px;
     width: max-content;
+    left: 50%;
+    right: 50%;
 }
 
 .filter {
