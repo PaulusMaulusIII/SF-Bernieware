@@ -45,7 +45,6 @@ article {
     object-fit: contain;
     height: 100%;
     aspect-ratio: 1;
-    filter: drop-shadow(2);
 }
 
 .item p {
@@ -125,7 +124,6 @@ span {
     .item picture img:hover {
         height: 100%;
         transition: 200ms;
-        filter: grayscale(0);
     }
 }
 
