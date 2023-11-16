@@ -16,12 +16,15 @@ hr {
 #filters {
     display: flex;
     justify-content: center;
+    border: solid var(--black) 1px;
+    border-radius: 10px;
 }
 
 .filter {
     display: flex;
     justify-content: center;
     align-items: center;
+    border: none;
 }
 
 .filter select {
