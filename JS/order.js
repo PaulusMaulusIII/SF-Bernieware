@@ -61,19 +61,6 @@ const displayOrder = () => {
     }
 }
 
-const getID = async () => {
-    if (!localStorage.getItem("id")) {
-        console.log("Working");
-        await fetch(settings.backend_ip + "uuid", {
-            method: "GET"
-        })
-            .then(response => response.text())
-            .then(response => JSON.parse(response))
-            .then(response => localStorage.setItem("id", response.id));
-    }
-    return localStorage.getItem("id");
-}
-
 document.getElementById('orderForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const file = "orders.tsv",
@@ -81,9 +68,6 @@ document.getElementById('orderForm').addEventListener('submit', async (e) => {
         name = document.getElementById('name').value,
         course = document.getElementById('class').value,
         email = document.getElementById('email').value;
-    let id = await getID();
-
-    console.log(id);
 
     let items = userCart.items.map(element => JSON.stringify(element));
 
@@ -93,11 +77,11 @@ document.getElementById('orderForm').addEventListener('submit', async (e) => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ file: file, id: id, surname: surname, name: name, course: course, email: email, items: JSON.stringify({ data: items }) })
+        body: JSON.stringify({ file: file, surname: surname, name: name, course: course, email: email, items: JSON.stringify({ data: items }) })
     })
         .then(response => response.json())
         .then(data => {
-            if (data.success && data.id === id) {
+            if (data.success) {
                 alert(data.id + ' submitted successfully.');
             } else {
                 alert('Failed to submit order.');

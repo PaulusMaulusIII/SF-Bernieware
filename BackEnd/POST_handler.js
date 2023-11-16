@@ -1,9 +1,10 @@
 const http = require("http");
 const { WebSocketServer } = require("ws");
-//TODO: Implement EMAIL (SMTP)
 const crypto = require('crypto');
 const fs = require("fs");
 const port = 8080;
+
+//TODO: Switch handling from lines to IDs
 
 const server = http.createServer((req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*"); //Gestattet Zugriff von der Hauptseite auf den POST Handler
@@ -14,27 +15,10 @@ const server = http.createServer((req, res) => {
         res.writeHead(204); //Antworte "Success, no content"
         res.end();
         return;
-    } else if (req.method === "GET") { //Wenn eine UUID angefordert wird
+    } else if (req.method === "GET") {
         if (req.url === "/database.csv") {
             res.writeHead(200, { "Content-Type": "basic" }); //Sende "erfolgreich"
             res.end(fs.readFileSync("database.csv", "utf-8"));
-        } else if (req.url === "/uuid") {
-            const expiry = new Date(Date.now() + 31557600000).toUTCString();
-            res.setHeader("Expires", expiry); //Setze den Cache Control Header der Antwort auf das Jetzt + 1 Jahr
-
-            const file = "users.list";
-            const id = crypto.randomUUID(); //Generiert eine UUID(v4)
-            fs.appendFile(file, id + "\n", (err) => {
-                if (err) {
-                    console.error(err);
-                    res.writeHead(500, { "Content-Type": "application/json" }); //Falls die Datei nicht gelesen werden kann, sende Fehlermeldung
-                    res.end(JSON.stringify({ success: false, id: 0 })); //Sende keine daten
-                } else {
-                    console.log(`ID "${id}" saved to ${file} and sent`);
-                    res.writeHead(200, { "Content-Type": "application/json" }); //Sende "erfolgreich"
-                    res.end(JSON.stringify({ success: true, id: id })); //Sende UUID, die der browser im cache speichert
-                }
-            });
         } else if (req.url === "/categories") {
             let categories = fs.readdirSync("Kategorien");
             categories = categories.map(element => element.replaceAll("-ae-", "ä").replaceAll("-ue-", "ü").replaceAll("-oe-", "ö").replaceAll("-sz-", "ß"));
@@ -63,17 +47,18 @@ const server = http.createServer((req, res) => {
         });
         req.on("end", () => { //Sobald die Übertragung vollständig ist
             const postData = JSON.parse(body); //Werden die übertragenen Daten von einem SJON String in ein Objekt geparsed
-            const { file, id, surname, name, course, email, items } = postData; //Dieses Dekonstruiert
+            const { file, surname, name, course, email, items } = postData; //Dieses Dekonstruiert
+            const id = crypto.randomUUID();
 
-            fs.appendFile(file, id + "\t" + surname + "\t" + name + "\t" + course + "\t" + email + "\t" + items + "\n", (err) => { // Und der Inhalt korrekt formatiert in eine tsv datei gespeichert //TODO: Write additional item information
+            fs.appendFile(file, id + "\t" + surname + "\t" + name + "\t" + course + "\t" + email + "\t" + items + "\n", (err) => { // Und der Inhalt korrekt formatiert in eine tsv datei gespeichert
                 if (err) {
                     console.error(err);
                     res.writeHead(500, { "Content-Type": "application/json" }); //Falls die Datei nicht gelesen werden kann, sende Fehlermeldung
                     res.end(JSON.stringify({ success: false, id: 0 })); //Sende keine daten
                 } else {
-                    console.log(`Order from "${id}" saved to ${file}`);
+                    console.log(`Order "${id}" saved to ${file}`);
                     res.writeHead(200, { "Content-Type": "application/json" }); //Sende "Erfolgreich"
-                    res.end(JSON.stringify({ success: true, id: id })); //Sende die ID an den client //TODO: Implement client cross check if order was right
+                    res.end(JSON.stringify({ success: true, id: id })); //Sende die ID an den client 
                 }
             });
         });
@@ -112,34 +97,30 @@ wss.on("connection", (ws) => { //Wenn ein nutzer sich verbindet
                     if (curr.mtime > prev.mtime) { //Wenn es zu einer relevanten änderung kommt
                         const content = fs.readFileSync(file, 'utf8'); //lese den neuen inhalt der datei ein
                         let newFileSize = content.split("\n").length, //und die neue länge der datei
-                            sizeDiff = fileSize - newFileSize;
+                            sizeDiff = newFileSize - fileSize;
 
-                        if (newFileSize > fileSize && sizeDiff == 1) { // falls die neue datei mehr zeilen hat als die alte //FIXME: When there are additions AND changes the handler notes the changes as additions
+                        if (sizeDiff > 0) { // falls die neue datei mehr zeilen hat als die alte //FIXME: When there are additions AND changes the handler notes the changes as additions
                             fileContent = fileContent.split("\n");
                             let addedContent = content.split("\n").filter(element => !fileContent.includes(element)); //Gibt uns nur die Zeilen die NICHT in der alten version vorhanden sind
-                            addedContent = addedContent.map(element => [element, content.split("\n").indexOf(element)]); //ERgänzt die zeile, in der die änderungen vorkommmen
+                            addedContent = addedContent.map(element => [content[(content.split("\n").indexOf(element)-1)].split("\t")[0], element]); //ERgänzt die zeile, in der die änderungen vorkommmen
                             clients.forEach((client) => { //Sende an jeden client
                                 client.send(JSON.stringify({ successful: true, method: "ADD", data: addedContent })); //Erfolgreich, "neuer Inhalt", Inhalt
                                 console.log(`Updated Client listening for changes to ${file}\n Added ${addedContent}`);
                             });
-                        } else if (newFileSize < fileSize) { //Falls die alte datei länger ist als die neue
+                        } else if (sizeDiff < 0) { //Falls die alte datei länger ist als die neue
                             let newFileContent = content.split("\n");
                             let deletedContent = fileContent.split("\n").filter(element => !newFileContent.includes(element)); //Gibt uns nur die zeilen die in der neuen version fehlen
-                            deletedContent = deletedContent.map(element => [fileContent.split("\n").indexOf(element), fileContent.split("\n").indexOf(element) + 1]);
+                            console.log(deletedContent);
+                            deletedContent = deletedContent.map(element => element.split("\t")[0]);
                             console.log(deletedContent);
                             clients.forEach((client) => {
                                 client.send(JSON.stringify({ successful: true, method: "REM", data: deletedContent })); //ERfolgreich, "Entfernt", entfernte inhalte
                                 console.log(`Updated Client listening for changes to ${file}\n Removed ${deletedContent}`);
                             });
-                        } else if (newFileSize > fileSize && sizeDiff > 1) {
-                            clients.forEach((client) => {
-                                client.send(JSON.stringify({ successful: true, method: "CHA", data: content })); //siehe ADD
-                                console.log(`Updated Client listening for changes to ${file}`);
-                            });
-                        } else { //Falls nur der inhalt der zeilen geändert wurde
+                        } else if (sizeDiff == 0) {
                             fileContent = fileContent.split("\n");
                             let changedContent = content.split("\n").filter(element => !fileContent.includes(element)); //siehe ADD
-                            changedContent = changedContent.map(element => [element, content.split("\n").indexOf(element)]); //siehe ADD
+                            changedContent = changedContent.map(element => [element.split("\t")[0], element]); //siehe ADD
                             clients.forEach((client) => {
                                 client.send(JSON.stringify({ successful: true, method: "CHA", data: changedContent })); //siehe ADD
                                 console.log(`Updated Client listening for changes to ${file}\n Changed ${changedContent}`);
