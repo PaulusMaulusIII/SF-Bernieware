@@ -19,8 +19,7 @@ hr {
     border: solid var(--black) 1px;
     border-radius: 10px;
     width: max-content;
-    left: 50%;
-    right: 50%;
+    margin-left: auto;
 }
 
 .filter {
@@ -113,6 +112,7 @@ main {
     justify-content: center;
     padding-bottom: 2.5%;
     padding-top: 2.5%;
+    border: none;
 }
 
 .range-slider {
