@@ -1,4 +1,4 @@
 const settings = {
-    backend_ip: "http://localhost:8080/",
-    websocket: "ws://localhost:8080/"
+    backend_ip: "http://brg-shop-backend.onrender.com:8080/",
+    websocket: "ws://brg-shop-backend.onrender.com:8080/"
 }
