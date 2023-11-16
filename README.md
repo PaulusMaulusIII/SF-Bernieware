@@ -66,6 +66,8 @@ To save the available products, the known users and the orders we used CSV,TSV a
   Can be accessed by tapping the green button in the cart pop-up.
 * #### search.js
   Allows the user to search by passing the search term to the gen.js script and displaying the fetched products on a sub.html. Can be accessed by clicking on the magnifying glass icon.
+* #### settings.js
+  Stores the global settings, such as back end server adress and websocket adress.
 
 ### DATA STORAGE
 
@@ -76,7 +78,12 @@ To save the available products, the known users and the orders we used CSV,TSV a
   | --- | -------- | ------ | ------ | ---------- | ------ | ------------ | --------------- | ----- | ----------------------- | ----------- | -------- |
   | 1   | Kleidung | Hoodie | Unisex | Rot        | Hände  | Blau         | XS/S/M/L/XL/XXL | 35€   | Medien/Kleidung/Haende/ | ...         | j        |
 * #### orders.tsv
+  Stores the orders in a simple table sorted by the time the order has been received.
+  | UUID                                 | SURNAME | NAME              | CLASS | EMAIL ADRESS     | ORDERS                                                                                       |
+  | ------------------------------------ | ------- | ----------------- | ----- | ---------------- | -------------------------------------------------------------------------------------------- |
+  | 6cf17a40-d7ff-4e98-a778-4a710a17b499 | Ruben   | von Albersmann IV | 3a    | ruben-abs@web.de | {"data":["{\"id\":\"93\",\"type\":\"Teddy\",\"size\":\"\",\"amount\":1,\"price\":\"26€\"}"]} |
 * #### users.list
+  Stores the UUIDs
 
 ### NODE.JS
 

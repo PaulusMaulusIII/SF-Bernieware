@@ -34,6 +34,9 @@ article {
 .item picture {
     object-fit: contain;
     height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .item picture img {
