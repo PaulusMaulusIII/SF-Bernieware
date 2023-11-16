@@ -29,6 +29,7 @@ article {
     flex-direction: column;
     justify-content: center;
     flex-shrink: 1;
+    margin: 2.5%;
 }
 
 .item picture {
