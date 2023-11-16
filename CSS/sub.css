@@ -105,6 +105,8 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;
 }
 
 .range-slider {
