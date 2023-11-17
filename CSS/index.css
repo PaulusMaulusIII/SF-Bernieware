@@ -144,6 +144,11 @@ span {
         justify-content: center;
     }
 
+    #additional,
+    #background {
+        display: none;
+    }
+
     .item {
         width: 90vw;
     }
