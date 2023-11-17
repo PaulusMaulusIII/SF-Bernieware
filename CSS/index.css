@@ -99,14 +99,6 @@ span {
 }
 
 @media (pointer: coarse) {
-    #background {
-        display: none;
-    }
-
-    #additional {
-        display: none;
-    }
-
     a:hover {
         font-weight: normal;
     }
@@ -143,10 +135,6 @@ span {
         flex-direction: column;
         flex-grow: 1;
         justify-content: center;
-    }
-    
-    #additional {
-        display: none;
     }
 
     .item {
