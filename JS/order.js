@@ -72,7 +72,7 @@ document.getElementById('orderForm').addEventListener('submit', async (e) => {
     let items = userCart.items.map(element => JSON.stringify(element));
 
     // Send the data to the Node.js server
-    fetch('http://localhost:8080/submit', {
+    fetch(settings.backend_ip + 'submit', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

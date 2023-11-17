@@ -41,7 +41,6 @@ const switchTheme = e => {
         root.style.setProperty('--shadowDark', 'rgba(255, 255, 255, 0.65)');
         document.getElementById("aboutUs").getElementsByClassName("icon")[0].src = "Medien/about_us_dark.svg";
         document.getElementById("search").getElementsByClassName("icon")[0].src = "Medien/Magnifying_glass_dark.svg";
-        document.getElementById("cart").getElementsByClassName("icon")[0].src = "Medien/korb_dark.svg";
     }
     else {
         localStorage.setItem("darkMode", "off");

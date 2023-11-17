@@ -17,6 +17,9 @@
     font-family: Arial, Helvetica, sans-serif;
     background-color: transparent;
     color: var(--black);
+    -webkit-box-sizing: border-box; /* Added box-sizing for Safari */
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html {
@@ -39,6 +42,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    -webkit-text-size-adjust: 100%
 }
 
 header {

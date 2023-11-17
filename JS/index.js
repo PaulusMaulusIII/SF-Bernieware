@@ -39,6 +39,7 @@ const getCategories = async () => {
 
         a.href = "sub.html?category=" + element;
         item.classList.add("item");
+        img.classList.add("categoryImg");
         img.src = categoryImages[index];
         p.textContent = element;
 

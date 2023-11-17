@@ -16,12 +16,18 @@ hr {
 #filters {
     display: flex;
     justify-content: center;
+    border: solid var(--black) 1px;
+    border-radius: 10px;
+    width: max-content;
+    margin: auto;
+    padding: 1%;
 }
 
 .filter {
     display: flex;
     justify-content: center;
     align-items: center;
+    border: none;
 }
 
 .filter select {
@@ -105,6 +111,9 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding-bottom: 2.5%;
+    padding-top: 2.5%;
+    border: none;
 }
 
 .range-slider {
