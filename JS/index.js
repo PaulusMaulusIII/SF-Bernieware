@@ -1,4 +1,6 @@
 const products = document.querySelector(".products");
+const scrollPos = Array.from(document.querySelectorAll(".scrollPos"));
+let currentPos = 0;
 
 /* 
 <a href="sub.html?category=Kleidung">
@@ -51,3 +53,9 @@ const getCategories = async () => {
 };
 
 getCategories();
+
+onwheel = (evt) => {
+    evt.preventDefault();
+    currentPos += evt.deltaY;
+    scrollPos[currentPos].scrollIntoView();   
+}
