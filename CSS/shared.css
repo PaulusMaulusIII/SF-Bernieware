@@ -39,6 +39,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    -webkit-text-size-adjust: 100%
 }
 
 header {
