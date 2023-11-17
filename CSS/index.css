@@ -1,13 +1,19 @@
 @import url("shared.css");
 
 main {
+    display: -webkit-flex;
+    -webkit-flex: 1 0 1;
+    -webkit-justify-content: center;
     display: flex;
-    flex: 1, 0, 1;
+    flex: 1 0 1;
     justify-content: center;
     flex-direction: column;
 }
 
 article {
+    display: -webkit-flex;
+    -webkit-justify-content: center;
+    -webkit-align-items: center;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -109,6 +115,7 @@ span {
         display: block;
         object-fit: contain;
         height: 90%;
+        -webkit-aspect-ratio: 1; /* Added -webkit- prefix */
         aspect-ratio: 1;
         transition: 200ms;
     }
