@@ -106,11 +106,40 @@ const detailGen = {
         });
 
         if (interesting[11] == "j") {
-            imgH.push("/" + interesting[9] + "/" + interesting[0] + "_h.jpg");
-            imgV.push("/" + interesting[9] + "/" + interesting[0] + "_v.jpg");
-            img.addEventListener("mouseenter", hover, false);
-            img.addEventListener("mouseover", hover, false);    //EventListener, damit Rückseite angezeigt wird wenn Nutzer über Bild hovert
-            img.addEventListener("mouseleave", exit, false);
+            if (window.matchMedia("(pointer:fine)").matches) {
+                img.addEventListener("mouseenter", hover);
+                img.addEventListener("mouseover", hover);
+                img.addEventListener("mouseleave", exit);
+                a.append(img);
+                picture.append(a);
+            } else {
+                let buttonBack = document.createElement("button"),
+                    buttonForth = document.createElement("button");
+
+                buttonBack.innerHTML = "&lt;";
+                buttonForth.innerHTML = "&gt;";
+
+                [buttonBack, buttonForth].map(element => {
+                    element.style = "background-color: var(--white); color: var(--black); border: var(--black) solid 1px; border-radius: 5px; height: 5vh; width: calc(100% + 10%);";
+                    element.addEventListener("click", () => {
+                        const src = img.src.replace(window.location.origin, "");
+                        if (img.src.endsWith("_h.jpg")) {
+                            if (imgH.includes(src)) {
+                                img.src = imgV[imgH.indexOf(src)];
+                            }
+                        } else {
+                            if (imgV.includes(src)) {
+                                img.src = imgH[imgV.indexOf(src)];
+                            }
+                        }
+                    });
+                });
+
+                picture.style = "display:flex; flex-grow:0; justify-content:center;"
+
+                a.append(img)
+                picture.append(buttonBack, img, buttonForth);
+            }
         }
 
         let sizes = "";

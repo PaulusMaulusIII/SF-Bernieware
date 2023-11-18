@@ -385,26 +385,26 @@ const gen = {
                         let buttonBack = document.createElement("button"),
                             buttonForth = document.createElement("button");
 
-                        buttonBack.addEventListener("click", () => {
-                            const src = img.src.replace(window.location.origin, "");
-                            if (imgH.includes(src)) {
-                                img.src = imgV[imgH.indexOf(src)];
-                            }
-                        });
                         buttonBack.innerHTML = "&lt;";
-                        buttonForth.addEventListener("click", () => {
-                            const src = img.src.replace(window.location.origin, "");
-                            if (imgV.includes(src)) {
-                                img.src = imgH[imgV.indexOf(src)];
-                            }
-                        });
                         buttonForth.innerHTML = "&gt;";
 
                         [buttonBack, buttonForth].map(element => {
-                            element.style = "background-color: var(--white); color: var(--black); border: var(--black) solid 1px; border-radius: 2.5px; height: 5vh; width: calc(100% + 10%);";
+                            element.style = "background-color: var(--white); color: var(--black); border: var(--black) solid 1px; border-radius: 5px; height: 5vh; width: calc(100% + 10%);";
+                            element.addEventListener("click", () => {
+                                const src = img.src.replace(window.location.origin, "");
+                                if (img.src.endsWith("_h.jpg")) {
+                                    if (imgH.includes(src)) {
+                                        img.src = imgV[imgH.indexOf(src)];
+                                    }
+                                } else {
+                                    if (imgV.includes(src)) {
+                                        img.src = imgH[imgV.indexOf(src)];
+                                    }
+                                }
+                            });
                         });
 
-                        picture.style = "display:flex; flex-grow:0;"
+                        picture.style = "display:flex; flex-grow:0; justify-content:center;"
 
                         a.append(img)
                         picture.append(buttonBack, img, buttonForth);
