@@ -124,13 +124,9 @@ const detailGen = {
                     element.addEventListener("click", () => {
                         const src = img.src.replace(window.location.origin, "");
                         if (img.src.endsWith("_h.jpg")) {
-                            if (imgH.includes(src)) {
-                                img.src = imgV[imgH.indexOf(src)];
-                            }
+                            img.src = interesting[9] + "/" + interesting[0] + "_v.jpg";
                         } else {
-                            if (imgV.includes(src)) {
-                                img.src = imgH[imgV.indexOf(src)];
-                            }
+                            img.src = interesting[9] + "/" + interesting[0] + "_h.jpg";
                         }
                         console.log(img.src);
                     });
