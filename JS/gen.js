@@ -389,7 +389,7 @@ const gen = {
                         buttonForth.innerHTML = "&gt;";
 
                         [buttonBack, buttonForth].map(element => {
-                            element.style = "background-color: var(--white); color: var(--black); border: var(--black) solid 1px; border-radius: 5px; height: 5vh; width: calc(100% + 10%);";
+                            element.style = "background-color: var(--white); color: var(--black); border: var(--black) solid 1px; border-radius: 5px; height: 5vh; width: max-content;";
                             element.addEventListener("click", () => {
                                 const src = img.src.replace(window.location.origin, "");
                                 if (img.src.endsWith("_h.jpg")) {
