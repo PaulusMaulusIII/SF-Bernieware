@@ -407,7 +407,7 @@ const gen = {
                         picture.style = "display:flex; flex-grow:0; align-items:center;"
 
                         a.append(img)
-                        picture.append(buttonBack, img, buttonForth);
+                        picture.append(buttonBack, a, buttonForth);
                     }
                 }
             } catch (error) {
