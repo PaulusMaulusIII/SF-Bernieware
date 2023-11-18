@@ -385,9 +385,9 @@ const gen = {
                         let buttonBack = document.createElement("button"),
                             buttonForth = document.createElement("button");
 
-                        buttonBack.addEventListener("click", exit);
+                        buttonBack.addEventListener("click", exit({target:img}));
                         buttonBack.innerHTML = "&lt;";
-                        buttonForth.addEventListener("click", hover);
+                        buttonForth.addEventListener("click", hover({target:img}));
                         buttonForth.innerHTML = "&gt;";
 
                         [buttonBack, buttonForth].map(element => {
