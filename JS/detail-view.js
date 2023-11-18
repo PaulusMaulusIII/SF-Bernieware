@@ -132,6 +132,7 @@ const detailGen = {
                                 img.src = imgH[imgV.indexOf(src)];
                             }
                         }
+                        console.log(img.src);
                     });
                 });
 
