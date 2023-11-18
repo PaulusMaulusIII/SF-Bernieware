@@ -113,8 +113,7 @@ const detailGen = {
                 img.addEventListener("mouseleave", exit);
                 picture.append(img);
             } else {
-                let picture = document.createElement("picture"),
-                    buttonBack = document.createElement("button"),
+                let buttonBack = document.createElement("button"),
                     buttonForth = document.createElement("button");
 
                 buttonBack.innerHTML = "&lt;";
