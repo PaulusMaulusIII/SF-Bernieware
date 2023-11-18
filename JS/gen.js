@@ -515,6 +515,7 @@ const exit = evt => {
 }
 
 const swipe = evt => {
+    alert("Working");
     if (touchDiff) {
         exit();
     } else {
