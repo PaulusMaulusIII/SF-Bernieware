@@ -385,17 +385,29 @@ const gen = {
                         let buttonBack = document.createElement("button"),
                             buttonForth = document.createElement("button");
 
-                        buttonBack.addEventListener("click", exit({target:img}));
+                        buttonBack.addEventListener("click", () => {
+                            const src = img.src.replace(window.location.origin, "");
+                            if (imgH.includes(src)) {
+                                img.src = imgV[imgH.indexOf(src)];
+                            }
+                        });
                         buttonBack.innerHTML = "&lt;";
-                        buttonForth.addEventListener("click", hover({target:img}));
+                        buttonForth.addEventListener("click", () => {
+                            const src = img.src.replace(window.location.origin, "");
+                            if (imgV.includes(src)) {
+                                img.src = imgH[imgV.indexOf(src)];
+                            }
+                        });
                         buttonForth.innerHTML = "&gt;";
 
                         [buttonBack, buttonForth].map(element => {
                             element.style = "background-color: var(--white); color: var(--black); border: var(--black) solid 1px; border-radius: 2.5px; height: 5vh; width: calc(100% + 10%);";
                         });
 
+                        picture.style = "display:flex; flex-grow:0;"
+
                         a.append(img)
-                        picture.append(buttonBack,img,buttonForth);
+                        picture.append(buttonBack, img, buttonForth);
                     }
                 }
             } catch (error) {
