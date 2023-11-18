@@ -378,9 +378,9 @@ const gen = {
                 img.src = filePath + "_v.jpg"; //Standard bild = vorderseite (_v.jpg) //TODO: Modernere Kompressionen aviv, webm, etc.
                 if (element[11] == "j") {
                     if (window.matchMedia("(pointer:fine)")) {
-                        img.addEventListener("mouseenter", hover());
-                        img.addEventListener("mouseover", hover());
-                        img.addEventListener("mouseleave", exit());
+                        img.addEventListener("mouseenter", hover);
+                        img.addEventListener("mouseover", hover);
+                        img.addEventListener("mouseleave", exit);
                     } else {
                         img.addEventListener("touchstart", evt => touchX = evt.touches[0].pageX);
                         img.addEventListener("touchend", evt => {
@@ -390,7 +390,7 @@ const gen = {
                     }
                 }
             } catch (error) {
-                console.error("Unknown");
+                console.error("Event error, could not assign listeners to img element");
             }
 
             for (let g = 0; g < fileAttr.length; g++) {
