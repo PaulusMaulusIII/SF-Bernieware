@@ -377,6 +377,7 @@ const gen = {
             try {
                 img.src = filePath + "_v.jpg"; //Standard bild = vorderseite (_v.jpg) //TODO: Modernere Kompressionen aviv, webm, etc.
                 if (element[11] == "j") {
+                    console.log(window.matchMedia("(pointer:fine)"));
                     if (window.matchMedia("(pointer:fine)")) {
                         img.addEventListener("mouseenter", hover);
                         img.addEventListener("mouseover", hover);
