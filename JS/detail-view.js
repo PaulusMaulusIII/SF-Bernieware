@@ -86,11 +86,12 @@ const detailCSV = {
 const detailGen = {
     gen: async () => {
 
-        let img = document.querySelectorAll("main picture img")[0],
-            title = document.querySelectorAll("main section h2")[0],
-            subtitle = document.querySelectorAll("main section h3")[0],
-            desc = document.querySelectorAll("main section p")[0],
-            button = document.querySelectorAll("main section button")[0],
+        let picture = document.querySelector("main picture"),
+            img = document.createElement("img"),
+            title = document.querySelector("main section h2"),
+            subtitle = document.querySelector("main section h3"),
+            desc = document.querySelector("main section p"),
+            button = document.querySelector("main section button"),
             sizeSelect = document.getElementById("sizes"),
             colorSelect = document.getElementById("colors"),
             typeSelect = document.getElementById("types"),
@@ -110,10 +111,10 @@ const detailGen = {
                 img.addEventListener("mouseenter", hover);
                 img.addEventListener("mouseover", hover);
                 img.addEventListener("mouseleave", exit);
-                a.append(img);
-                picture.append(a);
+                picture.append(img);
             } else {
-                let buttonBack = document.createElement("button"),
+                let picture = document.createElement("picture"),
+                    buttonBack = document.createElement("button"),
                     buttonForth = document.createElement("button");
 
                 buttonBack.innerHTML = "&lt;";
@@ -135,9 +136,8 @@ const detailGen = {
                     });
                 });
 
-                picture.style = "display:flex; flex-grow:0; justify-content:center;"
+                picture.style = "display:flex; flex-grow:0; align-items:center;"
 
-                a.append(img)
                 picture.append(buttonBack, img, buttonForth);
             }
         }
