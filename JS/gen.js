@@ -6,9 +6,7 @@ let fileList = [],  //Liste aller Produkte aus der CSV
     typeSelect,
     genderSelect,
     colorSelect,
-    motiveSelect,
-    touchX,
-    touchDiff;
+    motiveSelect;
 
 const genCSV = {
     parseCSV: str => {
@@ -381,12 +379,23 @@ const gen = {
                         img.addEventListener("mouseenter", hover);
                         img.addEventListener("mouseover", hover);
                         img.addEventListener("mouseleave", exit);
+                        a.append(img);
+                        picture.append(a);
                     } else {
-                        img.addEventListener("touchstart", evt => touchX = evt.touches[0].pageX);
-                        img.addEventListener("touchend", evt => {
-                            touchDiff = (touchX - evt.touches[0].pageX) > 0;
-                            swipe();
+                        let buttonBack = document.createElement("button"),
+                            buttonForth = document.createElement("button");
+
+                        buttonBack.addEventListener("click", exit);
+                        buttonBack.innerHTML = "&lt;";
+                        buttonForth.addEventListener("click", hover);
+                        buttonForth.innerHTML = "&gt;";
+
+                        [buttonBack, buttonForth].map(element => {
+                            element.style = "background-color: var(--white); color: var(--black); border: var(--black) solid 1px; border-radius: 2.5px; height: 5vh; width: calc(100% + 10%);";
                         });
+
+                        a.append(img)
+                        picture.append(buttonBack,img,buttonForth);
                     }
                 }
             } catch (error) {
@@ -417,8 +426,6 @@ const gen = {
                 }
             }
 
-            a.append(img);
-            picture.append(a);
             section.append(picture, button);
             content.append(section);
 
@@ -511,15 +518,6 @@ const exit = evt => {
     const src = img.src.replace(window.location.origin, "");
     if (imgH.includes(src)) {
         img.src = imgV[imgH.indexOf(src)];
-    }
-}
-
-const swipe = evt => {
-    alert("Working");
-    if (touchDiff) {
-        exit();
-    } else {
-        hover();
     }
 }
 
