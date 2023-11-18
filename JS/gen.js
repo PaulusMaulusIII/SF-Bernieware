@@ -6,7 +6,9 @@ let fileList = [],  //Liste aller Produkte aus der CSV
     typeSelect,
     genderSelect,
     colorSelect,
-    motiveSelect;
+    motiveSelect,
+    touchX,
+    touchDiff;
 
 const genCSV = {
     parseCSV: str => {
@@ -375,9 +377,17 @@ const gen = {
             try {
                 img.src = filePath + "_v.jpg"; //Standard bild = vorderseite (_v.jpg) //TODO: Modernere Kompressionen aviv, webm, etc.
                 if (element[11] == "j") {
-                    img.addEventListener("mouseenter", hover, false);
-                    img.addEventListener("mouseover", hover, false);    //EventListener, damit Rückseite angezeigt wird wenn Nutzer über Bild hovert
-                    img.addEventListener("mouseleave", exit, false);
+                    if (window.matchMedia("(pointer:fine)")) {
+                        img.addEventListener("mouseenter", hover());
+                        img.addEventListener("mouseover", hover());
+                        img.addEventListener("mouseleave", exit());
+                    } else {
+                        img.addEventListener("touchstart", evt => touchX = evt.touches[0].pageX);
+                        img.addEventListener("touchend", evt => {
+                            touchDiff = (touchX - evt.touches[0].pageX) > 0;
+                            swipe();
+                        });
+                    }
                 }
             } catch (error) {
                 console.error("Unknown");
@@ -501,6 +511,14 @@ const exit = evt => {
     const src = img.src.replace(window.location.origin, "");
     if (imgH.includes(src)) {
         img.src = imgV[imgH.indexOf(src)];
+    }
+}
+
+const swipe = evt => {
+    if (touchDiff) {
+        exit();
+    } else {
+        hover();
     }
 }
 
