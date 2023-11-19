@@ -66,7 +66,7 @@ const genCSV = {
                 if (search != null) {
                     for (const element of genCSV.parseCSV(response)) {
                         for (const el of element) {
-                            if (el.includes(search) && !fileList.includes(element)) {
+                            if (el.toUpperCase().includes(search.toUpperCase()) && !fileList.includes(element)) {
                                 fileList.push(element);
                             }
                         }
