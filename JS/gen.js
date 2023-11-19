@@ -410,6 +410,9 @@ const gen = {
                             a.append(img)
                             picture.append(buttonBack, a, buttonForth);
                         }
+                    } else {
+                        a.append(img);
+                        picture.append(a);
                     }
                 } catch (error) {
                     console.error("Event error, could not assign listeners to img element");
@@ -462,7 +465,9 @@ const gen = {
                 imgH.push("/" + filePath + "_h.jpg");
             });
         } else {
-            document.getElementById("content").innerHTML = "<h2>Keine Übereinstimmung gefunden!</h2>"
+            document.getElementById("content").innerHTML = "<h2>Keine Übereinstimmung gefunden!</h2>";
+            document.getElementById("filters").style.display = "none";
+            Array.from(document.querySelectorAll("hr")).map(element => element.style.display = "none");
         }
 
     },
