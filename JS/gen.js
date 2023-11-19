@@ -475,12 +475,8 @@ const gen = {
     },
 
     del: () => {
-
         let content = document.getElementById("content");
-
-        for (let el of document.querySelectorAll('.product')) {
-            content.removeChild(el);    //Löscht jedes Produkt
-        }
+        content.innerHTML = "";
     },
 }
 
@@ -510,6 +506,7 @@ const sliders = {
             });
 
             input.addEventListener("change", () => {
+                gen.del();
                 gen.gen();
             });
         });
