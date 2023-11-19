@@ -344,122 +344,126 @@ const gen = {
 
         filter.filter();
 
-        filteredFileList.forEach(element => {
-            let fileAttr = [], //Attribute (Farbe,Größen,etc.)
-                filePath = element[9] + "/" + element[0]; //Pfad = Pfad aus CSV + / + id (ohne datei-endung)
+        if (filteredFileList.length > 0) {
+            filteredFileList.forEach(element => {
+                let fileAttr = [], //Attribute (Farbe,Größen,etc.)
+                    filePath = element[9] + "/" + element[0]; //Pfad = Pfad aus CSV + / + id (ohne datei-endung)
 
-            let content = document.getElementById("content"), //Parent div die mit den Produkten gefüllt werden soll
-                section = document.createElement("section"), //Parent div für die einzelnen Produkte
-                a = document.createElement("a"),    //Link zu einzelansicht
-                picture = document.createElement("picture"),    //Beinhaltet das Bild
-                img = document.createElement("img"),    //Produktfoto
-                select = document.createElement("select"),  //Größenauswahl
-                optionSelect = document.createElement("option"),    //Platzhalter "Größe auswählen"
-                button = document.createElement("button");  //Zum Warenkorb hinzufügen Knopf
+                let content = document.getElementById("content"), //Parent div die mit den Produkten gefüllt werden soll
+                    section = document.createElement("section"), //Parent div für die einzelnen Produkte
+                    a = document.createElement("a"),    //Link zu einzelansicht
+                    picture = document.createElement("picture"),    //Beinhaltet das Bild
+                    img = document.createElement("img"),    //Produktfoto
+                    select = document.createElement("select"),  //Größenauswahl
+                    optionSelect = document.createElement("option"),    //Platzhalter "Größe auswählen"
+                    button = document.createElement("button");  //Zum Warenkorb hinzufügen Knopf
 
-            for (let e = 2; e <= 8; e++) {
-                fileAttr.push(element[e]); //Spalte 2 bis 8 aus CSV sind Attribute
-            }
+                for (let e = 2; e <= 8; e++) {
+                    fileAttr.push(element[e]); //Spalte 2 bis 8 aus CSV sind Attribute
+                }
 
-            section.className = "product";
-            img.className = "image";
-            select.className = "size info";     //Einheitliche Klassen für styling
-            select.name = "size-selection";
-            button.className = "toCart info";
-            button.id = element[0];
-            button.addEventListener("click", () => cart.add(button.id, element[2], select.value, fileAttr[6]));
-            button.textContent = fileAttr[6]; //fileAttr[6] = Preis aus CSV
+                section.className = "product";
+                img.className = "image";
+                select.className = "size info";     //Einheitliche Klassen für styling
+                select.name = "size-selection";
+                button.className = "toCart info";
+                button.id = element[0];
+                button.addEventListener("click", () => cart.add(button.id, element[2], select.value, fileAttr[6]));
+                button.textContent = fileAttr[6]; //fileAttr[6] = Preis aus CSV
 
-            a.href = "detail-view.html?id=" + element[0]; //Anchor leitet zur Einzelansicht weiter mit Produkt id aus CSV als parameter
+                a.href = "detail-view.html?id=" + element[0]; //Anchor leitet zur Einzelansicht weiter mit Produkt id aus CSV als parameter
 
-            try {
-                img.src = filePath + "_v.jpg"; //Standard bild = vorderseite (_v.jpg) //TODO: Modernere Kompressionen aviv, webm, etc.
-                if (element[11] == "j") {
-                    if (window.matchMedia("(pointer:fine)").matches) {
-                        img.addEventListener("mouseenter", hover);
-                        img.addEventListener("mouseover", hover);
-                        img.addEventListener("mouseleave", exit);
-                        a.append(img);
-                        picture.append(a);
-                    } else {
-                        let buttonBack = document.createElement("button"),
-                            buttonForth = document.createElement("button");
+                try {
+                    img.src = filePath + "_v.jpg"; //Standard bild = vorderseite (_v.jpg) //TODO: Modernere Kompressionen aviv, webm, etc.
+                    if (element[11] == "j") {
+                        if (window.matchMedia("(pointer:fine)").matches) {
+                            img.addEventListener("mouseenter", hover);
+                            img.addEventListener("mouseover", hover);
+                            img.addEventListener("mouseleave", exit);
+                            a.append(img);
+                            picture.append(a);
+                        } else {
+                            let buttonBack = document.createElement("button"),
+                                buttonForth = document.createElement("button");
 
-                        buttonBack.innerHTML = "&lt;";
-                        buttonForth.innerHTML = "&gt;";
+                            buttonBack.innerHTML = "&lt;";
+                            buttonForth.innerHTML = "&gt;";
 
-                        [buttonBack, buttonForth].map(element => {
-                            element.style = "background-color: var(--white); color: var(--black); border: var(--black) solid 1px; border-radius: 5px; height: 5vh; width: 10vw;";
-                            element.addEventListener("click", () => {
-                                const src = img.src.replace(window.location.origin, "");
-                                if (img.src.endsWith("_h.jpg")) {
-                                    if (imgH.includes(src)) {
-                                        img.src = imgV[imgH.indexOf(src)];
+                            [buttonBack, buttonForth].map(element => {
+                                element.style = "background-color: var(--white); color: var(--black); border: var(--black) solid 1px; border-radius: 5px; height: 5vh; width: 10vw;";
+                                element.addEventListener("click", () => {
+                                    const src = img.src.replace(window.location.origin, "");
+                                    if (img.src.endsWith("_h.jpg")) {
+                                        if (imgH.includes(src)) {
+                                            img.src = imgV[imgH.indexOf(src)];
+                                        }
+                                    } else {
+                                        if (imgV.includes(src)) {
+                                            img.src = imgH[imgV.indexOf(src)];
+                                        }
                                     }
-                                } else {
-                                    if (imgV.includes(src)) {
-                                        img.src = imgH[imgV.indexOf(src)];
-                                    }
-                                }
+                                });
                             });
+
+                            picture.style = "display:flex; flex-grow:0; align-items:center;"
+
+                            a.append(img)
+                            picture.append(buttonBack, a, buttonForth);
+                        }
+                    }
+                } catch (error) {
+                    console.error("Event error, could not assign listeners to img element");
+                }
+
+                for (let g = 0; g < fileAttr.length; g++) {
+                    section.classList.add(fileAttr[g]);     //Vergabe der Klassen nach Attributen aus CSV
+                }
+
+                if (element[7] != "N/A") {
+                    optionSelect.textContent = "Größe auswählen";
+
+                    let sizeString = ""; //Initialisiren, damit Datentyp String feststeht
+                    sizeString = fileAttr[5]; //fileAttr[5] = Größen optionen getrennt durch "/"
+                    let sizes = sizeString.split("/"), //füllt array sizes mit den möglichen Größen
+                        options = []; //Initialisieren von options als array
+                    for (let g = 0; g < sizes.length; g++) { //Wird für die Zahl der Größen optionen ausgeführt
+                        let option = document.createElement("option"); //Erstelle ein "option" Element
+                        option.textContent = sizes[g]; //Setze Inhalt
+                        option.value = sizes[g];    //und Value auf korrespondierende Größe
+                        options.push(option);   //Ergänzt options um das Element
+                        select.append(optionSelect,);
+                        options.forEach(element => {
+                            select.append(element);
                         });
-
-                        picture.style = "display:flex; flex-grow:0; align-items:center;"
-
-                        a.append(img)
-                        picture.append(buttonBack, a, buttonForth);
+                        section.append(select);
                     }
                 }
-            } catch (error) {
-                console.error("Event error, could not assign listeners to img element");
-            }
 
-            for (let g = 0; g < fileAttr.length; g++) {
-                section.classList.add(fileAttr[g]);     //Vergabe der Klassen nach Attributen aus CSV
-            }
+                section.append(picture, button);
+                content.append(section);
 
-            if (element[7] != "N/A") {
-                optionSelect.textContent = "Größe auswählen";
+                /*
+                Grundlegende DOM-Struktur
+                
+                body
+                |_content
+                    |_section
+                        |_anchor element
+                            |_picture
+                                |_img
+                        |_p
+                        |_select
+                            |_optionSelect
+                            |_...
+                        |_button
+                */
 
-                let sizeString = ""; //Initialisiren, damit Datentyp String feststeht
-                sizeString = fileAttr[5]; //fileAttr[5] = Größen optionen getrennt durch "/"
-                let sizes = sizeString.split("/"), //füllt array sizes mit den möglichen Größen
-                    options = []; //Initialisieren von options als array
-                for (let g = 0; g < sizes.length; g++) { //Wird für die Zahl der Größen optionen ausgeführt
-                    let option = document.createElement("option"); //Erstelle ein "option" Element
-                    option.textContent = sizes[g]; //Setze Inhalt
-                    option.value = sizes[g];    //und Value auf korrespondierende Größe
-                    options.push(option);   //Ergänzt options um das Element
-                    select.append(optionSelect,);
-                    options.forEach(element => {
-                        select.append(element);
-                    });
-                    section.append(select);
-                }
-            }
-
-            section.append(picture, button);
-            content.append(section);
-
-            /*
-            Grundlegende DOM-Struktur
-            
-            body
-            |_content
-                |_section
-                    |_anchor element
-                        |_picture
-                            |_img
-                    |_p
-                    |_select
-                        |_optionSelect
-                        |_...
-                    |_button
-            */
-
-            imgV.push("/" + filePath + "_v.jpg"); //Ergänzt Bilder von Vorder- und Rückseite in entsprechende Listen um zwischen den Beiden zu wechseln
-            imgH.push("/" + filePath + "_h.jpg");
-        });
+                imgV.push("/" + filePath + "_v.jpg"); //Ergänzt Bilder von Vorder- und Rückseite in entsprechende Listen um zwischen den Beiden zu wechseln
+                imgH.push("/" + filePath + "_h.jpg");
+            });
+        } else {
+            document.getElementById("content").innerHTML = "<h2>Keine Übereinstimmung gefunden!</h2>"
+        }
 
     },
 
