@@ -4,8 +4,7 @@ const getDate = async () => {
 
 const createCountdown = async () => {
 
-    let end = parseInt(getDate())
-    
+    let end = Date(getDate()).getTime();
     const dateElement = document.getElementById("date");
 
     const _second = 1000;
