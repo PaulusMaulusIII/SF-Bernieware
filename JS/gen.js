@@ -466,7 +466,8 @@ const gen = {
             });
         } else {
             document.getElementById("content").innerHTML = "<h2>Keine Übereinstimmung gefunden!</h2>";
-            if (URLSearchParams(window.location.search).get("search") != null) {
+            let params = new URLSearchParams(window.location.search);
+            if (params.get("category") == null) {
                 document.getElementById("filters").style.display = "none";
                 Array.from(document.querySelectorAll("hr")).map(element => element.style.display = "none");
             }
