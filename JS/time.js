@@ -5,6 +5,7 @@ const getDate = async () => {
 }
 
 end = getDate();
+end = end.getTime();
 const dateElement = document.getElementById("date");
 
 const _second = 1000;
