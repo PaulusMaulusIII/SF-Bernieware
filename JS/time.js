@@ -27,7 +27,7 @@ const createCountdown = async () => {
         const minutes = Math.floor((distance % _hour) / _minute);
         const seconds = Math.floor((distance % _minute) / _second);
 
-        dateElement.innerHTML = `Nur noch ${days} Tage, ${hours} Std., ${minutes} Min. und ${seconds} Sek. bis zur nächsten Bestellung!`;
+        dateElement.innerHTML = `Nächste Bestellung in ${days} Tagen`;
     }
 
     timer = setInterval(showRemaining, 1000);
