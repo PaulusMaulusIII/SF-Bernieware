@@ -235,16 +235,10 @@ window.onload = async () => {
 
 const hover = evt => {
     let img = evt.target
-    const src = img.src.replace(window.location.origin, "");
-    if (imgV.includes(src)) {
-        img.src = imgH[imgV.indexOf(src)];
-    }
+    img.src = interesting[9] + "/" + interesting[0] + "_h.jpg";
 }
 
 const exit = evt => {
     let img = evt.target
-    const src = img.src.replace(window.location.origin, "");
-    if (imgH.includes(src)) {
-        img.src = imgV[imgH.indexOf(src)];
-    }
+    img.src = interesting[9] + "/" + interesting[0] + "_v.jpg";
 }

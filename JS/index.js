@@ -1,23 +1,5 @@
 const products = document.querySelector(".products");
 
-/* 
-<a href="sub.html?category=Kleidung">
-
-    <section id="item1" class="item">
-
-        <picture>
-            <img src="Medien/Kleidung.jpg" alt="" srcset="">
-        </picture>
-        <br>
-        <p>
-            Kleidung
-        </p>
-
-    </section>
-
-</a> 
-*/
-
 const getCategories = async () => {
     let categories = [];
     let categoryImages = [];
