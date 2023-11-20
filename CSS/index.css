@@ -115,7 +115,7 @@ span {
         display: block;
         object-fit: contain;
         height: 90%;
-        -webkit-aspect-ratio: 1; /* Added -webkit- prefix */
+        -webkit-aspect-ratio: 1;
         aspect-ratio: 1;
         transition: 200ms;
     }
