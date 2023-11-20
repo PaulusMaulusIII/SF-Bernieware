@@ -1,4 +1,9 @@
 const end = new Date;
+
+const getDate = async () => {
+    return await fetch(settings.backend_ip + "/orderDate");
+}
+
 end = getDate();
 const dateElement = document.getElementById("date");
 
@@ -27,7 +32,3 @@ function showRemaining() {
 }
 
 timer = setInterval(showRemaining, 1000);
-
-const getDate = async () => {
-    return await fetch(settings.backend_ip + "/orderDate");
-}
