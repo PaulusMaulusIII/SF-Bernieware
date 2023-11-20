@@ -1,10 +1,8 @@
-let end = new Date;
-
 const getDate = async () => {
     return await fetch(settings.backend_ip + "orderDate");
 }
 
-end = getDate();
+let end = new Date(getDate());
 end = end.getTime();
 const dateElement = document.getElementById("date");
 
