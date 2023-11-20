@@ -1,7 +1,7 @@
 const getDate = async () => {
-    return await fetch(settings.backend_ip + "orderDate").then(respone => respone.text());
+    return await fetch(settings.backend_ip + "orderDate").then(response => response.text());
 }
-
+console.log(getDate(), Date(getDate()));
 let end = new Date(getDate());
 console.log(end);
 end = end.getTime();
