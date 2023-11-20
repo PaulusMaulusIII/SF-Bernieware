@@ -3,7 +3,7 @@ const getDate = async () => {
 }
 
 const createCountdown = async () => {
-    let end = new Date(getDate());
+    let end = new Date(await getDate());
     const dateElement = document.getElementById("date");
 
     const _second = 1000;
