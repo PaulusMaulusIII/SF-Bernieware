@@ -27,7 +27,15 @@ const createCountdown = async () => {
         const minutes = Math.floor((distance % _hour) / _minute);
         const seconds = Math.floor((distance % _minute) / _second);
 
-        dateElement.innerHTML = `Nächste Bestellung in ${days} Tagen`;
+        let color;
+        if (days > 14) {
+            color = "green";
+        } else if (days < 14 && days > 3) {
+            color = "yellow";
+        } else {
+            color = "red";
+        }
+        dateElement.innerHTML = `Nächste Bestellung in <span style="background-color:transparent;border:none;margin:0;padding:0;color: ${color};">${days}</span> Tagen`;
     }
 
     timer = setInterval(showRemaining, 1000);
