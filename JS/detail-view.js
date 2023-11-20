@@ -136,6 +136,8 @@ const detailGen = {
 
                 picture.append(buttonBack, img, buttonForth);
             }
+        } else {
+            picture.append(img);
         }
 
         let sizes = "";
