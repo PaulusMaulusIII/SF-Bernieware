@@ -3,7 +3,9 @@ const getDate = async () => {
 }
 
 let end = new Date(getDate());
+console.log(end);
 end = end.getTime();
+console.log(end);
 const dateElement = document.getElementById("date");
 
 const _second = 1000;
