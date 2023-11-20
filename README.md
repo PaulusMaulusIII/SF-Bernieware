@@ -22,72 +22,106 @@ To save the available products, the known users and the orders we used CSV,TSV a
 ### HTML
 
 * #### index.html
+
   Main site containing all categories of products available and all information about Bernieware, as well as the school contact details.
+
 * #### sub.html
+
   Shows all products matching the selected category or search query and filters. Depending on the amount of unique product properties allows for filtering by:
   * type
   * fit
   * main color
   * motive
   * price range
+
 * #### detail-view.html
+
   Shows the details of the selected products, foremost the description. Also allows for switching to related products.
+
 * #### admin-view.html
+
   WIP
 
 ### CSS
 
 * #### detail-view.css
+
   Defines how the detail view of each product should be styled
+
 * #### index.css
+
   Defines how the main page should be styled
+
 * #### shared.css
+
   Supplies styling information, that all pages have in common, is referenced in all other CSS sheets
+
 * #### sub.css
+
   Defines how the overview should be styled
 
 ### JS
 
 * #### admin.js
+
   WIP
+
 * #### cart.js
+
   Allows for user to add, remove, clear all and display items in their virtual shooping cart. Opens on PC by hovering over the icon, on mobile devices with a tap to the icon.
+
 * #### dark-mode.js
+
   Checks the user preferences of the device if dark mode is selected, if so, changes CSS root variables depending on state.
+
 * #### detail-view.js
+
   Fetches the information about the selected product from the CSV and fills it into the webpage, also checks for similar products, which the user is able to select.
+
 * #### gen.js
+
   Fetches all products from the CSV and fills the page with them. Also checks for available filters and possible filter values, dynamically creating the filters depending on the contents of the CSV.
+
 * #### index.js
+
   Fetches the available categories and their images from the node.js back end to dynamically create the category selection field on the page.
+
 * #### order.js
+
   Allows the user to submit an order through a form, which is then sent to the node.js back end using POST to be handled there.
   Also dynamically generates a table from the contents of the cart.
   Can be accessed by tapping the green button in the cart pop-up.
+
 * #### search.js
+
   Allows the user to search by passing the search term to the gen.js script and displaying the fetched products on a sub.html. Can be accessed by clicking on the magnifying glass icon.
+
 * #### settings.js
+
   Stores the global settings, such as back end server adress and websocket adress.
 
 ### DATA STORAGE
 
 * #### database.csv
+
   Stores all products as a simple table sorted by ID.
 
   | ID  | CATEGORY | TYPE   | FIT    | MAIN COLOR | MOTIVE | ACCENT COLOR | AVAILABLE SIZES | PRICE | IMAGE LOCATION          | DESCRIPTION | BACKSIDE |
   | --- | -------- | ------ | ------ | ---------- | ------ | ------------ | --------------- | ----- | ----------------------- | ----------- | -------- |
   | 1   | Kleidung | Hoodie | Unisex | Rot        | Hände  | Blau         | XS/S/M/L/XL/XXL | 35€   | Medien/Kleidung/Haende/ | ...         | j        |
+
 * #### orders.tsv
+
   Stores the orders in a simple table sorted by the time the order has been received.
   | UUID                                 | SURNAME | NAME              | CLASS | EMAIL ADRESS     | ORDERS                                                                                       |
   | ------------------------------------ | ------- | ----------------- | ----- | ---------------- | -------------------------------------------------------------------------------------------- |
-  | 6cf17a40-d7ff-4e98-a778-4a710a17b499 | Ruben   | von Albersmann IV | 3a    | ruben-abs@web.de | {"data":["{\"id\":\"93\",\"type\":\"Teddy\",\"size\":\"\",\"amount\":1,\"price\":\"26€\"}"]} |
-* #### users.list
-  Stores the UUIDs
+  | 6cf17a40-d7ff-4e98-a778-4a710a17b499 | Ruben   | von Albersmann IV | 3a    | <ruben-abs@web.de> | {"data":["{\"id\":\"93\",\"type\":\"Teddy\",\"size\":\"\",\"amount\":1,\"price\":\"26€\"}"]} |
 
 ### NODE.JS
 
-* #### POST_handler.js
+* #### app.js
+
+  Handles all requests made to the backend, like the categories and products available, saves orders and updates the admin-view using the ws framework.
 
 ## THE VISION AND WHAT'S (PROBABLY) TO COME
 

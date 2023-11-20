@@ -99,10 +99,11 @@ const cart = {
             } else {
                 userCart.items.push(new cartItem(id, type, size, 1, price))
             }
+            new PopUpNotification("<span style ='color:green;font-weigth:bold;font-size:6vh;'>&#10003;</span>", "<h4>Artikel zum Warenkorb hinzugefügt!</h4>").display(1000);
 
             cart.saveToLocalStorage();
         } else {
-            alert("Bitte geben Sie eine Größe an!");
+            new PopUpNotification("<span style ='color:red;font-weigth:bold;font-size:10vh;'>&times;</span>", "<h4>Bitte eine Größe angeben!</h4>").display(3000);
         }
     },
 
