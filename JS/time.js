@@ -3,11 +3,9 @@ const getDate = async () => {
 }
 
 const createCountdown = async () => {
-    console.log(getDate(), Date(getDate()));
     let end = Date(await getDate());
-    console.log(end);
+    console.log(end, end.getTime(), end.getMilliseconds());
     end = end.getTime();
-    console.log(end);
     const dateElement = document.getElementById("date");
 
     const _second = 1000;
