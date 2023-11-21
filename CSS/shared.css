@@ -12,6 +12,12 @@
     --shadowLight: rgba(255, 255, 255, 0.08);
 }
 
+@media (-webkit-min-device-pixel-ratio:0) {
+    :root {
+        --maxView: calc(100dwv - (100dvw - 100%));
+    }
+}
+
 * {
     max-width: var(--maxView);
     font-family: Arial, Helvetica, sans-serif;
@@ -42,6 +48,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    height: 100dvh;
     -webkit-text-size-adjust: 100%
 }
 
@@ -108,14 +115,18 @@ a:hover {
 
     .popup {
         width: 80vw;
+        width: 80dvw;
         height: 90vh;
+        height: 90dvh;
         top: 50%;
         left: 50%;
     }
 
     #cartPopup {
         width: 80vw;
+        width: 80dvw;
         height: 90vh;
+        height: 90dvh;
         top: 50%;
         left: 50%;
     }
@@ -128,7 +139,9 @@ a:hover {
 
     #cartPopup {
         width: 40vw;
+        width: 40dvw;
         height: 50vh;
+        heigth: 50dvh;
         top: 40%;
         left: 76%;
     }
@@ -159,6 +172,7 @@ a:hover {
     flex-direction: row;
     flex-wrap: nowrap;
     width: 80vw;
+    width: 80dvw;
     height: max-content;
     top: 50%;
     left: 50%;
@@ -201,6 +215,7 @@ a:hover {
     flex-direction: column;
     width: max-content;
     height: 48vh;
+    height: 48dvh;
     overflow-y: auto;
 }
 
@@ -225,7 +240,9 @@ a:hover {
     border: var(--lightGray) solid 1px;
     border-radius: 5px;
     width: 3vw;
+    width: 3dvw;
     height: 3vw;
+    height: 3dvw;
 }
 
 .cartItem fieldset span {
@@ -244,7 +261,9 @@ a:hover {
 
 .cartItem picture {
     width: 16vh;
+    width: 16dvh;
     height: 16vh;
+    height: 16dvh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -253,17 +272,21 @@ a:hover {
 .cartItem picture img {
     object-fit: contain;
     height: 15vh;
+    height: 15dvh;
 }
 
 #buy {
     width: 20vw;
+    width: 20dvw;
     height: 10vh;
+    height: 10dvh;
     background-color: green;
     border-radius: 10px;
 }
 
 #orderPopup {
     height: 80vh;
+    height: 80dvh;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
@@ -278,11 +301,13 @@ a:hover {
     overflow-y: auto;
     width: 100%;
     height: 40vh;
+    height: 40dvh;
 }
 
 td,
 th {
     width: 10vw;
+    width: 10dvw;
     text-align: center;
 }
 
@@ -379,6 +404,7 @@ option {
 #orderForm input {
     width: 100%;
     height: 4vh;
+    height: 4dvh;
 }
 
 #notification {
@@ -391,6 +417,7 @@ option {
     top: 50%;
     left: 50%;
     height: 15vh;
+    height: 15dvh;
     grid-template-columns: 1fr 9fr;
     transition: 200ms;
     background-color: var(--white);
@@ -398,6 +425,7 @@ option {
     border: var(--black) solid 2px;
     border-radius: 10px;
     width: 60vw;
+    width: 60dvw;
 }
 
 #notification section {
