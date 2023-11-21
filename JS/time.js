@@ -1,3 +1,5 @@
+let toggle = true;
+
 const getDate = async () => {
     return await fetch(settings.backend_ip + "orderDate").then(response => response.text());
 }
@@ -27,6 +29,10 @@ const createCountdown = async () => {
         const minutes = Math.floor((distance % _hour) / _minute);
         const seconds = Math.floor((distance % _minute) / _second);
 
+        if (seconds%10 === 0) {
+            toggle = !toggle;
+        }
+
         let color;
         if (days > 14) {
             color = "green";
@@ -35,7 +41,11 @@ const createCountdown = async () => {
         } else {
             color = "red";
         }
-        dateElement.innerHTML = `Nächste Bestellung in <span style="background-color:transparent;border:none;margin:0;padding:0;color: ${color};">${days}</span> Tagen`;
+        if (toggle) {
+            dateElement.innerHTML = `<span style="background-color:transparent;border:none;margin:0;padding:0;color: ${color};">${days}</span> Tage, <span style="background-color:transparent;border:none;margin:0;padding:0;color: ${color};">${hours}</span> Stunden, <span style="background-color:transparent;border:none;margin:0;padding:0;color: ${color};">${minutes}</span> Minuten und <span style="background-color:transparent;border:none;margin:0;padding:0;color: ${color};">${seconds}</span> Sekunden verbleiben!`;
+        } else {
+            dateElement.innerHTML = `Nächste Bestellung in <span style="background-color:transparent;border:none;margin:0;padding:0;color: ${color};">${days}</span> Tagen`;
+        }
     }
 
     timer = setInterval(showRemaining, 1000);
