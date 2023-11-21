@@ -405,3 +405,10 @@ option {
     justify-content: center;
     align-items: center;
 }
+
+#notification section span {
+    background-color:transparent;
+    border:none;
+    margin:0;
+    padding:0;
+}

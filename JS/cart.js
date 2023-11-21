@@ -201,9 +201,11 @@ const cart = {
             cart.saveToLocalStorage();
 
             cartDisplay.insertAdjacentHTML("beforeend", "<button id = \"clearCartButton\" onclick = \"cart.clear();\">Warenkorb leeren</button>");
+            document.getElementById("buy").style.display = "block";
         } else {
             cartDisplay.style.justifyContent = "center";
             cartDisplay.innerHTML = "<p id=\"cartEmpty\">Der Warenkorb ist leer</p>";
+            document.getElementById("buy").style.display = "none";
         }
     }
 }
