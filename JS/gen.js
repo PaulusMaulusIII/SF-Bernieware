@@ -10,6 +10,8 @@ let fileList = [],  //Liste aller Produkte aus der CSV
 
 const genCSV = {
     getCSV: async () => {
+        document.getElementById("filters").style.display = "none";
+        Array.from(document.getElementsByTagName("hr")).map(element => element.style.display = "none");
         let search,
             category;
         const urlParams = new URLSearchParams(window.location.search);
@@ -46,6 +48,8 @@ const genCSV = {
 
         try {
             document.getElementById("content").removeChild(document.getElementById("loading")); // "Bitte warten ... wird entfernt, falls es noch da ist"
+            document.getElementById("filters").style.display = "flex";
+            Array.from(document.getElementsByTagName("hr")).map(element => element.style.display = "block");
         } catch (error) {
 
         }
