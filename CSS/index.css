@@ -139,6 +139,13 @@ span {
     }
 }
 
+@media screen and (orientation: landscape) and (max-device-width < 800px) {
+    #additional,
+    #background {
+        display: none;
+    }
+}
+
 @media screen and (orientation: portrait) {
     .products {
         flex-direction: column;
@@ -153,7 +160,7 @@ span {
 
     .item {
         width: 90vw;
-        widht: 90dvw;
+        width: 90dvw;
     }
 
     article {

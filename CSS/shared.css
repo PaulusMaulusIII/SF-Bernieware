@@ -135,7 +135,7 @@ a:hover {
         width: 40vw;
         width: 40dvw;
         height: 50vh;
-        heigth: 50dvh;
+        height: 50dvh;
         top: 40%;
         left: 76%;
     }
@@ -190,6 +190,11 @@ a:hover {
     cursor: pointer;
     background-color: transparent;
     border: none;
+}
+
+#searchPopup {
+    height: 80vh;
+    height: 80dvh;
 }
 
 #searchbar {
