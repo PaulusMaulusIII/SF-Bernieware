@@ -197,3 +197,8 @@ main {
         width: 75vw;
     }
 }
+
+#loading {
+    font-size: xx-large;
+    font-weight: bolder;
+}
