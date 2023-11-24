@@ -192,11 +192,6 @@ a:hover {
     border: none;
 }
 
-#searchPopup {
-    height: 80vh;
-    height: 80dvh;
-}
-
 #searchbar {
     width: 80%;
     padding: 1%;
