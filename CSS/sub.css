@@ -97,15 +97,6 @@ main {
     }
 }
 
-.cartItem fieldset button,
-.cartItem fieldset span {
-    background-color: none;
-    border: var(--darkGray) solid 1px;
-    border-radius: 5px;
-    width: 3vw;
-    height: 3vw;
-}
-
 .range {
     width: 20vw;
     display: flex;

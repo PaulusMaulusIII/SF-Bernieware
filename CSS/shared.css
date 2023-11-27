@@ -215,49 +215,44 @@ a:hover {
 
 .cartItem {
     display: flex;
-    width: 40vw;
-    width: 40dvw;
-}
-
-.cartItem span,
-.cartItem fieldset span {
-    background-color: var(--white);
-    border: none;
-    border-radius: 0;
-}
-
-.cartItem fieldset button,
-.cartItem fieldset span {
-    background-color: none;
-    border: var(--lightGray) solid 1px;
-    border-radius: 5px;
-    width: 3vw;
-    width: 3dvw;
-    height: 3vw;
-    height: 3dvw;
-}
-
-.cartItem fieldset span {
-    display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    width: 35vw;
+    width: 35dvw;
+    color: var(--black);
+}
+
+.cartItem * {
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    color: var(--black);
+    margin: 1%;
+    padding: 0;
 }
 
 .cartItem fieldset {
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
-    appearance: none;
     border: none;
-    width: 20vw;
-    width: 20dvw;
+}
+
+.cartItem fieldset * {
+    aspect-ratio: 1;
+    width: 3vw;
+    border: solid var(--black) 1px;
+    border-radius: 10px;
+}
+
+.amountDisplay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .cartItem picture {
-    width: 16vh;
-    width: 16dvh;
-    height: 16vh;
-    height: 16dvh;
+    aspect-ratio: 1;
+    width: 8vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -265,9 +260,31 @@ a:hover {
 
 .cartItem picture img {
     object-fit: contain;
-    height: 15vh;
-    height: 15dvh;
+    max-height: 8vw;
 }
+
+.removeFromCart,
+.cartItem span {
+    aspect-ratio: 1;
+    width: 3vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 
+    <fieldset>
+        <button class="dec">
+            -
+        </button>
+        <span class="amountDisplay">
+            5
+        </span>
+        <button class="inc">
+            +
+        </button>
+    </fieldset>
+*/
 
 #buy {
     width: 20vw;
@@ -429,8 +446,8 @@ option {
 }
 
 #notification section span {
-    background-color:transparent;
-    border:none;
-    margin:0;
-    padding:0;
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
 }

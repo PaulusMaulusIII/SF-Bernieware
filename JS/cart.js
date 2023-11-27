@@ -106,7 +106,6 @@ const cart = {
                     amountDisplay = document.createElement("span"),
                     increase = document.createElement("button"),
                     remove = document.createElement("span"),
-                    name = document.createElement("span"),
                     size = document.createElement("span");
 
 
@@ -136,7 +135,6 @@ const cart = {
                 picture.classList.add("cartPicture");
                 remove.classList.add("removeFromCart");
                 remove.id = element.id;
-                name.textContent = CSVElement[2];
                 remove.textContent = "\u00D7";
                 remove.addEventListener("click", (evt) => {
                     const input = evt.target,
@@ -154,9 +152,10 @@ const cart = {
                 picture.append(img);
                 if (element.size != "") {
                     size.textContent = element.size;
-                    section.append(picture, name, amount, size, price, remove);
+                    section.append(picture, amount, size, price, remove);
                 } else {
-                    section.append(picture, name, amount, price, remove);
+                    size.textContent = "";
+                    section.append(picture, amount, size, price, remove);
                 }
                 cartDisplay.appendChild(section);
             });
