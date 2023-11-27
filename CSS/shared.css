@@ -215,10 +215,8 @@ a:hover {
 
 .cartItem {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    flex-grow: 1;
+    width: 40vw;
+    width: 40dvw;
 }
 
 .cartItem span,
@@ -251,6 +249,8 @@ a:hover {
     flex-wrap: nowrap;
     appearance: none;
     border: none;
+    width: 20vw;
+    width: 20dvw;
 }
 
 .cartItem picture {
