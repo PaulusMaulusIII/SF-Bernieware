@@ -172,6 +172,7 @@ const filter = {
             return document.getElementById(filterType + "Select");
         } else if (type === "range") {
             let fieldset = document.createElement("fieldset"),
+                label = document.createElement("label"),
                 rangeSlider = document.createElement("section"),
                 rangeInput = document.createElement("section"),
                 rangeSelected = document.createElement("span"),
@@ -197,10 +198,15 @@ const filter = {
             range1.value = genCSV.getMin(8);
             range2.value = genCSV.getMax(8);
 
+            label.innerHTML = "Preisspanne: ";
+            label.style.display = "flex";
+            label.style.justifyContent = "center";
+            label.style.alignItems = "center";
+
             rangeSlider.append(rangeSelected);
             rangeInput.append(range1, range2);
             fieldset.append(rangeSlider, rangeInput);
-            filterSection.append(fieldset);
+            filterSection.append(label,fieldset);
         }
     },
 

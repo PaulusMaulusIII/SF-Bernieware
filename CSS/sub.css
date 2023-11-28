@@ -20,7 +20,7 @@ hr {
     border-radius: 10px;
     width: max-content;
     margin: auto;
-    padding: 1%;
+    padding: 0.5%;
 }
 
 .filter {
@@ -32,6 +32,8 @@ hr {
 
 .filter select {
     width: 100%;
+    height: 125%;
+    font-weight: bold;
 }
 
 main {
@@ -149,6 +151,10 @@ main {
     -webkit-appearance: none;
 }
 
+.range-input input:hover {
+    cursor: ew-resize;
+}
+
 .min::-webkit-slider-thumb {
     background-image: var(--thumbInner1);
 }
@@ -167,11 +173,11 @@ main {
 }
 
 .min::-moz-range-thumb {
-    background-color: var(--thumbInner1);
+    background-image: var(--thumbInner1);
 }
 
 .max::-moz-range-thumb {
-    background-color: var(--thumbInner2);
+    background-image: var(--thumbInner2);
 }
 
 @media screen and (orientation: portrait) {

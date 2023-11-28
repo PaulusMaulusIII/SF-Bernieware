@@ -5,7 +5,7 @@ if (localStorage.getItem("darkMode") == null) {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         localStorage.setItem("darkMode", "on");
     } else {
-        localStorage.setItem("darkMode", "on");
+        localStorage.setItem("darkMode", "off");
     }
 }
 

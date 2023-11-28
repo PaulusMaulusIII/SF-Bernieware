@@ -107,7 +107,12 @@ const displayOrders = () => {
             }
         });
 
-        itemMap.forEach(element => {
+        let itemArray = [];
+        itemMap.forEach(element => itemArray.push(element));
+        console.log(itemArray);
+        itemArray = itemArray.sort((a, b) => b.amount - a.amount);
+        console.log(itemArray);
+        itemArray.map(element => {
             const newRow = table.insertRow();
             const { id, type, size, amount, price } = element;
             newRow.innerHTML = `<td>${amount}</td><td>${type}</td><td>${size}</td><td>${id}</td><td>${price}</td>`;

@@ -124,6 +124,7 @@ span {
 
     .item picture img:hover {
         height: 100%;
+        cursor: pointer;
         transition: 200ms;
     }
 }

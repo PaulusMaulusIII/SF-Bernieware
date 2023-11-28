@@ -83,7 +83,7 @@ const detailGen = {
                 buttonForth.innerHTML = "&gt;";
 
                 [buttonBack, buttonForth].map(element => {
-                    element.style = "background-color: var(--white); color: var(--black); border: var(--black) solid 1px; border-radius: 5px; height: 5vh; width: calc(100% + 10%);";
+                    element.style = "background-color: var(--white); color: var(--black); border: var(--black) solid 1px; border-radius: 5px; height: 5vh; width: calc(100% + 20%);";
                     element.addEventListener("click", () => {
                         const src = img.src.replace(window.location.origin, "");
                         if (img.src.endsWith("_h.jpg")) {
@@ -95,7 +95,7 @@ const detailGen = {
                     });
                 });
 
-                picture.style = "display:flex; flex-grow:0; align-items:center;"
+                picture.style = "display:flex; flex-grow:0; align-items:center; width: 90%; align-self: center; justify-self: center;"
 
                 picture.append(buttonBack, img, buttonForth);
             }
