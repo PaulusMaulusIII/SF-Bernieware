@@ -6,7 +6,9 @@ let fileList = [],  //Liste aller Produkte aus der CSV
     typeSelect,
     genderSelect,
     colorSelect,
-    motiveSelect;
+    motiveSelect,
+    mouseX,
+    mouseY;
 
 const genCSV = {
     getCSV: async () => {
@@ -172,17 +174,19 @@ const filter = {
             return document.getElementById(filterType + "Select");
         } else if (type === "range") {
             let fieldset = document.createElement("fieldset"),
-                label = document.createElement("label"),
                 rangeSlider = document.createElement("section"),
                 rangeInput = document.createElement("section"),
                 rangeSelected = document.createElement("span"),
                 range1 = document.createElement("input"),
-                range2 = document.createElement("input");
+                range2 = document.createElement("input"),
+                label = document.createElement("label");
 
             fieldset.classList.add("range");
 
             rangeSlider.classList.add("range-slider");
             rangeSelected.classList.add("range-selected");
+
+            label.id = "mobilePriceLabel"
 
             rangeInput.classList.add("range-input");
             range1.classList.add("min");
@@ -198,15 +202,10 @@ const filter = {
             range1.value = genCSV.getMin(8);
             range2.value = genCSV.getMax(8);
 
-            label.innerHTML = "Preisspanne: ";
-            label.style.display = "flex";
-            label.style.justifyContent = "center";
-            label.style.alignItems = "center";
-
             rangeSlider.append(rangeSelected);
             rangeInput.append(range1, range2);
             fieldset.append(rangeSlider, rangeInput);
-            filterSection.append(label,fieldset);
+            filterSection.append(label, fieldset);
         }
     },
 
@@ -458,38 +457,53 @@ const sliders = {
         let rangeMin = 1;
         const range = document.querySelector(".range-selected");
         const rangeInput = document.querySelectorAll(".range-input input");
-        const root = document.querySelector(':root');
+        const label = document.getElementById("priceLabel");
+        const mobilePriceLabel = document.getElementById("mobilePriceLabel");
 
         rangeInput.forEach((input) => {
             input.addEventListener("input", (e) => {
                 let minRange = parseInt(rangeInput[0].value);
                 let maxRange = parseInt(rangeInput[1].value);
                 if (maxRange - minRange < rangeMin) {
-                    if (e.target.className === "min") {
+                    if (e.target.className.includes("min")) {
                         rangeInput[0].value = maxRange - rangeMin;
                     } else {
                         rangeInput[1].value = minRange + rangeMin;
                     }
                 } else {
-                    root.style.setProperty('--thumbInner1', "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font='Arial' font-size='10'>" + rangeInput[0].value + "</text></svg>\")");
-                    root.style.setProperty('--thumbInner2', "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font='Arial' font-size='10'>" + rangeInput[1].value + "</text></svg>\")");
                     range.style.left = ((minRange - rangeInput[0].min) / (rangeInput[0].max - rangeInput[0].min)) * 100 + "%";
                     range.style.right = 100 - ((maxRange - rangeInput[1].min) / (rangeInput[1].max - rangeInput[1].min)) * 100 + "%";
                 }
+                mobilePriceLabel.textContent = rangeInput[0].value + "€ - " + rangeInput[1].value + "€";
+                label.textContent = rangeInput[0].value + "€ - " + rangeInput[1].value + "€";
             });
 
             input.addEventListener("change", () => {
                 gen.del();
                 gen.gen();
             });
+
+            mobilePriceLabel.textContent = rangeInput[0].value + "€ - " + rangeInput[1].value + "€";
+            label.textContent = rangeInput[0].value + "€ - " + rangeInput[1].value + "€";
+            label.style.top = range.getBoundingClientRect().top + window.scrollY - 250 + "px";
+
+            input.addEventListener("mouseenter", evt => {
+                label.style.display = "flex";
+            });
+
+            input.addEventListener("mouseover", evt => {
+                label.style.display = "flex";
+            });
+
+            input.addEventListener("mouseleave", evt => {
+                label.style.display = "none";
+            });
         });
 
         let minRange = parseInt(rangeInput[0].value);
         let maxRange = parseInt(rangeInput[1].value);
-        root.style.setProperty('--thumbInner1', "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font='Arial' font-size='10'>" + rangeInput[0].value + "</text></svg>\")");
-        root.style.setProperty('--thumbInner2', "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font='Arial' font-size='10'>" + rangeInput[1].value + "</text></svg>\")");
-        range.style.left = ((minRange - rangeInput[0].min) / (rangeInput[0].max - rangeInput[0].min)) * 100 + "%";
-        range.style.right = 100 - ((maxRange - rangeInput[1].min) / (rangeInput[1].max - rangeInput[1].min)) * 100 + "%";
+        range.style.left = ((minRange - rangeInput[0].min) / (rangeInput[0].max - rangeInput[0].min)) * 110 + "%";
+        range.style.right = 100 - ((maxRange - rangeInput[1].min) / (rangeInput[1].max - rangeInput[1].min)) * 110 + "%";
     },
 
     getVals: () => {
@@ -519,3 +533,9 @@ window.onload = async () => {
     filter.init();
     gen.gen();
 }
+
+addEventListener("mousemove", p => {
+    mouseX = p.pageX;
+    mouseY = p.pageY;
+    document.getElementById("priceLabel").style.left = `calc(${mouseX}px - 2.5vw)`;
+})

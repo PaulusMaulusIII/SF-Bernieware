@@ -1,9 +1,8 @@
 @import url("shared.css");
 
 :root {
-    --thumbInner1: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font-size='10'></text></svg>");
-    --thumbInner2: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font-size='10'></text></svg>");
-    --thumbOuter: var(--darkGray);
+    --thumbInner: var(--white);
+    --thumbOuter: var(--black);
 }
 
 hr {
@@ -33,7 +32,6 @@ hr {
 .filter select {
     width: 100%;
     height: 125%;
-    font-weight: bold;
 }
 
 main {
@@ -156,11 +154,11 @@ main {
 }
 
 .min::-webkit-slider-thumb {
-    background-image: var(--thumbInner1);
+    background-color: var(--thumbInner1);
 }
 
 .max::-webkit-slider-thumb {
-    background-image: var(--thumbInner2);
+    background-color: var(--thumbInner2);
 }
 
 .range-input input::-moz-range-thumb {
@@ -173,14 +171,14 @@ main {
 }
 
 .min::-moz-range-thumb {
-    background-image: var(--thumbInner1);
+    background-color: var(--thumbInner1);
 }
 
 .max::-moz-range-thumb {
-    background-image: var(--thumbInner2);
+    background-color: var(--thumbInner2);
 }
 
-@media screen and (orientation: portrait) {
+@media screen and (orientation:portrait) {
     .range {
         width: 75vw;
     }
@@ -198,4 +196,34 @@ main {
 #loading {
     font-size: xx-large;
     font-weight: bolder;
+}
+
+#priceLabel {
+    display: none;
+    position: absolute;
+    background-color: var(--shadowDark);
+    color: var(--white);
+    height: 10vh;
+    height: 10dvh;
+    width: 5vw;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 2.5vh;
+    clip-path: polygon(100% 0, 100% 75%, 75% 75%, 50% 100%, 25% 75%, 0 75%, 0 0);
+    font-size: large;
+}
+
+#mobilePriceLabel {
+    display: none;
+}
+
+@media screen and (pointer:coarse) {
+    #priceLabel {
+        height: 0px;
+        width: 0px;
+    }
+
+    #mobilePriceLabel {
+        display: flex;
+    }
 }
