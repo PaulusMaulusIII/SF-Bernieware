@@ -10,6 +10,8 @@
 
 <body>
 
+    <label id="priceLabel"></label>
+
     <header>
 
         <a href="index.html" id="logo" aria-label="Zur Hauptseite zurückkehren">
@@ -20,11 +22,16 @@
 
         </a>
 
-        <a href="index.html">
-            <h1 id="title">
-                BRG-SHOP
-            </h1>    
-        </a>
+        <section>
+            <a href="index.html">
+                <h1 id="title">
+                    BRG-SHOP
+                </h1>
+            </a>
+            <h4 id="date">
+
+            </h4>
+        </section>
 
         <menu id="buttons">
             <button type="button" id="aboutUs" aria-label="Über uns">
@@ -47,7 +54,7 @@
     <section id="searchPopup" class="popup">
         <span id="closePopup" class="close-button">&times;</span>
         <input type="text" name="searchbar" id="searchbar">
-        <button id="eingabe"><img src="Medien/Magnifying_glass.svg" alt="" srcset="" class="icon"></button>
+        <button id="eingabe"><img src="Medien/Magnifying_glass.svg" alt="" srcset="" class="icon" id="searchIcon"></button>
     </section>
 
     <section id="cartPopup" class="popup">
@@ -74,7 +81,7 @@
         <section id="sum">
 
         </section>
-        
+
         <form id="orderForm">
             <label for="surname">Vorname: </label>
             <input type="text" id="surname" name="surname" required>
@@ -91,6 +98,15 @@
 
 
         </p>
+    </section>
+
+    <section id="notification">
+        <section id="notificationIcon">
+
+        </section>
+        <section id="notificationText">
+
+        </section>
     </section>
 
     <hr>
@@ -121,12 +137,14 @@
     </footer>
 
     <script src="settings.js"></script>
+    <script src="JS/notification.js"></script>
     <script src="JS/gen.js"></script>
     <script src="JS/search.js"></script>
     <script src="JS/cart.js"></script>
     <script src="JS/order.js"></script>
     <script src="JS/dark-mode.js"></script>
-
+    <script src="JS/time.js"></script>
+    <script src="JS/parseCSV.js"></script>
 </body>
 
 </html>

@@ -6,47 +6,14 @@ let fileList = [],  //Liste aller Produkte aus der CSV
     typeSelect,
     genderSelect,
     colorSelect,
-    motiveSelect;
+    motiveSelect,
+    mouseX,
+    mouseY;
 
 const genCSV = {
-    parseCSV: str => {
-        const arr = []; //Zu füllendes Array
-        let quote = false; //Boolean für "Quoted fields" (Falls ein Komma in CSV in einem Wert ist muss es in Anührungszeichen angegeben werden, dies soll auch der Parser erkennen können)
-
-        for (let row = 0, col = 0, c = 0; c < str.length; c++) { //Läuft so lange bis Keine Inhalte in der CSV genfunden werden
-            let cc = str[c], nc = str[c + 1]; //Aktuelles Zeichen = Zeichen an Stelle c in CSV tabelle, Nächstes Zeichen ist Zeichen nach Stelle c (c+1)
-            arr[row] = arr[row] || []; //Reihe ist entweder so lang wie row oder 0
-            arr[row][col] = arr[row][col] || ''; //Falls col > 1, 2d array, sonst array
-
-            if (cc == '"' && quote && nc == '"') { //Falls cc = '"' UND quote = true UND nc = '"' (Damit Anführungszeichen gelesen werden können, müssen sie in Anführungszeichen gegeben werden [Bsp. " -> CSV -> """ -> Parser -> "])
-                arr[row][col] += cc; ++c; continue; //Schreibe cc in das Array und mache weiter
-            }
-
-            if (cc == '"') { //Falls Anführungszeichen
-                quote = !quote; continue; //Invertiere status für quoted fields
-            }
-
-            if (cc == ',' && !quote) { //Bei einem Komma, dass nicht in einem Quoted field ist
-                ++col; continue; //Zur nächsten Spalte übergehen
-            }
-
-            if (cc == '\r' && nc == '\n' && !quote) {//Falls der aktuelle char 'return carriage' ist UND der nächste 'next line' ist
-                ++row; col = 0; ++c; continue; //In die nächste reihe springen und einen char weiter springen
-            }
-
-            if (cc == '\n' && !quote) {
-                ++row; col = 0; continue; //nächste reihe
-            }
-            if (cc == '\r' && !quote) {
-                ++row; col = 0; continue; //nächste reihe
-            }
-
-            arr[row][col] += cc; //aktuelle char in das array hinzufügen
-        }
-        return arr; //array returnen
-    },
-
     getCSV: async () => {
+        document.getElementById("filters").style.display = "none";
+        Array.from(document.getElementsByTagName("hr")).map(element => element.style.display = "none");
         let search,
             category;
         const urlParams = new URLSearchParams(window.location.search);
@@ -64,15 +31,15 @@ const genCSV = {
             .then(async (response) => {
                 console.log(response);
                 if (search != null) {
-                    for (const element of genCSV.parseCSV(response)) {
+                    for (const element of CSVParser.parse(response)) {
                         for (const el of element) {
-                            if (el.includes(search) && !fileList.includes(element)) {
+                            if (el.toUpperCase().includes(search.toUpperCase()) && !fileList.includes(element)) {
                                 fileList.push(element);
                             }
                         }
                     }
                 } else if (category != null) {
-                    for (const element of genCSV.parseCSV(response)) {
+                    for (const element of CSVParser.parse(response)) {
                         if (element[1] === category) {
                             fileList.push(element);
                         }
@@ -83,6 +50,8 @@ const genCSV = {
 
         try {
             document.getElementById("content").removeChild(document.getElementById("loading")); // "Bitte warten ... wird entfernt, falls es noch da ist"
+            document.getElementById("filters").style.display = "flex";
+            Array.from(document.getElementsByTagName("hr")).map(element => element.style.display = "block");
         } catch (error) {
 
         }
@@ -209,12 +178,15 @@ const filter = {
                 rangeInput = document.createElement("section"),
                 rangeSelected = document.createElement("span"),
                 range1 = document.createElement("input"),
-                range2 = document.createElement("input");
+                range2 = document.createElement("input"),
+                label = document.createElement("label");
 
             fieldset.classList.add("range");
 
             rangeSlider.classList.add("range-slider");
             rangeSelected.classList.add("range-selected");
+
+            label.id = "mobilePriceLabel"
 
             rangeInput.classList.add("range-input");
             range1.classList.add("min");
@@ -233,7 +205,7 @@ const filter = {
             rangeSlider.append(rangeSelected);
             rangeInput.append(range1, range2);
             fieldset.append(rangeSlider, rangeInput);
-            filterSection.append(fieldset);
+            filterSection.append(label, fieldset);
         }
     },
 
@@ -344,103 +316,139 @@ const gen = {
 
         filter.filter();
 
-        filteredFileList.forEach(element => {
-            let fileAttr = [], //Attribute (Farbe,Größen,etc.)
-                filePath = element[9] + "/" + element[0]; //Pfad = Pfad aus CSV + / + id (ohne datei-endung)
+        if (filteredFileList.length > 0) {
+            filteredFileList.forEach(element => {
+                let fileAttr = [], //Attribute (Farbe,Größen,etc.)
+                    filePath = element[9] + "/" + element[0]; //Pfad = Pfad aus CSV + / + id (ohne datei-endung)
 
-            let content = document.getElementById("content"), //Parent div die mit den Produkten gefüllt werden soll
-                section = document.createElement("section"), //Parent div für die einzelnen Produkte
-                a = document.createElement("a"),    //Link zu einzelansicht
-                picture = document.createElement("picture"),    //Beinhaltet das Bild
-                img = document.createElement("img"),    //Produktfoto
-                select = document.createElement("select"),  //Größenauswahl
-                optionSelect = document.createElement("option"),    //Platzhalter "Größe auswählen"
-                button = document.createElement("button");  //Zum Warenkorb hinzufügen Knopf
+                let content = document.getElementById("content"), //Parent div die mit den Produkten gefüllt werden soll
+                    section = document.createElement("section"), //Parent div für die einzelnen Produkte
+                    a = document.createElement("a"),    //Link zu einzelansicht
+                    picture = document.createElement("picture"),    //Beinhaltet das Bild
+                    img = document.createElement("img"),    //Produktfoto
+                    select = document.createElement("select"),  //Größenauswahl
+                    optionSelect = document.createElement("option"),    //Platzhalter "Größe auswählen"
+                    button = document.createElement("button");  //Zum Warenkorb hinzufügen Knopf
 
-            for (let e = 2; e <= 8; e++) {
-                fileAttr.push(element[e]); //Spalte 2 bis 8 aus CSV sind Attribute
-            }
-
-            section.className = "product";
-            img.className = "image";
-            select.className = "size info";     //Einheitliche Klassen für styling
-            select.name = "size-selection";
-            button.className = "toCart info";
-            button.id = element[0];
-            button.addEventListener("click", () => cart.add(button.id, element[2], select.value, fileAttr[6]));
-            button.textContent = fileAttr[6]; //fileAttr[6] = Preis aus CSV
-
-            a.href = "detail-view.html?id=" + element[0]; //Anchor leitet zur Einzelansicht weiter mit Produkt id aus CSV als parameter
-
-            try {
-                img.src = filePath + "_v.jpg"; //Standard bild = vorderseite (_v.jpg) //TODO: Modernere Kompressionen aviv, webm, etc.
-                if (element[11] == "j") {
-                    img.addEventListener("mouseenter", hover, false);
-                    img.addEventListener("mouseover", hover, false);    //EventListener, damit Rückseite angezeigt wird wenn Nutzer über Bild hovert
-                    img.addEventListener("mouseleave", exit, false);
+                for (let e = 2; e <= 8; e++) {
+                    fileAttr.push(element[e]); //Spalte 2 bis 8 aus CSV sind Attribute
                 }
-            } catch (error) {
-                console.error("Unknown");
-            }
 
-            for (let g = 0; g < fileAttr.length; g++) {
-                section.classList.add(fileAttr[g]);     //Vergabe der Klassen nach Attributen aus CSV
-            }
+                section.className = "product";
+                img.className = "image";
+                select.className = "size info";     //Einheitliche Klassen für styling
+                select.name = "size-selection";
+                button.className = "toCart info";
+                button.id = element[0];
+                button.addEventListener("click", () => cart.add(button.id, element[2], select.value, fileAttr[6]));
+                button.textContent = fileAttr[6]; //fileAttr[6] = Preis aus CSV
 
-            if (element[7] != "N/A") {
-                optionSelect.textContent = "Größe auswählen";
+                a.href = "detail-view.html?id=" + element[0]; //Anchor leitet zur Einzelansicht weiter mit Produkt id aus CSV als parameter
 
-                let sizeString = ""; //Initialisiren, damit Datentyp String feststeht
-                sizeString = fileAttr[5]; //fileAttr[5] = Größen optionen getrennt durch "/"
-                let sizes = sizeString.split("/"), //füllt array sizes mit den möglichen Größen
-                    options = []; //Initialisieren von options als array
-                for (let g = 0; g < sizes.length; g++) { //Wird für die Zahl der Größen optionen ausgeführt
-                    let option = document.createElement("option"); //Erstelle ein "option" Element
-                    option.textContent = sizes[g]; //Setze Inhalt
-                    option.value = sizes[g];    //und Value auf korrespondierende Größe
-                    options.push(option);   //Ergänzt options um das Element
-                    select.append(optionSelect,);
-                    options.forEach(element => {
-                        select.append(element);
-                    });
-                    section.append(select);
+                try {
+                    img.src = filePath + "_v.jpg"; //Standard bild = vorderseite (_v.jpg) //TODO: Modernere Kompressionen aviv, webm, etc.
+                    if (element[11] == "j") {
+                        if (window.matchMedia("(pointer:fine)").matches) {
+                            img.addEventListener("mouseenter", hover);
+                            img.addEventListener("mouseover", hover);
+                            img.addEventListener("mouseleave", exit);
+                            a.append(img);
+                            picture.append(a);
+                        } else {
+                            let buttonBack = document.createElement("button"),
+                                buttonForth = document.createElement("button");
+
+                            buttonBack.innerHTML = "&lt;";
+                            buttonForth.innerHTML = "&gt;";
+
+                            [buttonBack, buttonForth].map(element => {
+                                element.style = "background-color: var(--white); color: var(--black); border: var(--black) solid 1px; border-radius: 5px; height: 5vh; width: 20vw;";
+                                element.addEventListener("click", () => {
+                                    const src = img.src.replace(window.location.origin, "");
+                                    if (img.src.endsWith("_h.jpg")) {
+                                        if (imgH.includes(src)) {
+                                            img.src = imgV[imgH.indexOf(src)];
+                                        }
+                                    } else {
+                                        if (imgV.includes(src)) {
+                                            img.src = imgH[imgV.indexOf(src)];
+                                        }
+                                    }
+                                });
+                            });
+
+                            picture.style = "display:flex; flex-grow:0; align-items:center;"
+
+                            a.append(img)
+                            picture.append(buttonBack, a, buttonForth);
+                        }
+                    } else {
+                        a.append(img);
+                        picture.append(a);
+                    }
+                } catch (error) {
+                    console.error("Event error, could not assign listeners to img element");
                 }
+
+                for (let g = 0; g < fileAttr.length; g++) {
+                    section.classList.add(fileAttr[g]);     //Vergabe der Klassen nach Attributen aus CSV
+                }
+
+                if (element[7] != "N/A") {
+                    optionSelect.textContent = "Größe auswählen";
+
+                    let sizeString = ""; //Initialisiren, damit Datentyp String feststeht
+                    sizeString = fileAttr[5]; //fileAttr[5] = Größen optionen getrennt durch "/"
+                    let sizes = sizeString.split("/"), //füllt array sizes mit den möglichen Größen
+                        options = []; //Initialisieren von options als array
+                    for (let g = 0; g < sizes.length; g++) { //Wird für die Zahl der Größen optionen ausgeführt
+                        let option = document.createElement("option"); //Erstelle ein "option" Element
+                        option.textContent = sizes[g]; //Setze Inhalt
+                        option.value = sizes[g];    //und Value auf korrespondierende Größe
+                        options.push(option);   //Ergänzt options um das Element
+                        select.append(optionSelect,);
+                        options.forEach(element => {
+                            select.append(element);
+                        });
+                        section.append(select);
+                    }
+                }
+
+                section.append(picture, button);
+                content.append(section);
+
+                /*
+                Grundlegende DOM-Struktur
+                
+                body
+                |_content
+                    |_section
+                        |_anchor element
+                            |_picture
+                                |_img
+                        |_p
+                        |_select
+                            |_optionSelect
+                            |_...
+                        |_button
+                */
+
+                imgV.push("/" + filePath + "_v.jpg"); //Ergänzt Bilder von Vorder- und Rückseite in entsprechende Listen um zwischen den Beiden zu wechseln
+                imgH.push("/" + filePath + "_h.jpg");
+            });
+        } else {
+            document.getElementById("content").innerHTML = "<h2>Keine Übereinstimmung gefunden!</h2>";
+            if (fileList.length == 0) {
+                document.getElementById("filters").style.display = "none";
+                Array.from(document.querySelectorAll("hr")).map(element => element.style.display = "none");
             }
-
-            a.append(img);
-            picture.append(a);
-            section.append(picture, button);
-            content.append(section);
-
-            /*
-            Grundlegende DOM-Struktur
-            
-            body
-            |_content
-                |_section
-                    |_anchor element
-                        |_picture
-                            |_img
-                    |_p
-                    |_select
-                        |_optionSelect
-                        |_...
-                    |_button
-            */
-
-            imgV.push("/" + filePath + "_v.jpg"); //Ergänzt Bilder von Vorder- und Rückseite in entsprechende Listen um zwischen den Beiden zu wechseln
-            imgH.push("/" + filePath + "_h.jpg");
-        });
+        }
 
     },
 
     del: () => {
-
         let content = document.getElementById("content");
-
-        for (let el of document.querySelectorAll('.product')) {
-            content.removeChild(el);    //Löscht jedes Produkt
-        }
+        content.innerHTML = "";
     },
 }
 
@@ -449,37 +457,53 @@ const sliders = {
         let rangeMin = 1;
         const range = document.querySelector(".range-selected");
         const rangeInput = document.querySelectorAll(".range-input input");
-        const root = document.querySelector(':root');
+        const label = document.getElementById("priceLabel");
+        const mobilePriceLabel = document.getElementById("mobilePriceLabel");
 
         rangeInput.forEach((input) => {
             input.addEventListener("input", (e) => {
                 let minRange = parseInt(rangeInput[0].value);
                 let maxRange = parseInt(rangeInput[1].value);
                 if (maxRange - minRange < rangeMin) {
-                    if (e.target.className === "min") {
+                    if (e.target.className.includes("min")) {
                         rangeInput[0].value = maxRange - rangeMin;
                     } else {
                         rangeInput[1].value = minRange + rangeMin;
                     }
                 } else {
-                    root.style.setProperty('--thumbInner1', "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font='Arial' font-size='10'>" + rangeInput[0].value + "</text></svg>\")");
-                    root.style.setProperty('--thumbInner2', "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font='Arial' font-size='10'>" + rangeInput[1].value + "</text></svg>\")");
                     range.style.left = ((minRange - rangeInput[0].min) / (rangeInput[0].max - rangeInput[0].min)) * 100 + "%";
                     range.style.right = 100 - ((maxRange - rangeInput[1].min) / (rangeInput[1].max - rangeInput[1].min)) * 100 + "%";
                 }
+                mobilePriceLabel.textContent = rangeInput[0].value + "€ - " + rangeInput[1].value + "€";
+                label.textContent = rangeInput[0].value + "€ - " + rangeInput[1].value + "€";
             });
 
             input.addEventListener("change", () => {
+                gen.del();
                 gen.gen();
+            });
+
+            mobilePriceLabel.textContent = rangeInput[0].value + "€ - " + rangeInput[1].value + "€";
+            label.textContent = rangeInput[0].value + "€ - " + rangeInput[1].value + "€";
+            label.style.top = range.getBoundingClientRect().top + window.scrollY - 250 + "px";
+
+            input.addEventListener("mouseenter", evt => {
+                label.style.display = "flex";
+            });
+
+            input.addEventListener("mouseover", evt => {
+                label.style.display = "flex";
+            });
+
+            input.addEventListener("mouseleave", evt => {
+                label.style.display = "none";
             });
         });
 
         let minRange = parseInt(rangeInput[0].value);
         let maxRange = parseInt(rangeInput[1].value);
-        root.style.setProperty('--thumbInner1', "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font='Arial' font-size='10'>" + rangeInput[0].value + "</text></svg>\")");
-        root.style.setProperty('--thumbInner2', "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='50px' ><text x='2.5' y='10' fill='black' font='Arial' font-size='10'>" + rangeInput[1].value + "</text></svg>\")");
-        range.style.left = ((minRange - rangeInput[0].min) / (rangeInput[0].max - rangeInput[0].min)) * 100 + "%";
-        range.style.right = 100 - ((maxRange - rangeInput[1].min) / (rangeInput[1].max - rangeInput[1].min)) * 100 + "%";
+        range.style.left = ((minRange - rangeInput[0].min) / (rangeInput[0].max - rangeInput[0].min)) * 110 + "%";
+        range.style.right = 100 - ((maxRange - rangeInput[1].min) / (rangeInput[1].max - rangeInput[1].min)) * 110 + "%";
     },
 
     getVals: () => {
@@ -509,3 +533,9 @@ window.onload = async () => {
     filter.init();
     gen.gen();
 }
+
+addEventListener("mousemove", p => {
+    mouseX = p.pageX;
+    mouseY = p.pageY;
+    document.getElementById("priceLabel").style.left = `calc(${mouseX}px - 2.5vw)`;
+})

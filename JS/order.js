@@ -70,6 +70,7 @@ document.getElementById('orderForm').addEventListener('submit', async (e) => {
         email = document.getElementById('email').value;
 
     let items = userCart.items.map(element => JSON.stringify(element));
+    closeOrderPopup.click();
 
     // Send the data to the Node.js server
     fetch(settings.backend_ip + 'submit', {
@@ -82,9 +83,9 @@ document.getElementById('orderForm').addEventListener('submit', async (e) => {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert(data.id + ' submitted successfully.');
+                new PopUpNotification("<span style ='color:green;font-weigth:bold;font-size:3vh;'>&#10003;</span>", "<h4>Bestellung ist erfolgt!</h4>").display(3000);
             } else {
-                alert('Failed to submit order.');
+                new PopUpNotification("<span style ='color:red;font-weigth:bold;font-size:10vh;'>&times;</span>", "<h4>Bestellvorgang gescheitert!</h4>").display(10000);
             }
         })
         .catch(error => {

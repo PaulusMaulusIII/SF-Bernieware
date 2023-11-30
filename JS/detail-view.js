@@ -6,50 +6,13 @@ let interesting,
     imgH = [];
 
 const detailCSV = {
-    parseCSV: str => {
-        const arr = []; //Zu füllendes Array
-        let quote = false; //Boolean für "Quoted fields" (Falls ein Komma in CSV in einem Wert ist muss es in Anührungszeichen angegeben werden, dies soll auch der Parser erkennen können)
-
-        for (let row = 0, col = 0, c = 0; c < str.length; c++) { //Läuft so lange bis Keine Inhalte in der CSV genfunden werden
-            let cc = str[c], nc = str[c + 1]; //Aktuelles Zeichen = Zeichen an Stelle c in CSV tabelle, Nächstes Zeichen ist Zeichen nach Stelle c (c+1)
-            arr[row] = arr[row] || []; //Reihe ist entweder so lang wie row oder 0
-            arr[row][col] = arr[row][col] || ''; //Falls col > 1, 2d array, sonst array
-
-            if (cc == '"' && quote && nc == '"') { //Falls cc = '"' UND quote = true UND nc = '"' (Damit Anführungszeichen gelesen werden können, müssen sie in Anführungszeichen gegeben werden [Bsp. " -> CSV -> """ -> Parser -> "])
-                arr[row][col] += cc; ++c; continue; //Schreibe cc in das Array und mache weiter
-            }
-
-            if (cc == '"') { //Falls Anführungszeichen
-                quote = !quote; continue; //Invertiere status für quoted fields
-            }
-
-            if (cc == ',' && !quote) { //Bei einem Komma, dass nicht in einem Quoted field ist
-                ++col; continue; //Zur nächsten Spalte übergehen
-            }
-
-            if (cc == '\r' && nc == '\n' && !quote) {//Falls der aktuelle char 'return carriage' ist UND der nächste 'next line' ist
-                ++row; col = 0; ++c; continue; //In die nächste reihe springen und einen char weiter springen
-            }
-
-            if (cc == '\n' && !quote) {
-                ++row; col = 0; continue; //nächste reihe
-            }
-            if (cc == '\r' && !quote) {
-                ++row; col = 0; continue; //nächste reihe
-            }
-
-            arr[row][col] += cc; //aktuelle char in das array hinzufügen
-        }
-        return arr; //array returnen
-    },
-
     getCSV: async id => {
         let arr;
 
         await fetch(settings.backend_ip + "database.csv")
             .then(response => response.text())
             .then(async (response) => {
-                arr = (detailCSV.parseCSV(response));
+                arr = (CSVParser.parse(response));
 
                 interesting = arr.filter(function (value) { return value[0] == id; })[0];
             })
@@ -62,7 +25,7 @@ const detailCSV = {
             .then(async (response) => {
                 list.length = 0;
 
-                detailCSV.parseCSV(response).forEach(element => {
+                CSVParser.parse(response).forEach(element => {
                     equal = true;
                     let banned = [6, 7, 8, 9, 10]
 
@@ -86,11 +49,12 @@ const detailCSV = {
 const detailGen = {
     gen: async () => {
 
-        let img = document.querySelectorAll("main picture img")[0],
-            title = document.querySelectorAll("main section h2")[0],
-            subtitle = document.querySelectorAll("main section h3")[0],
-            desc = document.querySelectorAll("main section p")[0],
-            button = document.querySelectorAll("main section button")[0],
+        let picture = document.querySelector("main picture"),
+            img = document.createElement("img"),
+            title = document.querySelector("main section h2"),
+            subtitle = document.querySelector("main section h3"),
+            desc = document.querySelector("main section p"),
+            button = document.querySelector("main section button"),
             sizeSelect = document.getElementById("sizes"),
             colorSelect = document.getElementById("colors"),
             typeSelect = document.getElementById("types"),
@@ -106,11 +70,37 @@ const detailGen = {
         });
 
         if (interesting[11] == "j") {
-            imgH.push("/" + interesting[9] + "/" + interesting[0] + "_h.jpg");
-            imgV.push("/" + interesting[9] + "/" + interesting[0] + "_v.jpg");
-            img.addEventListener("mouseenter", hover, false);
-            img.addEventListener("mouseover", hover, false);    //EventListener, damit Rückseite angezeigt wird wenn Nutzer über Bild hovert
-            img.addEventListener("mouseleave", exit, false);
+            if (window.matchMedia("(pointer:fine)").matches) {
+                img.addEventListener("mouseenter", hover);
+                img.addEventListener("mouseover", hover);
+                img.addEventListener("mouseleave", exit);
+                picture.append(img);
+            } else {
+                let buttonBack = document.createElement("button"),
+                    buttonForth = document.createElement("button");
+
+                buttonBack.innerHTML = "&lt;";
+                buttonForth.innerHTML = "&gt;";
+
+                [buttonBack, buttonForth].map(element => {
+                    element.style = "background-color: var(--white); color: var(--black); border: var(--black) solid 1px; border-radius: 5px; height: 5vh; width: calc(100% + 20%);";
+                    element.addEventListener("click", () => {
+                        const src = img.src.replace(window.location.origin, "");
+                        if (img.src.endsWith("_h.jpg")) {
+                            img.src = interesting[9] + "/" + interesting[0] + "_v.jpg";
+                        } else {
+                            img.src = interesting[9] + "/" + interesting[0] + "_h.jpg";
+                        }
+                        console.log(img.src);
+                    });
+                });
+
+                picture.style = "display:flex; flex-grow:0; align-items:center; width: 90%; align-self: center; justify-self: center;"
+
+                picture.append(buttonBack, img, buttonForth);
+            }
+        } else {
+            picture.append(img);
         }
 
         let sizes = "";
@@ -208,16 +198,10 @@ window.onload = async () => {
 
 const hover = evt => {
     let img = evt.target
-    const src = img.src.replace(window.location.origin, "");
-    if (imgV.includes(src)) {
-        img.src = imgH[imgV.indexOf(src)];
-    }
+    img.src = interesting[9] + "/" + interesting[0] + "_h.jpg";
 }
 
 const exit = evt => {
     let img = evt.target
-    const src = img.src.replace(window.location.origin, "");
-    if (imgH.includes(src)) {
-        img.src = imgV[imgH.indexOf(src)];
-    }
+    img.src = interesting[9] + "/" + interesting[0] + "_v.jpg";
 }

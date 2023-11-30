@@ -5,7 +5,7 @@ if (localStorage.getItem("darkMode") == null) {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         localStorage.setItem("darkMode", "on");
     } else {
-        localStorage.setItem("darkMode", "on");
+        localStorage.setItem("darkMode", "off");
     }
 }
 
@@ -25,6 +25,7 @@ if (state === "on") {
     document.getElementById("aboutUs").getElementsByClassName("icon")[0].src = "Medien/about_us_dark.svg";
     document.getElementById("search").getElementsByClassName("icon")[0].src = "Medien/Magnifying_glass_dark.svg";
     document.getElementById("cart").getElementsByClassName("icon")[0].src = "Medien/korb_dark.svg";
+    document.getElementById("searchIcon").src = "Medien/Magnifying_glass_dark.svg";
 }
 
 const switchTheme = e => {
@@ -41,6 +42,7 @@ const switchTheme = e => {
         root.style.setProperty('--shadowDark', 'rgba(255, 255, 255, 0.65)');
         document.getElementById("aboutUs").getElementsByClassName("icon")[0].src = "Medien/about_us_dark.svg";
         document.getElementById("search").getElementsByClassName("icon")[0].src = "Medien/Magnifying_glass_dark.svg";
+        document.getElementById("searchIcon").src = "Medien/Magnifying_glass_dark.svg";
     }
     else {
         localStorage.setItem("darkMode", "off");
@@ -56,6 +58,7 @@ const switchTheme = e => {
         document.getElementById("aboutUs").getElementsByClassName("icon")[0].src = "Medien/about_us.svg";
         document.getElementById("search").getElementsByClassName("icon")[0].src = "Medien/Magnifying_glass.svg";
         document.getElementById("cart").getElementsByClassName("icon")[0].src = "Medien/korb.svg";
+        document.getElementById("searchIcon").src = "Medien/Magnifying_glass.svg";
     }
 }
 

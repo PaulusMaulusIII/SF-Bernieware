@@ -41,6 +41,86 @@ const modifyFile = async (file = "", method = "", data = []) => {
     await sendRequest(file, "SUB");
 };
 
+const displayOrders = () => {
+    body.innerHTML = "";
+    if (document.getElementById("views").value == "orders") {
+        orders.forEach((element, index) => {
+
+            if (element.split("\t").length === 6) {
+                const [UUID, surname, name, year, email, cart] = element.split("\t");
+
+                const details = document.createElement("details"),
+                    summary = document.createElement("summary"),
+                    table = document.createElement("table"),
+                    theadrow = document.createElement("tr");
+
+                summary.innerHTML = `${index}. Bestellung ${UUID} von:${surname} ${name}, Klasse: ${year}, Email-Adresse: <a href="mailto:${email}">${email}</a>:`;
+                summary.style.fontSize = "larger";
+                summary.style.fontWeight = "bold";
+                details.append(summary)
+                theadrow.innerHTML = "<th>MENGE</th><th>ART</th><th>GRÖßE</th><th>ID</th><th>PREIS</th>";
+                table.append(theadrow);
+
+                let cartItems = [];
+                JSON.parse(cart).data.forEach(element => cartItems.push(element));
+                cartItems.map(element => JSON.parse(element)).map(element => {
+                    const tr = document.createElement("tr")
+                    const { id, type, size, amount, price } = element;
+                    [amount + " x", type, size, id, price].map(element => {
+                        const td = document.createElement("td");
+                        td.textContent = element;
+                        tr.append(td);
+                    });
+                    table.append(tr);
+                });
+
+                details.append(table);
+                body.append(details);
+            }
+
+        });
+    } else {
+        const table = document.createElement("table"),
+            theadrow = document.createElement("tr");
+
+        theadrow.innerHTML = "<th>MENGE</th><th>ART</th><th>GRÖßE</th><th>ID</th><th>PREIS</th>";
+        table.append(theadrow);
+
+        const itemMap = new Map();
+
+        orders.forEach(element => {
+            if (element.split("\t").length === 6) {
+                const [UUID, surname, name, year, email, cart] = element.split("\t");
+
+                let cartItems = [];
+                JSON.parse(cart).data.forEach(element => cartItems.push(element));
+                cartItems.map(element => JSON.parse(element)).forEach(element => {
+                    const { id, type, size, amount, price } = element;
+
+                    if (itemMap.has(id)) {
+                        const existingItem = itemMap.get(id);
+                        existingItem.amount += amount;
+                    } else {
+                        itemMap.set(id, { id, type, size, amount, price });
+                    }
+                });
+            }
+        });
+
+        let itemArray = [];
+        itemMap.forEach(element => itemArray.push(element));
+        console.log(itemArray);
+        itemArray = itemArray.sort((a, b) => b.amount - a.amount);
+        console.log(itemArray);
+        itemArray.map(element => {
+            const newRow = table.insertRow();
+            const { id, type, size, amount, price } = element;
+            newRow.innerHTML = `<td>${amount}</td><td>${type}</td><td>${size}</td><td>${id}</td><td>${price}</td>`;
+        });
+        body.append(table);
+    }
+}
+
 ws.addEventListener("open", async () => {
     console.log("Connected to the WebSocket server");
     await sendRequest("orders.tsv", "SUB");
@@ -74,37 +154,7 @@ ws.addEventListener("message", (event) => {
 
         body.innerHTML = "";
 
-        orders.forEach(element => {
-
-            if (element.split("\t").length === 6) {
-                const [UUID, surname, name, year, email, cart] = element.split("\t");
-
-                const h3 = document.createElement("h3"),
-                    table = document.createElement("table"),
-                    theadrow = document.createElement("tr");
-
-                h3.innerHTML = `Bestellung ${UUID} von:${surname} ${name}, Klasse: ${year}, Email-Adresse: <a href="mailto:${email}">${email}</a>:`;
-                body.append(h3);
-                theadrow.innerHTML = "<th>MENGE</th><th>ART</th><th>GRÖßE</th><th>ID</th><th>PREIS</th>";
-                table.append(theadrow);
-
-                let cartItems = [];
-                JSON.parse(cart).data.forEach(element => cartItems.push(element));
-                cartItems.map(element => JSON.parse(element)).map(element => {
-                    const tr = document.createElement("tr")
-                    const { id, type, size, amount, price } = element;
-                    [amount + " x", type, size, id, price].map(element => {
-                        const td = document.createElement("td");
-                        td.textContent = element;
-                        tr.append(td);
-                    });
-                    table.append(tr);
-                });
-
-                body.append(table);
-            }
-
-        });
+        displayOrders();
     } else {
         if (!successful) {
             console.error("Request failed");
@@ -117,3 +167,5 @@ ws.addEventListener("message", (event) => {
 ws.addEventListener("close", () => {
     console.log("Disconnected from the WebSocket server");
 });
+
+document.getElementById("views").addEventListener("change", displayOrders)
