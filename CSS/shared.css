@@ -20,7 +20,6 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    appearance: none;
 }
 
 html {
@@ -402,23 +401,6 @@ option {
     background-color: var(--white);
     color: var(--black);
 }
-
-select {
-    appearance: none;
-    background-color: transparent;
-    border: none;
-    padding: 0 1em 0 0;
-    margin: 0;
-    width: 100%;
-    cursor: inherit;
-    line-height: inherit;
-    outline: none;
-}
-
-select {
-    border: var(--darkGray) solid 1px;
-    border-radius: 5px;
-    padding: 5%;
 
 #orderForm {
     display: flex;

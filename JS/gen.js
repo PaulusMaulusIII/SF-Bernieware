@@ -485,19 +485,6 @@ const sliders = {
 
             mobilePriceLabel.textContent = rangeInput[0].value + "€ - " + rangeInput[1].value + "€";
             label.textContent = rangeInput[0].value + "€ - " + rangeInput[1].value + "€";
-            label.style.top = range.getBoundingClientRect().top + window.scrollY - 250 + "px";
-
-            input.addEventListener("mouseenter", evt => {
-                label.style.display = "flex";
-            });
-
-            input.addEventListener("mouseover", evt => {
-                label.style.display = "flex";
-            });
-
-            input.addEventListener("mouseleave", evt => {
-                label.style.display = "none";
-            });
         });
 
         let minRange = parseInt(rangeInput[0].value);
@@ -535,7 +522,19 @@ window.onload = async () => {
 }
 
 addEventListener("mousemove", p => {
+    const slider = document.querySelector(".range-slider");
+    const label = document.getElementById("priceLabel");
     mouseX = p.pageX;
     mouseY = p.pageY;
-    document.getElementById("priceLabel").style.left = `calc(${mouseX}px - 2.5vw)`;
+    try {
+        if ((mouseX > slider.getBoundingClientRect().left && mouseX < slider.getBoundingClientRect().right) && (mouseY > (slider.getBoundingClientRect().top - 10) && mouseY < (slider.getBoundingClientRect().bottom + 10))) {
+            label.style.left = `calc(${mouseX}px - 5vw)`;
+            label.style.top = `calc(${document.querySelector(".range-slider").getBoundingClientRect().top + window.scrollY}px - 12vh)`
+            label.style.display = "flex";
+        } else {
+            label.style.display = "none";
+        }
+    } catch (error) {
+
+    }
 })
