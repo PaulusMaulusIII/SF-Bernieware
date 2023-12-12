@@ -6,6 +6,12 @@ let orders = [];
 //TODO: Switch handling from lines to IDs
 
 class FileRequest {
+    /**
+     * @param {String} file 
+     * @param {String} method 
+     * @param {String[]} data 
+     */
+
     constructor(file, method, data) {
         this.file = file;
         this.method = method;
@@ -27,6 +33,12 @@ const getPromise = () => {
     });
 };
 
+/**
+ * @param {String} file 
+ * @param {String} method 
+ * @param {String[]} data 
+ */
+
 const sendRequest = async (file = "", method = "", data = []) => {
     const req = new FileRequest(file, method, data);
 
@@ -34,6 +46,12 @@ const sendRequest = async (file = "", method = "", data = []) => {
     console.log(`Sent: ${JSON.stringify(req)}`);
     await getPromise();
 };
+
+/**
+ * @param {String} file 
+ * @param {String} method 
+ * @param {String[]} data 
+ */
 
 const modifyFile = async (file = "", method = "", data = []) => {
     await sendRequest(file, "UNS");
@@ -168,4 +186,4 @@ ws.addEventListener("close", () => {
     console.log("Disconnected from the WebSocket server");
 });
 
-document.getElementById("views").addEventListener("change", displayOrders)
+document.getElementById("views").addEventListener("change", displayOrders);

@@ -27,7 +27,7 @@ const detailCSV = {
 
                 CSVParser.parse(response).forEach(element => {
                     equal = true;
-                    let banned = [6, 7, 8, 9, 10]
+                    let banned = [7, 8, 9, 10, 11]
 
                     for (let i = 1; i < interesting.length; i++) {
                         if (i != column) {
@@ -37,10 +37,11 @@ const detailCSV = {
                         }
                     }
 
-                    if (equal && (element[column] != interesting[column])) {
+                    if (equal && !list.includes(element) && element[column] != interesting[column]) {
                         list.push(element);
                     }
                 });
+                console.log(list);
             })
             .catch(err => console.log(err));
     }

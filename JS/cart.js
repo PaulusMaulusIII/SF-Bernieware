@@ -12,6 +12,14 @@ let userCart = {
 }
 
 class cartItem {
+    /**
+     * @param {Number} id 
+     * @param {String} type 
+     * @param {String} size 
+     * @param {Number} amount 
+     * @param {Number} price 
+     */
+
     constructor(id, type, size, amount, price) {
         this.id = id;
         this.type = type;
@@ -48,6 +56,13 @@ const cart = {
             cart.display();
         }
     },
+
+    /**
+     * @param {Number} id 
+     * @param {String} type 
+     * @param {String} size 
+     * @param {Number} price 
+     */
 
     add: (id, type, size, price) => {
         if (size !== "Größe auswählen") {

@@ -154,11 +154,11 @@ main {
 }
 
 .min::-webkit-slider-thumb {
-    background-color: var(--thumbInner1);
+    background-color: var(--thumbInner);
 }
 
 .max::-webkit-slider-thumb {
-    background-color: var(--thumbInner2);
+    background-color: var(--thumbInner);
 }
 
 .range-input input::-moz-range-thumb {
@@ -171,11 +171,11 @@ main {
 }
 
 .min::-moz-range-thumb {
-    background-color: var(--thumbInner1);
+    background-color: var(--thumbInner);
 }
 
 .max::-moz-range-thumb {
-    background-color: var(--thumbInner2);
+    background-color: var(--thumbInner);
 }
 
 @media screen and (orientation:portrait) {
