@@ -140,7 +140,7 @@ span {
     }
 }
 
-@media screen and (orientation: landscape) and (max-device-width < 800px) {
+@media screen and (orientation: landscape) and (device-width < 800px) {
     #additional,
     #background {
         display: none;

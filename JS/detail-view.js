@@ -31,7 +31,7 @@ const detailCSV = {
 
                     for (let i = 1; i < interesting.length; i++) {
                         if (i != column) {
-                            if (element[i] !== interesting[i] && !banned.includes(i)) {
+                            if (element[i] !== interesting[i] && !banned.includes(i) && element[i] != "N/A") {
                                 equal = false;
                             }
                         }
